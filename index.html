@@ -166,14 +166,14 @@ h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),#a78bfa)
 .phone-frame{background:var(--bg4);border:2px solid var(--border2);border-radius:36px;padding:11px;box-shadow:0 30px 80px rgba(0,0,0,.6);}
 .phone-notch{width:78px;height:18px;background:var(--bg4);border-radius:0 0 14px 14px;margin:0 auto 8px;border-bottom:2px solid var(--border);display:flex;align-items:center;justify-content:center;gap:5px;}
 .phone-cam{width:7px;height:7px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);}
-.phone-screen{background:var(--bg3);border-radius:26px;overflow:hidden;min-height:440px;display:flex;flex-direction:column;}
+.phone-screen{background:var(--bg3);border-radius:26px;overflow:hidden;height:580px;display:flex;flex-direction:column;}
 .phone-status{background:var(--bg4);padding:5px 14px;display:flex;justify-content:space-between;align-items:center;}
 .phone-time{font-size:.7rem;font-weight:600;}
 .chat-header{background:var(--bg4);padding:9px 13px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
 .chat-avatar{width:29px;height:29px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff;flex-shrink:0;}
 .chat-agent-name{font-size:.78rem;font-weight:600;display:block;}
 .chat-agent-sub{font-size:.62rem;color:var(--green);}
-.chat-body{flex:1;padding:11px 9px;display:flex;flex-direction:column;gap:7px;overflow:hidden;}
+.chat-body{flex:1;padding:11px 9px;display:flex;flex-direction:column;gap:7px;overflow-y:auto;}
 .bubble{max-width:86%;border-radius:13px;padding:7px 10px;font-size:.76rem;line-height:1.45;}
 .bubble.bot{background:var(--bg4);color:var(--text);border-radius:4px 13px 13px 13px;align-self:flex-start;}
 .bubble.user{background:var(--accent);color:#000;font-weight:500;border-radius:13px 4px 13px 13px;align-self:flex-end;}
@@ -650,24 +650,26 @@ footer{border-top:1px solid var(--border);padding:34px 5%;display:flex;align-ite
     <span class="label" style="display:block;text-align:center;">Get Started</span>
     <h2 class="sec-title">Ready to grow?<br>Let's talk.</h2>
     <p class="sec-sub" style="margin:0 auto 2rem;text-align:center;">Fill this out and we'll reach out within 24 hours. No pressure, no pitch — just a real conversation about what would actually help your business.</p>
-    <div class="form-grid">
-      <div class="fg"><label>First Name</label><input type="text" placeholder="John"></div>
-      <div class="fg"><label>Last Name</label><input type="text" placeholder="Smith"></div>
-      <div class="fg"><label>Email</label><input type="email" placeholder="john@yourbusiness.com"></div>
-      <div class="fg"><label>Phone</label><input type="tel" placeholder="(404) 000-0000"></div>
-      <div class="fg full"><label>I'm Interested In</label>
-        <select>
-          <option value="">Select a service...</option>
-          <option>Website + Google Business Profile ($199)</option>
-          <option>Ad Management</option>
-          <option>AI Automation</option>
-          <option>Custom Software — Free Consultation</option>
-          <option>Multiple Services / Not Sure Yet</option>
-        </select>
+    <form id="contactForm">
+      <div class="form-grid">
+        <div class="fg"><label>First Name</label><input type="text" name="first_name" placeholder="John" required></div>
+        <div class="fg"><label>Last Name</label><input type="text" name="last_name" placeholder="Smith" required></div>
+        <div class="fg"><label>Email</label><input type="email" name="email" placeholder="john@yourbusiness.com" required></div>
+        <div class="fg"><label>Phone</label><input type="tel" name="phone" placeholder="(404) 000-0000"></div>
+        <div class="fg full"><label>I'm Interested In</label>
+          <select name="service">
+            <option value="">Select a service...</option>
+            <option>Website + Google Business Profile ($199)</option>
+            <option>Ad Management</option>
+            <option>AI Automation</option>
+            <option>Custom Software — Free Consultation</option>
+            <option>Multiple Services / Not Sure Yet</option>
+          </select>
+        </div>
+        <div class="fg full"><label>Tell Us About Your Business</label><textarea name="message" placeholder="What does your business do? What's your biggest challenge right now? (Even just a sentence is fine)"></textarea></div>
       </div>
-      <div class="fg full"><label>Tell Us About Your Business</label><textarea placeholder="What does your business do? What's your biggest challenge right now? (Even just a sentence is fine)"></textarea></div>
-    </div>
-    <button class="submit-btn" onclick="this.textContent='✓ Sent! We\'ll be in touch within 24 hours.';this.style.background='#22c55e';this.style.color='#fff';this.disabled=true;">Send Message — It's Free →</button>
+      <button type="submit" class="submit-btn" id="submitBtn">Send Message — It's Free →</button>
+    </form>
   </div>
 </div>
 
@@ -690,6 +692,44 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Contact form — FormSubmit AJAX
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const form = this;
+  const data = {
+    first_name: form.first_name.value,
+    last_name: form.last_name.value,
+    email: form.email.value,
+    phone: form.phone.value,
+    service: form.service.value,
+    message: form.message.value,
+    _subject: 'New Nolvek Inquiry from ' + form.first_name.value + ' ' + form.last_name.value,
+    _template: 'table',
+    _captcha: 'false'
+  };
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  fetch('https://formsubmit.co/ajax/kevlongalloway1999@icloud.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(() => {
+    btn.textContent = '✓ Sent! We\'ll be in touch within 24 hours.';
+    btn.style.background = '#22c55e';
+    btn.style.color = '#fff';
+    form.reset();
+  })
+  .catch(() => {
+    btn.textContent = 'Something went wrong — please try again.';
+    btn.style.background = '#ef4444';
+    btn.style.color = '#fff';
+    btn.disabled = false;
+  });
+});
 
 // Animated chat loop
 const extraMessages = [
