@@ -278,6 +278,14 @@ footer{border-top:1px solid var(--border);padding:34px 5%;display:flex;align-ite
 .soft-content{grid-template-columns:1fr;}
 .soft-sidebar{display:none;}
 }
+
+/* Floating music player */
+#musicBtn{position:fixed;bottom:24px;right:24px;z-index:900;display:flex;align-items:center;gap:7px;background:rgba(13,15,20,0.92);border:1px solid rgba(0,229,255,0.25);border-radius:100px;padding:9px 16px;color:var(--accent);font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;backdrop-filter:blur(16px);transition:all .25s;letter-spacing:.04em;}
+#musicBtn:hover{border-color:rgba(0,229,255,0.55);background:rgba(13,15,20,0.98);box-shadow:0 0 18px rgba(0,229,255,.12);}
+#musicBtn.playing{border-color:rgba(0,229,255,0.45);box-shadow:0 0 14px rgba(0,229,255,.1);}
+#musicIcon{font-size:1rem;line-height:1;animation:none;}
+#musicBtn.playing #musicIcon{animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.45;}}
 </style>
 
 </head>
@@ -806,7 +814,64 @@ function addMessage() {
   }
 }
 setTimeout(addMessage, 2500);
+
+// Background music — Erika (Major Hans Friess)
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+const musicIcon = document.getElementById('musicIcon');
+const musicLabel = document.getElementById('musicLabel');
+let musicStarted = false;
+
+function setPlaying(playing) {
+  if (playing) {
+    musicIcon.textContent = '♪';
+    musicLabel.textContent = 'Erika';
+    musicBtn.classList.add('playing');
+  } else {
+    musicIcon.textContent = '♪';
+    musicLabel.textContent = 'Play';
+    musicBtn.classList.remove('playing');
+  }
+}
+
+music.addEventListener('play', () => setPlaying(true));
+music.addEventListener('pause', () => setPlaying(false));
+
+musicBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  if (music.paused) {
+    music.play().catch(() => {});
+  } else {
+    music.pause();
+  }
+});
+
+// Attempt autoplay on first user interaction with the page
+function startOnInteraction() {
+  if (!musicStarted) {
+    musicStarted = true;
+    music.play().catch(() => {});
+    document.removeEventListener('click', startOnInteraction);
+    document.removeEventListener('touchstart', startOnInteraction);
+  }
+}
+document.addEventListener('click', startOnInteraction);
+document.addEventListener('touchstart', startOnInteraction);
+
+// Try immediate autoplay (works if browser allows it)
+music.play().then(() => { musicStarted = true; }).catch(() => {});
 </script>
+
+<!-- Background music: Erika by Major Hans Friess (archive.org) -->
+<audio id="bgMusic" loop preload="none">
+  <source src="https://archive.org/download/k_20210314_20210314/k_20210314_20210314.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Floating music pill -->
+<button id="musicBtn" aria-label="Toggle music" title="Erika — Major Hans Friess">
+  <span id="musicIcon">♪</span>
+  <span id="musicLabel">Play</span>
+</button>
 
 </body>
 </html>
