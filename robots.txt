@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow:
 
-Sitemap: https://nolvek-dev.onrender.com/sitemap.xml
+Sitemap: https://nolvek.online/sitemap.xml

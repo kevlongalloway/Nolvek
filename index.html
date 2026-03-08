@@ -10,9 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 
-<link rel="icon" type="image/svg+xml" href="logo.svg">
-<link rel="alternate icon" type="image/png" href="logo.svg">
-<link rel="apple-touch-icon" href="logo.svg">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="icon" type="image/svg+xml" href="/logo.svg">
+<link rel="apple-touch-icon" href="/favicon.png">
 
 <meta name="description" content="Nolvek helps Atlanta local businesses get found online and grow faster. Websites from $199, Google & Meta ad management, AI lead automation, and custom software. Based in Atlanta, GA.">
 <meta name="keywords" content="Atlanta web design, local business website Atlanta, Google Ads management Atlanta, AI automation small business, custom software Atlanta, Google Business Profile setup, digital marketing Atlanta">
@@ -25,7 +25,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nolvek.online">
 <meta property="og:site_name" content="Nolvek">
-<meta property="og:title" content="Nolvek | Websites, Ads & AI Automation — Atlanta Local Businesses">
+<meta property="og:title" content="Nolvek | Websites, Ads & AI for Atlanta Businesses">
 <meta property="og:description" content="Nolvek helps Atlanta local businesses get found online. Websites from $199, Google & Meta ads, AI lead automation, and custom software. Based in Atlanta, GA.">
 <meta property="og:image" content="https://nolvek.online/og-image.png">
 <meta property="og:image:type" content="image/png">
@@ -34,7 +34,7 @@
 <meta property="og:image:alt" content="Nolvek — Your Competition Is Online. Are You Winning?">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Nolvek | Websites, Ads & AI Automation — Atlanta Local Businesses">
+<meta name="twitter:title" content="Nolvek | Websites, Ads & AI for Atlanta Businesses">
 <meta name="twitter:description" content="Nolvek helps Atlanta local businesses get found online. Websites from $199, Google & Meta ads, AI lead automation, and custom software.">
 <meta name="twitter:image" content="https://nolvek.online/og-image.png">
 <meta name="twitter:image:alt" content="Nolvek — Your Competition Is Online. Are You Winning?">
@@ -344,6 +344,17 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
 .section-note{font-size:.76rem;color:var(--muted);margin-top:.65rem;line-height:1.65;}
 .section-note strong{color:var(--muted2);}
 
+/* ── FAQ SECTION ── */
+.faq-grid{display:grid;gap:.75rem;margin-top:2.5rem;}
+.faq-item{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s;}
+.faq-item:hover{border-color:var(--border2);}
+.faq-q{width:100%;background:none;border:none;color:var(--text);font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;text-align:left;padding:1.25rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;line-height:1.4;}
+.faq-q .faq-icon{flex-shrink:0;width:20px;height:20px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.85rem;transition:transform .25s,border-color .25s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);border-color:var(--accent);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-item.open .faq-a{max-height:300px;}
+.faq-a p{padding:.25rem 1.5rem 1.25rem;font-size:.84rem;color:var(--muted2);line-height:1.85;margin:0;}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   nav{top:12px;padding:0 5px;height:46px;}
@@ -364,7 +375,7 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "LocalBusiness",
+      "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": "https://nolvek.online/#business",
       "name": "Nolvek",
       "description": "Nolvek builds websites, manages Google and Meta ad campaigns, deploys AI lead automation, and creates custom software for local businesses in Atlanta, GA.",
@@ -385,7 +396,18 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
       },
       "areaServed": [
         { "@type": "City", "name": "Atlanta", "sameAs": "https://www.wikidata.org/wiki/Q23556" },
-        { "@type": "State", "name": "Georgia" }
+        { "@type": "City", "name": "Buckhead" },
+        { "@type": "City", "name": "Midtown Atlanta" },
+        { "@type": "City", "name": "Sandy Springs" },
+        { "@type": "City", "name": "Marietta" },
+        { "@type": "City", "name": "Alpharetta" },
+        { "@type": "City", "name": "Decatur" },
+        { "@type": "City", "name": "Smyrna" },
+        { "@type": "City", "name": "Kennesaw" },
+        { "@type": "City", "name": "Roswell" },
+        { "@type": "City", "name": "Dunwoody" },
+        { "@type": "State", "name": "Georgia" },
+        { "@type": "Country", "name": "United States" }
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
@@ -454,7 +476,7 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
       "@type": "WebPage",
       "@id": "https://nolvek.online/#webpage",
       "url": "https://nolvek.online",
-      "name": "Nolvek | Websites, Ads & AI Automation — Atlanta Local Businesses",
+      "name": "Nolvek | Websites, Ads & AI for Atlanta Businesses",
       "isPartOf": { "@id": "https://nolvek.online/#website" },
       "about": { "@id": "https://nolvek.online/#business" },
       "description": "Nolvek helps Atlanta local businesses get found online and grow faster. Websites from $199, Google & Meta ad management, AI lead automation, and custom software.",
@@ -467,6 +489,117 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
       "speakable": {
         "@type": "SpeakableSpecification",
         "cssSelector": [".hero-sub", ".sec-sub"]
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://nolvek.online/#service-webdesign",
+      "name": "Website Design & Development",
+      "serviceType": "Web Design",
+      "provider": { "@id": "https://nolvek.online/#business" },
+      "areaServed": "United States",
+      "description": "Custom, mobile-responsive websites for small businesses. Includes Google Business Profile setup, on-page SEO, contact forms, and fast hosting. Starting at $199.",
+      "offers": { "@type": "Offer", "price": "199", "priceCurrency": "USD", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "199" } }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://nolvek.online/#service-ads",
+      "name": "Google Ads & Meta Ad Management",
+      "serviceType": "Digital Advertising",
+      "provider": { "@id": "https://nolvek.online/#business" },
+      "areaServed": "United States",
+      "description": "Managed Google Ads and Facebook/Instagram ad campaigns for local businesses. Campaign setup, daily optimization, and weekly reports. Packages from $397/month.",
+      "offers": { "@type": "Offer", "price": "397", "priceCurrency": "USD", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "397" } }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://nolvek.online/#service-ai",
+      "name": "AI Business Automation",
+      "serviceType": "Marketing Automation",
+      "provider": { "@id": "https://nolvek.online/#business" },
+      "areaServed": "United States",
+      "description": "AI-powered lead response, smart scheduling, follow-up sequences, and analytics — your business runs 24/7 without manual effort."
+    },
+    {
+      "@type": "Service",
+      "@id": "https://nolvek.online/#service-software",
+      "name": "Custom Software Development",
+      "serviceType": "Software Development",
+      "provider": { "@id": "https://nolvek.online/#business" },
+      "areaServed": "United States",
+      "description": "Custom-built web apps, dashboards, job management systems, client portals, and mobile tools tailored to your specific business workflows."
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does a website cost for a small business in Atlanta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our website packages start at $199 with a $20/month hosting fee. That includes a fully designed, mobile-responsive website, contact forms, on-page SEO, and Google Business Profile setup — everything a local business needs to get found online."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer web design services near me?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Nolvek is based in Atlanta, GA and works with businesses across the Atlanta metro area — including Sandy Springs, Marietta, Alpharetta, Decatur, and beyond — as well as clients nationwide. Everything is handled remotely, so location is never a barrier."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get my business found on Google in Atlanta?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "There are two main paths: organic search (SEO) and paid ads. We handle both. Every website we build includes on-page SEO and Google Business Profile setup so you start showing up in local search results. We also run Google Ads campaigns to put your business in front of buyers who are actively searching right now."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is included in your website packages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every site includes: a custom, mobile-responsive design; contact forms; on-page SEO optimization; Google Business Profile setup; fast hosting; and ongoing support. We build on a clean, lightweight stack — no bloated page builders — so your site loads fast and ranks well."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to build a website?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most small business websites are ready in 5–10 business days once we have your content and branding. More complex projects with custom functionality take 2–4 weeks. We move fast because we know your business can't afford to wait."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you run Google Ads for Atlanta businesses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. We manage Google Ads and Meta (Facebook/Instagram) ad campaigns for local businesses. Our ad management packages start at $397/month and include campaign setup, ad copywriting, daily optimization, and weekly performance reports."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is AI automation and does my business need it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI automation means your business automatically responds to leads, books appointments, and follows up with prospects — 24/7, without you lifting a finger. If you're missing calls or leads outside business hours, or spending too much time on repetitive follow-ups, AI automation pays for itself fast."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What industries do you work with?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We work with any local service business — roofing contractors, HVAC companies, restaurants, salons, real estate agents, law firms, medical practices, and more. If your customers are searching for you on Google, we can help them find you and convert."
       }
     }
   ]
@@ -507,7 +640,7 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
     <div>
       <div class="hero-eyebrow">
         <span class="hero-eyebrow-dot"></span>
-        Atlanta-based &nbsp;·&nbsp; Built for local business
+        Atlanta Web Design &nbsp;·&nbsp; Google Ads &nbsp;·&nbsp; AI Automation
       </div>
       <h1>Your business,<br>online &amp;<br><em>growing.</em></h1>
       <p class="hero-sub">Nolvek builds websites, runs your ads, automates lead capture with AI, and creates custom software — so you stop losing customers to competitors who showed up first.</p>
@@ -585,7 +718,8 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
       <div>
         <div class="section-tag"><span class="section-tag-num">01</span> &mdash; Web Development</div>
         <h2 class="sec-title">Your business needs<br>to be findable online.</h2>
-        <p class="sec-sub" style="margin-bottom:2rem;">Right now, when someone Googles "HVAC near me" or "best roofer in Atlanta" — if you don't have a website and a Google profile, they'll never find you. We fix that, fast.</p>
+        <p class="sec-sub" style="margin-bottom:.75rem;">Right now, when someone Googles "HVAC near me" or "best roofer in Atlanta" — if you don't have a website and a Google profile, they'll never find you. We fix that, fast.</p>
+        <p class="sec-sub" style="margin-bottom:2rem;">Based in Atlanta and serving businesses across Sandy Springs, Marietta, Alpharetta, Decatur, and <strong style="color:var(--text);">nationwide</strong> — we build websites that help local customers find you first.</p>
 
         <p style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.7rem;">What shows up on Google when customers search for you:</p>
         <div class="gbp-mock reveal">
@@ -898,6 +1032,103 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
 </section>
 
 <!-- ══════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════ -->
+<div class="divider"></div>
+<section class="section" id="faq">
+  <div class="inner">
+    <div class="section-header">
+      <div class="section-tag"><span class="section-tag-num">FAQ</span> &mdash; Common Questions</div>
+      <h2 class="sec-title">Questions we<br>hear all the time.</h2>
+      <p class="sec-sub">Straightforward answers about how we work, what things cost, and whether we're the right fit for your business.</p>
+    </div>
+    <div class="faq-grid">
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          How much does a website cost for a small business?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Our websites start at <strong>$199</strong> with a $20/month hosting fee. That includes a fully designed, mobile-responsive site, contact forms, on-page SEO, and Google Business Profile setup — everything you need to get found online from day one.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you offer web design services near me?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>We're based in Atlanta, GA and work with businesses across the metro area — Sandy Springs, Marietta, Alpharetta, Decatur, and beyond. We also work with clients <strong>nationwide</strong>. Everything is handled remotely, so location is never a barrier.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          How do I get my Atlanta business found on Google?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Two paths: organic search (SEO) and paid ads. Every site we build includes on-page SEO and Google Business Profile setup so you start ranking in local results. We also run Google Ads to put you in front of buyers who are searching <em>right now</em>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          How long does it take to build a website?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Most small business websites are ready in <strong>5–10 business days</strong> once we have your content and branding. More complex projects with custom functionality take 2–4 weeks. We move fast because your business can't afford to wait.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you run Google Ads for local businesses?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Yes. We manage Google Ads and Meta (Facebook/Instagram) campaigns. Packages start at <strong>$397/month</strong> and include campaign setup, ad copy, daily optimization, and weekly performance reports. No long-term contracts required.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What is AI automation and does my business need it?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>AI automation means your business automatically responds to leads, books appointments, and follows up with prospects — <strong>24/7, without you lifting a finger</strong>. If you're missing calls or spending hours on repetitive follow-ups, it pays for itself fast.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What industries do you work with?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Any local service business — roofing, HVAC, restaurants, salons, real estate, law firms, medical practices, and more. If your customers search for you on Google, we can help them find you and convert.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's included in your website packages?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a" role="region">
+          <p>Every site includes: custom mobile-responsive design, contact forms, on-page SEO, Google Business Profile setup, fast hosting, and ongoing support. We build on a clean, lightweight stack — no bloated page builders — so your site loads fast and ranks well.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
      CONTACT
 ══════════════════════════════════════════ -->
 <div class="cta-wrap" id="contact">
@@ -972,6 +1203,22 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ── FAQ ACCORDION ──
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
 
 // ── CONTACT FORM — FormSubmit AJAX ──
 document.getElementById('contactForm').addEventListener('submit', function(e) {
