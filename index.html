@@ -820,52 +820,78 @@ const music = document.getElementById('bgMusic');
 const musicBtn = document.getElementById('musicBtn');
 const musicIcon = document.getElementById('musicIcon');
 const musicLabel = document.getElementById('musicLabel');
-let musicStarted = false;
+let audioReady = false;
+let playQueued = false;
 
 function setPlaying(playing) {
-  if (playing) {
-    musicIcon.textContent = '♪';
-    musicLabel.textContent = 'Erika';
-    musicBtn.classList.add('playing');
-  } else {
-    musicIcon.textContent = '♪';
-    musicLabel.textContent = 'Play';
-    musicBtn.classList.remove('playing');
-  }
+  musicIcon.textContent = '♪';
+  musicLabel.textContent = playing ? 'Erika' : 'Play';
+  musicBtn.classList.toggle('playing', playing);
+}
+
+function setError() {
+  musicLabel.textContent = 'Unavailable';
+  musicBtn.style.opacity = '0.45';
+  musicBtn.disabled = true;
 }
 
 music.addEventListener('play', () => setPlaying(true));
 music.addEventListener('pause', () => setPlaying(false));
+music.addEventListener('error', setError);
+
+function tryPlay() {
+  if (!audioReady) { playQueued = true; return; }
+  music.play().catch(() => {});
+}
 
 musicBtn.addEventListener('click', function(e) {
   e.stopPropagation();
-  if (music.paused) {
-    music.play().catch(() => {});
-  } else {
-    music.pause();
-  }
+  if (music.paused) { tryPlay(); } else { music.pause(); }
 });
 
-// Attempt autoplay on first user interaction with the page
-function startOnInteraction() {
-  if (!musicStarted) {
-    musicStarted = true;
-    music.play().catch(() => {});
-    document.removeEventListener('click', startOnInteraction);
-    document.removeEventListener('touchstart', startOnInteraction);
-  }
-}
-document.addEventListener('click', startOnInteraction);
-document.addEventListener('touchstart', startOnInteraction);
+// Dynamically resolve the real MP3 filename from archive.org metadata
+// (runs in the user's browser, which can reach archive.org)
+const ARCHIVE_IDS = ['20200828-075015', 'k_20210314_20210314', 'erika_202007'];
 
-// Try immediate autoplay (works if browser allows it)
-music.play().then(() => { musicStarted = true; }).catch(() => {});
+async function resolveAudioSrc() {
+  for (const id of ARCHIVE_IDS) {
+    try {
+      const res = await fetch(`https://archive.org/metadata/${id}`);
+      if (!res.ok) continue;
+      const data = await res.json();
+      const files = data.files || [];
+      // Prefer 128k MP3 derived file, fallback to any MP3
+      const mp3 = files.find(f => /128kb\.mp3$/i.test(f.name))
+                || files.find(f => /\.mp3$/i.test(f.name));
+      if (mp3) {
+        music.src = `https://archive.org/download/${id}/${encodeURIComponent(mp3.name)}`;
+        audioReady = true;
+        if (playQueued) { playQueued = false; music.play().catch(() => {}); }
+        return;
+      }
+    } catch (e) { /* try next */ }
+  }
+  setError();
+}
+resolveAudioSrc();
+
+// Autoplay on first user interaction anywhere on the page
+let interactionFired = false;
+function onFirstInteraction() {
+  if (interactionFired) return;
+  interactionFired = true;
+  tryPlay();
+  document.removeEventListener('click', onFirstInteraction);
+  document.removeEventListener('touchstart', onFirstInteraction);
+  document.removeEventListener('keydown', onFirstInteraction);
+}
+document.addEventListener('click', onFirstInteraction);
+document.addEventListener('touchstart', onFirstInteraction, { passive: true });
+document.addEventListener('keydown', onFirstInteraction);
 </script>
 
-<!-- Background music: Erika by Major Hans Friess (archive.org) -->
-<audio id="bgMusic" loop preload="none">
-  <source src="https://archive.org/download/k_20210314_20210314/k_20210314_20210314.mp3" type="audio/mpeg">
-</audio>
+<!-- Background music: Erika by Major Hans Friess — src resolved dynamically -->
+<audio id="bgMusic" loop preload="none"></audio>
 
 <!-- Floating music pill -->
 <button id="musicBtn" aria-label="Toggle music" title="Erika — Major Hans Friess">
