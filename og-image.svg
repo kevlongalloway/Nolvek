@@ -1,25 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#08090c"/>
-      <stop offset="100%" stop-color="#0d0f14"/>
+      <stop offset="0%" stop-color="#09090b"/>
+      <stop offset="100%" stop-color="#111113"/>
     </linearGradient>
     <linearGradient id="logoG" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#00e5ff"/>
-      <stop offset="100%" stop-color="#7c3aed"/>
+      <stop offset="0%" stop-color="#a8ff3e"/>
+      <stop offset="100%" stop-color="#34d399"/>
     </linearGradient>
-    <linearGradient id="textG" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#00e5ff"/>
-      <stop offset="100%" stop-color="#a78bfa"/>
-    </linearGradient>
-    <radialGradient id="glowPurple" cx="50%" cy="100%" r="55%">
-      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.35"/>
-      <stop offset="60%" stop-color="#00e5ff" stop-opacity="0.08"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+    <radialGradient id="glowLime" cx="50%" cy="105%" r="60%">
+      <stop offset="0%" stop-color="#a8ff3e" stop-opacity="0.12"/>
+      <stop offset="50%" stop-color="#34d399" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#09090b" stop-opacity="0"/>
     </radialGradient>
-    <filter id="blur20">
-      <feGaussianBlur stdDeviation="20"/>
-    </filter>
+    <radialGradient id="glowCenter" cx="50%" cy="65%" r="40%">
+      <stop offset="0%" stop-color="#a8ff3e" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#09090b" stop-opacity="0"/>
+    </radialGradient>
     <clipPath id="bgClip">
       <rect width="1200" height="630"/>
     </clipPath>
@@ -28,71 +25,71 @@
   <!-- Background -->
   <rect width="1200" height="630" fill="url(#bg)"/>
 
-  <!-- Subtle dot grid -->
-  <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-    <circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.055)"/>
+  <!-- Dot grid -->
+  <pattern id="dots" x="0" y="0" width="36" height="36" patternUnits="userSpaceOnUse">
+    <circle cx="18" cy="18" r="1" fill="rgba(255,255,255,0.05)"/>
   </pattern>
   <rect width="1200" height="630" fill="url(#dots)"/>
 
-  <!-- Bottom glow -->
-  <ellipse cx="600" cy="720" rx="680" ry="380" fill="url(#glowPurple)" clip-path="url(#bgClip)"/>
+  <!-- Glows -->
+  <ellipse cx="600" cy="760" rx="720" ry="420" fill="url(#glowLime)" clip-path="url(#bgClip)"/>
+  <ellipse cx="600" cy="380" rx="500" ry="280" fill="url(#glowCenter)" clip-path="url(#bgClip)"/>
 
-  <!-- Top accent line -->
-  <rect x="60" y="0" width="120" height="3" rx="2" fill="url(#logoG)"/>
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#logoG)"/>
 
-  <!-- ── Logo mark (top-left) ── -->
-  <g transform="translate(60, 52)">
-    <!-- N icon background -->
-    <rect width="80" height="80" rx="16" fill="#12151c" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-    <!-- N left bar -->
-    <rect x="15" y="13" width="14" height="54" rx="2.5" fill="url(#logoG)"/>
-    <!-- N diagonal -->
-    <polygon points="29,13 43,13 49,67 35,67" fill="url(#logoG)"/>
-    <!-- N right bar -->
-    <rect x="49" y="13" width="14" height="54" rx="2.5" fill="url(#logoG)"/>
+  <!-- Logo mark -->
+  <g transform="translate(64, 48)">
+    <rect width="72" height="72" rx="14" fill="#1c1c1f" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <rect x="14" y="12" width="13" height="49" rx="2" fill="url(#logoG)"/>
+    <polygon points="27,12 40,12 46,61 33,61" fill="url(#logoG)"/>
+    <rect x="46" y="12" width="13" height="49" rx="2" fill="url(#logoG)"/>
   </g>
 
-  <!-- NOLVEK wordmark next to icon -->
-  <text x="158" y="107"
-    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
-    font-weight="900"
-    font-size="42"
-    letter-spacing="-1"
+  <!-- NOLVEK wordmark -->
+  <text x="152" y="98"
+    font-family="'Arial Black', Impact, 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900" font-size="38" letter-spacing="-1"
     fill="white">NOLV</text>
-  <text x="254" y="107"
-    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
-    font-weight="900"
-    font-size="42"
-    letter-spacing="-1"
+  <text x="243" y="98"
+    font-family="'Arial Black', Impact, 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900" font-size="38" letter-spacing="-1"
     fill="url(#logoG)">EK</text>
 
-  <!-- ── Main headline ── -->
-  <text x="600" y="290"
-    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
-    font-weight="900"
-    font-size="58"
-    fill="white"
-    text-anchor="middle"
-    letter-spacing="-1">Your Competition Is Online.</text>
-
-  <!-- ── Gradient sub-headline ── -->
-  <text x="600" y="388"
-    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
-    font-weight="900"
-    font-size="72"
-    fill="url(#textG)"
-    text-anchor="middle"
-    letter-spacing="-2">Are You Winning?</text>
-
-  <!-- ── Bottom tagline ── -->
-  <text x="600" y="560"
+  <!-- Atlanta badge -->
+  <rect x="64" y="118" width="148" height="26" rx="13"
+    fill="rgba(168,255,62,0.1)" stroke="rgba(168,255,62,0.25)" stroke-width="1"/>
+  <text x="138" y="136"
     font-family="Arial, Helvetica, sans-serif"
-    font-weight="400"
-    font-size="24"
-    fill="rgba(255,255,255,0.35)"
-    text-anchor="middle"
-    letter-spacing="2">NOLVEK.COM · ATLANTA, GA</text>
+    font-weight="600" font-size="13" fill="#a8ff3e"
+    text-anchor="middle" letter-spacing="1">ATLANTA, GA</text>
 
-  <!-- Bottom border accent -->
-  <rect x="0" y="626" width="1200" height="4" rx="0" fill="url(#logoG)"/>
+  <!-- Main headline -->
+  <text x="600" y="295"
+    font-family="'Arial Black', Impact, 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900" font-size="62" fill="white"
+    text-anchor="middle" letter-spacing="-1.5">Your Competition Is Online.</text>
+
+  <!-- Accent headline -->
+  <text x="600" y="388"
+    font-family="'Arial Black', Impact, 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900" font-size="76" fill="url(#logoG)"
+    text-anchor="middle" letter-spacing="-2">Are You Winning?</text>
+
+  <!-- Services strip -->
+  <text x="600" y="480"
+    font-family="Arial, Helvetica, sans-serif"
+    font-weight="400" font-size="22"
+    fill="rgba(255,255,255,0.4)"
+    text-anchor="middle" letter-spacing="1.5">Websites · Ads · AI Automation · Custom Software</text>
+
+  <!-- Domain -->
+  <text x="600" y="564"
+    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-weight="700" font-size="20"
+    fill="rgba(255,255,255,0.22)"
+    text-anchor="middle" letter-spacing="3">NOLVEK.ONLINE</text>
+
+  <!-- Bottom border -->
+  <rect x="0" y="627" width="1200" height="3" fill="url(#logoG)"/>
 </svg>

@@ -5,14 +5,14 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
   <url>
-    <loc>https://nolvek-dev.onrender.com/</loc>
+    <loc>https://nolvek.online/</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://nolvek-dev.onrender.com/privacy.html</loc>
+    <loc>https://nolvek.online/privacy.html</loc>
     <lastmod>2026-03-08</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
