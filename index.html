@@ -615,11 +615,18 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
 <nav>
   <a class="nav-logo" href="#">
     <svg width="30" height="30" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="ng" x1="38" y1="0" x2="162" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a8ff3e"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs>
-      <rect width="200" height="200" rx="42" fill="#111113"/>
-      <rect x="38" y="34" width="36" height="132" rx="6" fill="url(#ng)"/>
-      <polygon points="74,34 110,34 126,166 90,166" fill="url(#ng)"/>
-      <rect x="126" y="34" width="36" height="132" rx="6" fill="url(#ng)"/>
+      <defs>
+        <filter id="ng" x="-35%" y="-35%" width="170%" height="170%">
+          <feGaussianBlur stdDeviation="6" result="b1"/>
+          <feGaussianBlur stdDeviation="2.5" result="b2"/>
+          <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <g filter="url(#ng)" fill="#3dff3d">
+        <polygon points="60,34 77,34 69,174 52,174"/>
+        <polygon points="77,34 94,34 138,174 121,174"/>
+        <polygon points="129,34 146,34 138,174 121,174"/>
+      </g>
     </svg>
     <span class="logo-text">Nolv<span>ek</span></span>
   </a>
@@ -1162,11 +1169,18 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
 <footer>
   <a class="nav-logo" href="#">
     <svg width="28" height="28" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="fg" x1="38" y1="0" x2="162" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a8ff3e"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs>
-      <rect width="200" height="200" rx="42" fill="#111113"/>
-      <rect x="38" y="34" width="36" height="132" rx="6" fill="url(#fg)"/>
-      <polygon points="74,34 110,34 126,166 90,166" fill="url(#fg)"/>
-      <rect x="126" y="34" width="36" height="132" rx="6" fill="url(#fg)"/>
+      <defs>
+        <filter id="fg" x="-35%" y="-35%" width="170%" height="170%">
+          <feGaussianBlur stdDeviation="6" result="b1"/>
+          <feGaussianBlur stdDeviation="2.5" result="b2"/>
+          <feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <g filter="url(#fg)" fill="#3dff3d">
+        <polygon points="60,34 77,34 69,174 52,174"/>
+        <polygon points="77,34 94,34 138,174 121,174"/>
+        <polygon points="129,34 146,34 138,174 121,174"/>
+      </g>
     </svg>
     <span class="logo-text" style="font-size:1rem;">Nolv<span>ek</span></span>
   </a>
