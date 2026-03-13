@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
   <defs>
     <linearGradient id="g" x1="38" y1="0" x2="162" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#00e5ff"/>
-      <stop offset="100%" stop-color="#7c3aed"/>
+      <stop offset="0%" stop-color="#a8ff3e"/>
+      <stop offset="100%" stop-color="#34d399"/>
     </linearGradient>
   </defs>
-  <rect width="200" height="200" rx="42" fill="#0d0f14"/>
+  <rect width="200" height="200" rx="42" fill="#111113"/>
   <!-- N left bar -->
   <rect x="38" y="34" width="36" height="132" rx="6" fill="url(#g)"/>
-  <!-- N diagonal (parallelogram: top meets left bar right edge, bottom meets right bar left edge) -->
+  <!-- N diagonal -->
   <polygon points="74,34 110,34 126,166 90,166" fill="url(#g)"/>
   <!-- N right bar -->
   <rect x="126" y="34" width="36" height="132" rx="6" fill="url(#g)"/>
