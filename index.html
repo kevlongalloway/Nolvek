@@ -1069,11 +1069,11 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
     <div class="upcart-grid">
       <div>
         <div class="v-marker reveal"><span class="v-num">05</span> Product Spotlight <span class="v-trail"></span></div>
-        <h2 class="upcart-tagline reveal"><span class="by">Built by Nolvek</span>Upcart — your store, <span class="v-underline">selling on its own.</span></h2>
-        <p class="sec-sub reveal" style="margin-bottom:.5rem;">Upcart is Nolvek's done-for-you e-commerce product. We build your online store, wire up checkout, load your products, and keep it running — so you sell online without touching the tech.</p>
+        <h2 class="upcart-tagline reveal"><span class="by">Built by Nolvek</span>Upcart — your store, <span class="v-underline">built to scale.</span></h2>
+        <p class="sec-sub reveal" style="margin-bottom:.5rem;">Upcart is Nolvek's done-for-you e-commerce product. We build your online store, wire up secure checkout, load your products, and keep it running — so you sell online without touching the tech.</p>
         <div class="upcart-feat-grid">
           <div class="upcart-feat reveal ignite" style="--d:.05s"><span class="ig">✓</span><div><h4>Ready-to-Sell Storefront</h4><p>A clean, mobile-first shop that looks built for your brand from day one.</p></div></div>
-          <div class="upcart-feat reveal ignite" style="--d:.1s"><span class="ig">✓</span><div><h4>Built-in Checkout</h4><p>Fast, secure cart and checkout so customers buy in a couple of taps.</p></div></div>
+          <div class="upcart-feat reveal ignite" style="--d:.1s"><span class="ig">✓</span><div><h4>Secure Payments</h4><p>Built-in checkout with Stripe — payments processed and paid out straight to your bank.</p></div></div>
           <div class="upcart-feat reveal ignite" style="--d:.15s"><span class="ig">✓</span><div><h4>Product Management</h4><p>Add products, prices, photos, and stock from one simple dashboard.</p></div></div>
           <div class="upcart-feat reveal ignite" style="--d:.2s"><span class="ig">✓</span><div><h4>Admin Dashboard</h4><p>Track orders, customers, and revenue at a glance — no spreadsheets.</p></div></div>
           <div class="upcart-feat reveal ignite" style="--d:.25s"><span class="ig">✓</span><div><h4>Managed by Nolvek</h4><p>We handle setup, hosting, and updates. You handle the orders coming in.</p></div></div>
@@ -1216,18 +1216,26 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
     <div class="v-marker center reveal" style="justify-content:center;"><span class="v-trail"></span><span class="v-num">09</span> Get Started <span class="v-trail"></span></div>
     <h2 class="sec-title reveal">Let's get your business<br><span class="v-underline">growing online.</span></h2>
     <p class="sec-sub reveal" style="margin:0 auto 2.5rem;text-align:center;">Free consultation. No pressure, no jargon — just a clear plan for how to get you more customers. Tell us about your business and we'll be in touch within one business day.</p>
-    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true" class="reveal">
-      <input type="hidden" name="form-name" value="contact">
-      <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+    <form id="contactForm" class="reveal">
       <div class="form-grid">
-        <div class="fg"><label>Name</label><input type="text" name="name" required></div>
-        <div class="fg"><label>Email</label><input type="email" name="email" required></div>
-        <div class="fg"><label>Phone</label><input type="tel" name="phone"></div>
-        <div class="fg"><label>Business Name</label><input type="text" name="business"></div>
-        <div class="fg full"><label>What do you need help with?</label><select name="service"><option>A new website</option><option>Google / Meta ads</option><option>AI automation</option><option>Custom software</option><option>Upcart online store</option><option>Not sure yet — let's talk</option></select></div>
-        <div class="fg full"><label>Tell us about your business</label><textarea name="message"></textarea></div>
+        <div class="fg"><label>First Name</label><input type="text" name="first_name" placeholder="John" required></div>
+        <div class="fg"><label>Last Name</label><input type="text" name="last_name" placeholder="Smith" required></div>
+        <div class="fg"><label>Email</label><input type="email" name="email" placeholder="john@yourbusiness.com" required></div>
+        <div class="fg"><label>Phone</label><input type="tel" name="phone" placeholder="(404) 000-0000"></div>
+        <div class="fg full"><label>I'm Interested In</label>
+          <select name="service">
+            <option value="">Select a service...</option>
+            <option>Website + Google Business Profile ($199)</option>
+            <option>Ad Management</option>
+            <option>AI Automation</option>
+            <option>Custom Software — Free Consultation</option>
+            <option>Upcart Online Store</option>
+            <option>Multiple Services / Not Sure Yet</option>
+          </select>
+        </div>
+        <div class="fg full"><label>Tell Us About Your Business</label><textarea name="message" placeholder="What does your business do? What's your biggest challenge right now? (Even just a sentence is fine)"></textarea></div>
       </div>
-      <button type="submit" class="submit-btn">Get My Free Consultation &rarr;</button>
+      <button type="submit" class="submit-btn" id="submitBtn">Get My Free Consultation &rarr;</button>
     </form>
   </div>
 </section>
@@ -1366,6 +1374,45 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
   document.querySelectorAll('.faq-q').forEach(function(q){
     q.addEventListener('click', function(){ q.closest('.faq-item').classList.toggle('open'); });
   });
+
+  /* ── Contact form — FormSubmit AJAX (same integration as live site) ── */
+  var cf = document.getElementById('contactForm');
+  if(cf){
+    cf.addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = document.getElementById('submitBtn');
+      var form = this;
+      var data = {
+        first_name: form.first_name.value,
+        last_name: form.last_name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        service: form.service.value,
+        message: form.message.value,
+        _subject: 'New Nolvek Inquiry from ' + form.first_name.value + ' ' + form.last_name.value,
+        _template: 'table',
+        _captcha: 'false'
+      };
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      fetch('https://formsubmit.co/ajax/kevlongalloway1999@icloud.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(){
+        btn.textContent = "✓ Sent! We'll be in touch within 24 hours.";
+        btn.style.background = '#22c55e'; btn.style.color = '#fff';
+        form.reset();
+      })
+      .catch(function(){
+        btn.textContent = 'Something went wrong — please try again.';
+        btn.style.background = '#ef4444'; btn.style.color = '#fff';
+        btn.disabled = false;
+      });
+    });
+  }
 
   /* ── Mobile menu (momentum slide-in) ── */
   var burger = document.getElementById('burger');
