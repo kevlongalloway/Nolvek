@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nolvek | Websites, Ads & AI for Atlanta Businesses</title>
+<title>Nolvek | Websites, AI & Software for Atlanta Businesses</title>
 <link rel="canonical" href="https://nolvek.online/">
 
 <!-- ===== FONTS (locked to live brand: Syne display / Inter body) ===== -->
@@ -17,8 +17,8 @@
 <link rel="apple-touch-icon" href="/favicon.png">
 
 <!-- ===== SEO ===== -->
-<meta name="description" content="Nolvek helps Atlanta local businesses get found online and grow faster. Websites from $199, Google & Meta ad management, AI lead automation, and custom software. Based in Atlanta, GA.">
-<meta name="keywords" content="Atlanta web design, local business website Atlanta, Google Ads management Atlanta, AI automation small business, custom software Atlanta, Google Business Profile setup, digital marketing Atlanta, Upcart ecommerce">
+<meta name="description" content="Nolvek builds high-converting websites, optimizes your Google Business Profile, deploys AI automation, and creates custom software for Atlanta businesses. Plus self-serve products like Upcart managed commerce. Websites from $199.">
+<meta name="keywords" content="Atlanta web design, Google Business Profile optimization Atlanta, AI automation small business, custom software Atlanta, Upcart ecommerce, managed online store Atlanta">
 <meta name="author" content="Nolvek">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="geo.region" content="US-GA">
@@ -28,8 +28,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nolvek.online">
 <meta property="og:site_name" content="Nolvek">
-<meta property="og:title" content="Nolvek | Websites, Ads & AI for Atlanta Businesses">
-<meta property="og:description" content="Nolvek helps Atlanta local businesses get found online. Websites from $199, Google & Meta ads, AI lead automation, and custom software. Based in Atlanta, GA.">
+<meta property="og:title" content="Nolvek | Websites, AI & Software for Atlanta Businesses">
+<meta property="og:description" content="Websites from $199, Google Business Profile optimization, AI automation, custom software, and self-serve products like Upcart. Based in Atlanta, GA.">
 <meta property="og:image" content="https://nolvek.online/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
@@ -37,8 +37,8 @@
 <meta property="og:image:alt" content="Nolvek — Your Competition Is Online. Are You Winning?">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Nolvek | Websites, Ads & AI for Atlanta Businesses">
-<meta name="twitter:description" content="Nolvek helps Atlanta local businesses get found online. Websites from $199, Google & Meta ads, AI lead automation, and custom software.">
+<meta name="twitter:title" content="Nolvek | Websites, AI & Software for Atlanta Businesses">
+<meta name="twitter:description" content="Websites from $199, Google Business Profile optimization, AI automation, custom software, and self-serve products like Upcart.">
 <meta name="twitter:image" content="https://nolvek.online/og-image.png">
 <meta name="twitter:image:alt" content="Nolvek — Your Competition Is Online. Are You Winning?">
 
@@ -54,11 +54,20 @@
       "image": "https://nolvek.online/og-image.png",
       "url": "https://nolvek.online",
       "email": "kevlongalloway1999@icloud.com",
-      "description": "Atlanta digital agency offering high-converting websites, Google & Meta ad management, AI automation, and custom software.",
+      "description": "Atlanta digital agency offering high-converting websites, Google Business Profile optimization, AI automation, and custom software, plus self-serve products like Upcart managed commerce.",
       "areaServed": "Atlanta, GA",
       "address": {"@type": "PostalAddress", "addressLocality": "Atlanta", "addressRegion": "GA", "addressCountry": "US"},
       "priceRange": "$$",
-      "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "150"}
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services",
+        "itemListElement": [
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Website Design & Development", "serviceType": "Web Design"}, "price": "199", "priceCurrency": "USD"},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Google Business Profile Optimization", "serviceType": "Local SEO"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AI Business Automation", "serviceType": "Marketing Automation"}},
+          {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Custom Software Development", "serviceType": "Software Development"}}
+        ]
+      }
     },
     {
       "@type": "Product",
@@ -66,7 +75,7 @@
       "name": "Upcart",
       "brand": {"@type": "Brand", "name": "Nolvek"},
       "url": "https://upcart.online",
-      "description": "Upcart is the all-in-one managed e-commerce platform built and managed by Nolvek — fast hosting, conversion-optimized checkout, real-time inventory, and built-in marketing tools.",
+      "description": "Upcart is the self-serve, fully managed e-commerce platform by Nolvek — fast hosting, conversion-optimized checkout, real-time inventory, and built-in marketing tools.",
       "category": "E-commerce platform"
     }
   ]
@@ -77,16 +86,15 @@
 /* ============================================================
    NOLVEK — VELOCITY DESIGN SYSTEM
    ------------------------------------------------------------
-   Brand is LOCKED to live extraction (nolvek.online):
-     · Accent  : Electric Lime  #a8ff3e
-     · Display : Syne 700/800   ·  Body: Inter 300–600
-     · Surfaces: near-black zinc ramp #09090b → #27272a
-   Velocity layer (NEW): draw-on-scroll trails, thrust hovers,
+   Brand LOCKED to live extraction (nolvek.online):
+     · Accent  : Electric Lime  #a8ff3e  (gradient -> #34d399)
+     · Display : Syne 700/800   ·  Body: Inter 300-600
+     · Surfaces: near-black zinc ramp #09090b -> #27272a
+   Velocity layer adds draw-on-scroll trails, thrust hovers,
    3D tilt, magnetic CTAs, custom cursor, momentum scroll —
    every glow/trail derives ONLY from --accent.
 ============================================================ */
 :root{
-  /* —— locked brand tokens —— */
   --bg:    #09090b;
   --bg2:   #111113;
   --bg3:   #1c1c1f;
@@ -94,6 +102,7 @@
   --border:  rgba(255,255,255,0.07);
   --border2: rgba(255,255,255,0.13);
   --accent:  #a8ff3e;
+  --accent2: #34d399;
   --accent-rgb: 168,255,62;
   --accent-dim: rgba(168,255,62,0.07);
   --accent-border: rgba(168,255,62,0.2);
@@ -103,7 +112,6 @@
   --muted:  #71717a;
   --muted2: #a1a1aa;
   --r: 8px;
-  /* —— velocity layer —— */
   --glow: 0 0 40px rgba(var(--accent-rgb),0.25);
   --ease: cubic-bezier(0.16,1,0.3,1);
 }
@@ -113,27 +121,22 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{
   background:var(--bg);color:var(--text);
   font-family:'Inter',sans-serif;line-height:1.6;
-  overflow-x:hidden;font-size:17px;            /* +~13% base for readability (brand family preserved) */
+  overflow-x:hidden;font-size:17px;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
 }
 ::selection{background:var(--accent);color:#000;}
 a{color:inherit;}
 img{max-width:100%;display:block;}
 
-/* —— smooth-scroll momentum wrapper —— */
-#smooth-wrap{will-change:transform;}
-
-/* ============================================================
-   CUSTOM CURSOR (desktop only)
-============================================================ */
+/* ── CUSTOM CURSOR (desktop only) ── */
 .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:10000;mix-blend-mode:difference;}
 .cursor-dot{width:7px;height:7px;background:var(--accent);transform:translate(-50%,-50%);}
 .cursor-ring{width:34px;height:34px;border:1.5px solid rgba(var(--accent-rgb),0.55);transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease),background .25s,border-color .25s;}
 .cursor-ring.hot{width:60px;height:60px;background:rgba(var(--accent-rgb),0.08);border-color:transparent;}
 @media (hover:none),(max-width:900px){.cursor-dot,.cursor-ring{display:none;}}
 
-/* —— scroll progress velocity line —— */
-#scroll-line{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:9999;width:0%;will-change:width;box-shadow:0 0 12px rgba(var(--accent-rgb),0.6);}
+/* ── scroll progress velocity line ── */
+#scroll-line{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:9999;width:0%;will-change:width;box-shadow:0 0 12px rgba(var(--accent-rgb),0.6);}
 
 /* ============================================================
    FLOATING PILL NAV
@@ -155,7 +158,6 @@ nav.scrolled{box-shadow:0 6px 34px rgba(0,0,0,.55),0 0 0 1px rgba(var(--accent-r
 .nav-links{display:flex;align-items:center;gap:1px;list-style:none;}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:500;padding:7px 13px;border-radius:100px;transition:color .15s,background .15s;white-space:nowrap;}
 .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06);}
-/* Upcart highlighted pill — light pulse */
 .nav-upcart{color:var(--accent)!important;border:1px solid var(--accent-border);position:relative;animation:upcartPulse 2.8s var(--ease) infinite;}
 @keyframes upcartPulse{0%,100%{box-shadow:0 0 0 0 rgba(var(--accent-rgb),0.0);}50%{box-shadow:0 0 0 4px rgba(var(--accent-rgb),0.10);}}
 .nav-cta{background:var(--accent)!important;color:#000!important;font-weight:600!important;margin-left:3px;}
@@ -166,27 +168,24 @@ nav.scrolled{box-shadow:0 6px 34px rgba(0,0,0,.55),0 0 0 1px rgba(var(--accent-r
 .nav-burger.active span:nth-child(2){opacity:0;}
 .nav-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
-/* —— mobile momentum drawer —— */
 .mobile-drawer{position:fixed;inset:0;z-index:790;background:rgba(9,9,11,.96);backdrop-filter:blur(20px);display:flex;flex-direction:column;justify-content:center;padding:0 9%;gap:.3rem;transform:translateX(100%);transition:transform .55s var(--ease);visibility:hidden;}
 .mobile-drawer.open{transform:translateX(0);visibility:visible;}
-.mobile-drawer a{font-family:'Syne',sans-serif;font-weight:700;font-size:2.2rem;letter-spacing:-.03em;color:var(--text);text-decoration:none;padding:.5rem 0;border-bottom:1px solid var(--border);opacity:0;transform:translateX(30px);}
+.mobile-drawer a{font-family:'Syne',sans-serif;font-weight:700;font-size:2.1rem;letter-spacing:-.03em;color:var(--text);text-decoration:none;padding:.5rem 0;border-bottom:1px solid var(--border);opacity:0;transform:translateX(30px);}
 .mobile-drawer.open a{animation:drawerIn .5s var(--ease) forwards;}
 .mobile-drawer.open a:nth-child(1){animation-delay:.08s;}
 .mobile-drawer.open a:nth-child(2){animation-delay:.14s;}
 .mobile-drawer.open a:nth-child(3){animation-delay:.20s;}
 .mobile-drawer.open a:nth-child(4){animation-delay:.26s;}
 .mobile-drawer.open a:nth-child(5){animation-delay:.32s;}
-.mobile-drawer.open a:nth-child(6){animation-delay:.38s;}
 .mobile-drawer a span{color:var(--accent);}
 @keyframes drawerIn{to{opacity:1;transform:translateX(0);}}
 
 /* ============================================================
-   HERO
+   HERO  (overflow-safe asymmetric grid)
 ============================================================ */
 .hero{min-height:100vh;display:flex;align-items:center;padding:140px 5% 90px;position:relative;overflow:hidden;}
-.hero-dot-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.055) 1px,transparent 1px);background-size:30px 30px;pointer-events:none;mask-image:radial-gradient(80% 80% at 50% 40%,#000,transparent);}
+.hero-dot-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.055) 1px,transparent 1px);background-size:30px 30px;pointer-events:none;mask-image:radial-gradient(80% 80% at 50% 40%,#000,transparent);-webkit-mask-image:radial-gradient(80% 80% at 50% 40%,#000,transparent);}
 .hero-spotlight{position:absolute;inset:0;pointer-events:none;background:radial-gradient(700px circle at var(--mx,55%) var(--my,45%),rgba(var(--accent-rgb),0.05),transparent 60%);transition:background .4s ease;}
-/* velocity thrust streaks — move forward on load + parallax */
 .thrust-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
 .streak{position:absolute;height:1px;left:-30%;width:40%;background:linear-gradient(90deg,transparent,rgba(var(--accent-rgb),0.55),transparent);opacity:0;animation:streak 6s linear infinite;}
 .streak:nth-child(1){top:22%;animation-delay:0s;}
@@ -194,20 +193,22 @@ nav.scrolled{box-shadow:0 6px 34px rgba(0,0,0,.55),0 0 0 1px rgba(var(--accent-r
 .streak:nth-child(3){top:71%;width:32%;animation-delay:3.1s;}
 .streak:nth-child(4){top:86%;width:48%;animation-delay:4.4s;}
 @keyframes streak{0%{transform:translateX(0);opacity:0;}10%{opacity:.7;}90%{opacity:.7;}100%{transform:translateX(330%);opacity:0;}}
-.hero-inner{display:grid;grid-template-columns:55% 1fr;gap:4rem;align-items:center;width:100%;max-width:1240px;margin:0 auto;position:relative;z-index:2;}
+.hero-inner{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:3.5rem;align-items:center;width:100%;max-width:1240px;margin:0 auto;position:relative;z-index:2;}
+.hero-copy,.hero-visual{min-width:0;}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:600;color:var(--muted);margin-bottom:1.6rem;letter-spacing:.12em;text-transform:uppercase;}
 .hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0;box-shadow:0 0 10px var(--accent);}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,6vw,5.6rem);line-height:.98;letter-spacing:-.05em;margin-bottom:1.6rem;}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.7rem,5.2vw,5rem);line-height:1.0;letter-spacing:-.045em;margin-bottom:1.6rem;overflow-wrap:break-word;}
 h1 em{font-style:normal;color:var(--accent);position:relative;display:inline-block;}
-/* velocity underline that draws itself */
 h1 em::after{content:'';position:absolute;left:0;bottom:-.06em;height:.07em;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;border-radius:4px;box-shadow:0 0 18px rgba(var(--accent-rgb),0.5);animation:drawLine 1s var(--ease) forwards .85s;}
 @keyframes drawLine{to{transform:scaleX(1);}}
-.hero-sub{font-size:1.08rem;color:var(--muted2);max-width:470px;margin-bottom:2.5rem;font-weight:400;line-height:1.8;}
+.hero-sub{font-size:1.06rem;color:var(--muted2);max-width:480px;margin-bottom:2.4rem;font-weight:400;line-height:1.78;}
 .hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;}
-.hero-meta{display:flex;gap:2.5rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);}
-.hero-meta-num{font-family:'Syne',sans-serif;font-weight:700;font-size:1.4rem;color:var(--text);display:block;letter-spacing:-.03em;}
-.hero-meta-lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;}
+/* honest capability chips (no fabricated metrics) */
+.hero-chips{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:2.6rem;padding-top:1.8rem;border-top:1px solid var(--border);}
+.hero-chip{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--muted2);border:1px solid var(--border2);border-radius:100px;padding:7px 13px;}
+.hero-chip b{color:var(--text);font-weight:600;}
+.hero-chip i{width:5px;height:5px;border-radius:50%;background:var(--accent);font-style:normal;flex-shrink:0;}
 
 /* ============================================================
    BUTTONS — thrust glow + magnetic
@@ -216,9 +217,10 @@ h1 em::after{content:'';position:absolute;left:0;bottom:-.06em;height:.07em;widt
 .btn-p:hover{background:#fff;box-shadow:0 6px 28px rgba(var(--accent-rgb),.35);transform:translateY(-2px) scale(1.03);}
 .btn-g{background:transparent;color:var(--muted2);font-family:'Inter',sans-serif;font-weight:500;font-size:.92rem;padding:13px 24px;border-radius:var(--r);border:1px solid var(--border2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:all .2s var(--ease);will-change:transform;}
 .btn-g:hover{color:var(--text);border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.04);transform:translateY(-2px);}
+.btn-p[aria-disabled="true"],.btn-g[aria-disabled="true"]{opacity:.55;pointer-events:none;}
 
 /* ============================================================
-   BROWSER MOCK (3D tilt)
+   BROWSER MOCK (3D tilt) — hero
 ============================================================ */
 .hero-visual{perspective:1200px;}
 .browser-mock{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.04);animation:floatUp .9s var(--ease) both .2s;opacity:0;transform-style:preserve-3d;transition:transform .2s ease;will-change:transform;}
@@ -227,14 +229,14 @@ h1 em::after{content:'';position:absolute;left:0;bottom:-.06em;height:.07em;widt
 .b-dots{display:flex;gap:5px;}
 .b-dot{width:10px;height:10px;border-radius:50%;}
 .b-dot:nth-child(1){background:#ff5f57;}.b-dot:nth-child(2){background:#febc2e;}.b-dot:nth-child(3){background:#28c840;}
-.b-url{flex:1;background:rgba(255,255,255,.05);border-radius:4px;padding:5px 10px;font-size:.74rem;color:var(--muted);}
+.b-url{flex:1;min-width:0;background:rgba(255,255,255,.05);border-radius:4px;padding:5px 10px;font-size:.74rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .mock-site{padding:18px;}
 .mock-hero-band{background:linear-gradient(135deg,#0f1621,#1a2035);border-radius:6px;padding:18px;margin-bottom:10px;position:relative;overflow:hidden;}
 .mock-hero-band::before{content:'';position:absolute;top:-30px;right:-20px;width:100px;height:100px;background:radial-gradient(circle,rgba(var(--accent-rgb),.14),transparent 70%);}
 .mock-biz-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:2px;}
-.mock-tagline{font-size:.72rem;color:var(--muted2);margin-bottom:10px;}
+.mock-tagline{font-size:.72rem;color:var(--muted2);margin-bottom:12px;}
 .mock-cta-row{display:flex;gap:6px;align-items:center;}
-.mock-btn{font-size:.64rem;padding:5px 11px;border-radius:4px;border:none;cursor:default;}
+.mock-btn{font-size:.64rem;padding:5px 11px;border-radius:4px;border:none;cursor:default;line-height:1.2;}
 .mock-btn.primary{background:var(--accent);color:#000;font-weight:600;}
 .mock-btn.sec{background:transparent;color:var(--muted2);border:1px solid var(--border2);}
 .mock-services-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px;}
@@ -246,7 +248,7 @@ h1 em::after{content:'';position:absolute;left:0;bottom:-.06em;height:.07em;widt
 .mock-badge{font-size:.6rem;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border);padding:3px 8px;border-radius:100px;}
 
 /* ============================================================
-   TICKER / VELOCITY MARQUEE
+   TICKER
 ============================================================ */
 .ticker-wrap{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:15px 0;overflow:hidden;}
 .ticker-track{display:flex;animation:ticker 30s linear infinite;width:max-content;}
@@ -262,62 +264,103 @@ h1 em::after{content:'';position:absolute;left:0;bottom:-.06em;height:.07em;widt
 ============================================================ */
 section{position:relative;}
 .sec{padding:120px 5%;max-width:1240px;margin:0 auto;}
-.sec-head{margin-bottom:4rem;max-width:720px;}
-/* numbered velocity marker w/ draw-on-scroll trail */
+.sec-head{margin-bottom:3.5rem;max-width:760px;}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.74rem;font-weight:600;color:var(--accent);margin-bottom:1.2rem;letter-spacing:.14em;text-transform:uppercase;}
 .eyebrow::after{content:'';width:0;height:1px;background:linear-gradient(90deg,var(--accent),transparent);transition:width 1s var(--ease) .15s;}
 .reveal.in .eyebrow::after{width:90px;}
-h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.4rem);line-height:1.06;letter-spacing:-.04em;margin-bottom:1.2rem;}
-.sec-sub{font-size:1.08rem;color:var(--muted2);line-height:1.8;font-weight:400;}
+h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.3rem);line-height:1.06;letter-spacing:-.04em;margin-bottom:1.2rem;}
+.sec-sub{font-size:1.06rem;color:var(--muted2);line-height:1.78;font-weight:400;}
 
-/* —— scroll reveal: fade + upward slide (velocity entry) —— */
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s var(--ease),transform .7s var(--ease);will-change:transform,opacity;}
 .reveal.in{opacity:1;transform:none;}
-.reveal.d1{transition-delay:.08s;}.reveal.d2{transition-delay:.16s;}.reveal.d3{transition-delay:.24s;}.reveal.d4{transition-delay:.32s;}
 
 /* ============================================================
-   SERVICES — ASYMMETRIC BENTO + thrust hover
+   SERVICES — done-for-you (asymmetric bento)
 ============================================================ */
-.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
 .svc{
   border:1px solid var(--border);border-radius:var(--r);padding:30px;
   background:var(--bg2);position:relative;overflow:hidden;
   transition:border-color .25s,transform .35s var(--ease),box-shadow .35s;
-  min-height:240px;display:flex;flex-direction:column;
+  min-height:210px;display:flex;flex-direction:column;
 }
 .svc:hover{border-color:var(--accent-border);transform:translateY(-5px);box-shadow:0 18px 40px rgba(0,0,0,.4);}
-/* velocity trail across top on hover */
 .svc::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s;}
 .svc:hover::after{opacity:.6;}
-.svc-num{font-family:'Syne',sans-serif;font-size:.72rem;color:var(--muted);font-weight:600;margin-bottom:auto;letter-spacing:.1em;}
+.svc-num{font-family:'Syne',sans-serif;font-size:.72rem;color:var(--muted);font-weight:600;letter-spacing:.1em;position:absolute;top:30px;right:30px;}
 .svc-icon-wrap{width:46px;height:46px;border-radius:8px;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:1.3rem;transition:transform .35s var(--ease);}
 .svc:hover .svc-icon-wrap{transform:scale(1.08) rotate(-4deg);}
 .svc h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.22rem;margin-bottom:8px;letter-spacing:-.02em;}
-.svc p{font-size:.95rem;color:var(--muted);line-height:1.7;}
-.svc-tag{position:absolute;top:18px;right:18px;font-size:.62rem;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border);padding:4px 10px;border-radius:100px;font-weight:600;}
-.svc.tall{grid-row:span 2;}
-/* Upcart spotlight card */
-.svc.spotlight{grid-column:span 2;flex-direction:row;align-items:center;gap:30px;background:linear-gradient(120deg,var(--bg2),rgba(var(--accent-rgb),0.035));}
-.svc.spotlight .svc-body{flex:1;}
-.spot-mini{flex:0 0 200px;border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--bg3);transition:transform .4s var(--ease);}
-.svc.spotlight:hover .spot-mini{transform:scale(1.05);}
-.spot-mini-bar{background:var(--bg4);padding:6px 8px;display:flex;gap:4px;}
-.spot-mini-bar i{width:6px;height:6px;border-radius:50%;background:var(--muted);}
-.spot-mini-body{padding:12px;}
-.spot-prod{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;}
-.spot-prod div{background:var(--bg4);border-radius:4px;height:34px;position:relative;overflow:hidden;}
-.spot-prod div::after{content:'';position:absolute;bottom:4px;left:4px;right:4px;height:4px;background:var(--accent-dim);border-radius:2px;}
-.spot-buy{background:var(--accent);color:#000;font-size:.6rem;font-weight:700;text-align:center;padding:5px;border-radius:4px;}
+.svc p{font-size:.96rem;color:var(--muted);line-height:1.7;}
+
+/* ── AI automation phone demo (restored) ── */
+.ai-demo{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:3rem;align-items:center;margin-top:3rem;border:1px solid var(--border);border-radius:14px;background:var(--bg2);padding:36px;}
+.ai-demo-copy h3{font-family:'Syne';font-weight:800;font-size:clamp(1.5rem,2.4vw,2rem);letter-spacing:-.03em;margin-bottom:.8rem;}
+.ai-demo-copy p{color:var(--muted2);font-size:1rem;line-height:1.75;margin-bottom:1.4rem;max-width:440px;}
+.ai-points{list-style:none;display:grid;gap:.7rem;}
+.ai-points li{font-size:.93rem;color:var(--muted2);display:flex;gap:10px;align-items:flex-start;}
+.ai-points li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;}
+.phone-wrap{justify-self:center;perspective:1100px;}
+.phone{width:280px;background:var(--bg4);border:2px solid var(--border2);border-radius:38px;padding:11px;box-shadow:0 40px 80px rgba(0,0,0,.6);transform-style:preserve-3d;transition:transform .2s ease;}
+.phone-notch{width:78px;height:18px;background:var(--bg4);border-radius:0 0 14px 14px;margin:0 auto 8px;border-bottom:2px solid var(--border);display:flex;align-items:center;justify-content:center;}
+.phone-cam{width:7px;height:7px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);}
+.phone-screen{background:var(--bg3);border-radius:26px;overflow:hidden;height:520px;display:flex;flex-direction:column;}
+.phone-status{background:var(--bg4);padding:6px 16px;display:flex;justify-content:space-between;align-items:center;font-size:.7rem;font-weight:600;color:var(--muted2);}
+.chat-header{background:var(--bg4);padding:10px 14px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border);}
+.chat-avatar{width:30px;height:30px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#000;flex-shrink:0;}
+.chat-agent-name{font-size:.8rem;font-weight:600;display:block;}
+.chat-agent-sub{font-size:.64rem;color:var(--green);}
+.chat-body{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
+.bubble{max-width:86%;border-radius:14px;padding:8px 11px;font-size:.78rem;line-height:1.45;animation:bubbleIn .35s var(--ease) both;}
+.bubble.bot{background:var(--bg4);color:var(--text);border-radius:4px 14px 14px 14px;align-self:flex-start;}
+.bubble.user{background:var(--accent);color:#000;font-weight:500;border-radius:14px 4px 14px 14px;align-self:flex-end;}
+.bubble-time{font-size:.58rem;color:var(--muted);margin-top:3px;}
+.bubble.user .bubble-time{color:rgba(0,0,0,.5);}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+.typing-dots{display:flex;gap:3px;align-items:center;padding:3px 2px;}
+.typing-dot{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:typingBounce 1.2s infinite;}
+.typing-dot:nth-child(2){animation-delay:.2s;}
+.typing-dot:nth-child(3){animation-delay:.4s;}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-5px);}}
+.chat-quick{padding:8px 10px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--border);}
+.qr{background:var(--accent-dim);border:1px solid var(--accent-border);color:var(--accent);font-size:.66rem;padding:5px 9px;border-radius:100px;white-space:nowrap;}
+
+/* ============================================================
+   PRODUCTS — self-serve suite
+============================================================ */
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.prod-card{
+  border:1px solid var(--border);border-radius:12px;padding:28px;background:var(--bg2);
+  position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:300px;
+  transition:border-color .25s,transform .35s var(--ease),box-shadow .35s;
+}
+.prod-card:hover{transform:translateY(-5px);box-shadow:0 18px 44px rgba(0,0,0,.42);}
+.prod-card.live{border-color:var(--accent-border);background:linear-gradient(160deg,var(--bg2),rgba(var(--accent-rgb),0.035));}
+.prod-card.live:hover{border-color:var(--accent);}
+.prod-card.soon{opacity:.96;}
+.prod-card.soon::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent,transparent 11px,rgba(255,255,255,.012) 11px,rgba(255,255,255,.012) 22px);pointer-events:none;}
+.prod-status{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font-size:.64rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:100px;margin-bottom:18px;}
+.prod-status.s-live{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border);}
+.prod-status.s-soon{background:rgba(255,255,255,.04);color:var(--muted2);border:1px solid var(--border2);}
+.prod-status .ld{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s infinite;}
+.prod-card h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-.03em;margin-bottom:8px;}
+.prod-card .prod-kicker{font-size:.78rem;color:var(--accent);font-weight:600;margin-bottom:14px;}
+.prod-card p{font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:18px;}
+.prod-feats{list-style:none;display:grid;gap:.6rem;margin-bottom:22px;}
+.prod-feats li{font-size:.88rem;color:var(--muted2);display:flex;gap:9px;align-items:flex-start;}
+.prod-feats li::before{content:'›';color:var(--accent);font-weight:700;flex-shrink:0;}
+.prod-card .prod-cta{margin-top:auto;}
+.prod-card .prod-cta a,.prod-card .prod-cta button{width:100%;justify-content:center;}
 
 /* ============================================================
    UPCART VELOCITY SHOWCASE — full-bleed thrust band
 ============================================================ */
 .upcart-band{position:relative;margin-top:3rem;padding:80px 5%;background:linear-gradient(180deg,var(--bg2),var(--bg));border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;}
 .upcart-band::before{content:'';position:absolute;top:-120px;right:-80px;width:520px;height:520px;background:radial-gradient(circle,rgba(var(--accent-rgb),.10),transparent 65%);pointer-events:none;}
-.upcart-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr 1.05fr;gap:4.5rem;align-items:center;position:relative;}
+.upcart-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:4rem;align-items:center;position:relative;}
 .upcart-badge{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:600;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border);padding:6px 14px;border-radius:100px;margin-bottom:1.4rem;letter-spacing:.04em;}
 .upcart-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,3.4vw,2.9rem);letter-spacing:-.04em;line-height:1.05;margin-bottom:1.2rem;}
-.upcart-desc{color:var(--muted2);font-size:1.06rem;line-height:1.8;margin-bottom:2rem;max-width:480px;}
+.upcart-desc{color:var(--muted2);font-size:1.04rem;line-height:1.78;margin-bottom:2rem;max-width:480px;}
 .upcart-feats{list-style:none;display:grid;gap:.85rem;margin-bottom:2.2rem;}
 .upcart-feats li{display:flex;align-items:flex-start;gap:12px;font-size:1rem;color:var(--text);opacity:0;transform:translateX(-14px);transition:opacity .5s var(--ease),transform .5s var(--ease);}
 .reveal.in .upcart-feats li{opacity:1;transform:none;}
@@ -326,17 +369,16 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.4r
 .reveal.in .upcart-feats li:nth-child(3){transition-delay:.3s;}
 .reveal.in .upcart-feats li:nth-child(4){transition-delay:.4s;}
 .uf-check{flex:0 0 22px;height:22px;border-radius:50%;background:var(--accent);color:#000;font-size:.72rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 0 rgba(var(--accent-rgb),0);transition:box-shadow .4s;}
-.reveal.in .upcart-feats li .uf-check{box-shadow:0 0 16px rgba(var(--accent-rgb),0.6);} /* "ignite" */
-/* storefront mock w/ 3D tilt */
-.upcart-visual{perspective:1300px;}
+.reveal.in .upcart-feats li .uf-check{box-shadow:0 0 16px rgba(var(--accent-rgb),0.6);}
+.upcart-visual{perspective:1300px;min-width:0;}
 .upcart-screen{background:var(--bg3);border:1px solid var(--border2);border-radius:14px;overflow:hidden;box-shadow:0 50px 90px rgba(0,0,0,.6);transform-style:preserve-3d;transition:transform .2s ease;will-change:transform;}
 .us-bar{background:var(--bg4);padding:11px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);}
 .us-bar .b-url{font-size:.74rem;}
 .us-body{padding:20px;}
-.us-hero{background:linear-gradient(135deg,#10100f,#1d2410);border:1px solid var(--accent-border);border-radius:8px;padding:18px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;}
+.us-hero{background:linear-gradient(135deg,#10100f,#1d2410);border:1px solid var(--accent-border);border-radius:8px;padding:18px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;}
 .us-hero h5{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;}
 .us-hero p{font-size:.72rem;color:var(--muted2);}
-.us-cart{background:var(--accent);color:#000;font-size:.66rem;font-weight:700;padding:7px 12px;border-radius:6px;}
+.us-cart{background:var(--accent);color:#000;font-size:.66rem;font-weight:700;padding:7px 12px;border-radius:6px;white-space:nowrap;}
 .us-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
 .us-card{background:var(--bg4);border-radius:7px;overflow:hidden;border:1px solid var(--border);}
 .us-card .thumb{height:54px;background:linear-gradient(135deg,#22272e,#15181d);position:relative;}
@@ -350,30 +392,24 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.4r
 .us-pay{background:var(--accent);color:#000;font-size:.66rem;font-weight:700;padding:7px 14px;border-radius:6px;position:relative;overflow:hidden;}
 .us-pay::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:translateX(-100%);animation:shine 2.6s var(--ease) infinite;}
 @keyframes shine{0%{transform:translateX(-100%);}55%,100%{transform:translateX(220%);}}
-/* admin dashboard strip */
-.upcart-admin{max-width:1240px;margin:2.5rem auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;position:relative;}
-.admin-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px;transition:transform .35s var(--ease),border-color .25s;}
+
+/* live dashboard strip */
+.upcart-admin{max-width:1240px;margin:2.5rem auto 0;position:relative;}
+.admin-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+.admin-head .lt{display:flex;align-items:center;gap:10px;font-family:'Syne';font-weight:700;font-size:1.05rem;}
+.live-pill{display:inline-flex;align-items:center;gap:7px;font-size:.66rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-border);background:var(--accent-dim);padding:5px 11px;border-radius:100px;}
+.live-pill .ld{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 1.6s infinite;}
+.admin-cap{font-size:.78rem;color:var(--muted);}
+.admin-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.admin-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:22px;transition:transform .35s var(--ease),border-color .25s;}
 .admin-card:hover{transform:translateY(-4px);border-color:var(--accent-border);}
 .admin-card .lbl{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;}
-.admin-card .big{font-family:'Syne',sans-serif;font-weight:800;font-size:1.7rem;letter-spacing:-.03em;}
-.admin-card .big span{color:var(--accent);font-size:1rem;}
-.admin-bars{display:flex;align-items:flex-end;gap:5px;height:40px;margin-top:12px;}
-.admin-bars i{flex:1;background:var(--accent-dim);border-radius:2px 2px 0 0;}
-.admin-bars i:nth-child(odd){background:var(--accent-border);}
-
-/* ============================================================
-   WORK
-============================================================ */
-.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.work-card{border:1px solid var(--border);border-radius:var(--r);padding:28px;background:var(--bg2);transition:transform .35s var(--ease),border-color .25s;position:relative;overflow:hidden;}
-.work-card:nth-child(2){transform:translateY(28px);}        /* asymmetric stagger */
-.work-card:hover{border-color:var(--accent-border);transform:translateY(-5px);}
-.work-card:nth-child(2):hover{transform:translateY(23px);}
-.work-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;}
-.work-cat{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
-.work-stat{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;color:var(--accent);letter-spacing:-.03em;}
-.work-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.15rem;margin-bottom:8px;}
-.work-desc{font-size:.95rem;color:var(--muted);line-height:1.7;}
+.admin-card .big{font-family:'Syne',sans-serif;font-weight:800;font-size:1.9rem;letter-spacing:-.03em;line-height:1;}
+.admin-card .sub{font-size:.74rem;color:var(--muted);margin-top:8px;}
+.admin-card .sub b{color:var(--accent);}
+.admin-bars{display:flex;align-items:flex-end;gap:5px;height:38px;margin-top:14px;}
+.admin-bars i{flex:1;background:var(--accent-dim);border-radius:2px 2px 0 0;transition:height .6s var(--ease);}
+.admin-bars i.hot{background:var(--accent-border);}
 
 /* ============================================================
    PROCESS — four gears
@@ -410,36 +446,12 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.4r
 .price-card .btn-p,.price-card .btn-g{width:100%;justify-content:center;}
 
 /* ============================================================
-   STATS BAND (counters)
-============================================================ */
-.stats-band{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;border:1px solid var(--border);border-radius:12px;padding:48px 24px;background:var(--bg2);}
-.stat-item{text-align:center;border-right:1px solid var(--border);}
-.stat-item:last-child{border-right:none;}
-.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.2rem,4vw,3.2rem);color:var(--accent);letter-spacing:-.04em;line-height:1;}
-.stat-lbl{font-size:.82rem;color:var(--muted);margin-top:8px;letter-spacing:.04em;}
-
-/* ============================================================
-   TESTIMONIALS — staggered
-============================================================ */
-.tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.tst-card{border:1px solid var(--border);border-radius:12px;padding:28px;background:var(--bg2);display:flex;flex-direction:column;gap:18px;transition:transform .35s var(--ease),border-color .25s;}
-.tst-card:hover{transform:translateY(-4px);border-color:var(--accent-border);}
-.tst-card:nth-child(3n+2){transform:translateY(24px);}
-.tst-card:nth-child(3n+2):hover{transform:translateY(20px);}
-.tst-stars{color:var(--accent);font-size:.9rem;letter-spacing:2px;}
-.tst-q{font-size:1rem;line-height:1.7;color:var(--text);}
-.tst-by{display:flex;align-items:center;gap:12px;margin-top:auto;}
-.tst-av{width:38px;height:38px;border-radius:50%;background:var(--accent-dim);border:1px solid var(--accent-border);color:var(--accent);font-family:'Syne';font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
-.tst-name{font-weight:600;font-size:.92rem;}
-.tst-role{font-size:.8rem;color:var(--muted);}
-
-/* ============================================================
    CONTACT
 ============================================================ */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
 .contact-meta{margin-top:2.5rem;display:grid;gap:1rem;}
 .cm-row{display:flex;align-items:center;gap:12px;color:var(--muted2);font-size:1rem;}
-.cm-ic{width:36px;height:36px;border-radius:8px;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;}
+.cm-ic{width:36px;height:36px;border-radius:8px;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .contact-form{display:grid;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:30px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .contact-form input,.contact-form select,.contact-form textarea{
@@ -450,6 +462,7 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.4r
 .contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--muted);}
 .contact-form input:focus,.contact-form select:focus,.contact-form textarea:focus{outline:none;border-color:var(--accent-border);box-shadow:0 0 0 3px rgba(var(--accent-rgb),.1);}
 .contact-form select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%2371717a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;}
+.contact-form select option{background:#1a1d24;}
 .form-note{font-size:.82rem;color:var(--muted);text-align:center;}
 .form-note.ok{color:var(--accent);}
 
@@ -466,13 +479,11 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.4r
 .footer{max-width:1240px;margin:0 auto;}
 .footer-top{display:grid;grid-template-columns:1.4fr 2fr;gap:4rem;padding-bottom:48px;border-bottom:1px solid var(--border);}
 .footer-tag{color:var(--muted);font-size:.96rem;line-height:1.7;max-width:340px;margin:1rem 0 1.5rem;}
-.footer-social{display:flex;gap:10px;}
-.footer-social a{width:38px;height:38px;border-radius:8px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--muted2);text-decoration:none;font-size:.85rem;transition:all .2s;}
-.footer-social a:hover{color:var(--accent);border-color:var(--accent-border);transform:translateY(-2px);}
 .footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
 .footer-col h4{font-family:'Syne';font-size:.92rem;font-weight:700;margin-bottom:1rem;}
 .footer-col a{display:block;color:var(--muted);text-decoration:none;font-size:.92rem;padding:6px 0;transition:color .2s,padding-left .2s;}
 .footer-col a:hover{color:var(--accent);padding-left:5px;}
+.footer-col span.soon-tag{font-size:.6rem;color:var(--muted2);border:1px solid var(--border2);border-radius:100px;padding:1px 7px;margin-left:6px;}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;flex-wrap:wrap;gap:10px;}
 .footer-bottom p{font-size:.85rem;color:var(--muted);}
 
@@ -482,40 +493,33 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.4r
 @media (max-width:1024px){
   .hero-inner{grid-template-columns:1fr;gap:3rem;}
   .hero-visual{max-width:520px;}
-  .svc.spotlight{grid-column:span 3;}
   .upcart-inner{grid-template-columns:1fr;gap:3rem;}
   .contact-grid{grid-template-columns:1fr;gap:2.5rem;}
   .footer-top{grid-template-columns:1fr;gap:2.5rem;}
+  .prod-grid{grid-template-columns:1fr;}
+}
+@media (min-width:641px) and (max-width:1024px){
+  .admin-cards{grid-template-columns:repeat(3,1fr);}
 }
 @media (max-width:760px){
   body{font-size:16px;}
   .nav-links{display:none;}
   .nav-burger{display:flex;}
   .sec{padding:80px 6%;}
-  h1{font-size:clamp(2.6rem,11vw,3.6rem);}
   .hero{padding:120px 6% 70px;}
-  .hero-meta{gap:1.6rem;flex-wrap:wrap;}
-  .svc-grid,.work-grid,.price-grid,.tst-grid,.upcart-admin{grid-template-columns:1fr;}
-  .svc.tall{grid-row:auto;}
-  .svc.spotlight{grid-column:auto;flex-direction:column;align-items:flex-start;}
-  .spot-mini{flex:none;width:100%;}
-  .work-card:nth-child(2),.tst-card:nth-child(3n+2){transform:none;}
-  .work-card:nth-child(2):hover,.tst-card:nth-child(3n+2):hover{transform:translateY(-5px);}
+  .svc-grid,.price-grid,.admin-cards{grid-template-columns:1fr;}
+  .ai-demo{grid-template-columns:1fr;gap:2.4rem;padding:26px;}
+  .phone-wrap{order:-1;}
   .process-list{grid-template-columns:1fr;}
   .process-step{border-right:none;border-bottom:1px solid var(--border);padding:26px 0;}
   .reveal.in .process-step::before{width:40%;}
-  .stats-band{grid-template-columns:1fr 1fr;gap:30px 14px;}
-  .stat-item:nth-child(2){border-right:none;}
   .price-card.featured{transform:none;}
   .price-card.featured:hover{transform:translateY(-5px);}
   .form-row{grid-template-columns:1fr;}
   .footer-cols{grid-template-columns:1fr 1fr;}
 }
-@media (min-width:641px) and (max-width:1024px){
-  .svc-grid,.work-grid,.tst-grid{grid-template-columns:repeat(2,1fr);}
-}
 
-/* —— accessibility: focus + reduced motion —— */
+/* —— accessibility —— */
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
@@ -524,16 +528,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 }
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
 </style>
-<noscript><style>.reveal{opacity:1!important;transform:none!important;}.cursor-dot,.cursor-ring{display:none;}.stat-num::after{content:attr(data-count);}</style></noscript>
+<noscript><style>.reveal{opacity:1!important;transform:none!important;}.cursor-dot,.cursor-ring{display:none;}</style></noscript>
 </head>
 
 <body>
 
-<!-- custom cursor -->
 <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
-
-<!-- scroll progress -->
 <div id="scroll-line"></div>
 
 <!-- ===================== NAV ===================== -->
@@ -544,9 +545,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   </a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
+    <li><a href="#products">Products</a></li>
     <li><a href="#upcart" class="nav-upcart">Upcart</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#process">Process</a></li>
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#contact" class="nav-cta">Get Started</a></li>
   </ul>
@@ -555,18 +555,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   </button>
 </nav>
 
-<!-- mobile drawer -->
 <div class="mobile-drawer" id="mobileDrawer">
   <a href="#services">Services</a>
+  <a href="#products">Products</a>
   <a href="#upcart"><span>Upcart</span></a>
-  <a href="#work">Work</a>
-  <a href="#process">Process</a>
   <a href="#pricing">Pricing</a>
   <a href="#contact">Get Started</a>
 </div>
 
-<!-- smooth-scroll content wrapper -->
-<div id="smooth-wrap">
 <span id="top"></span>
 
 <!-- ===================== HERO ===================== -->
@@ -580,15 +576,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     <div class="hero-copy">
       <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Atlanta, GA · Digital Agency</div>
       <h1>Your competition<br>is online.<br><em>Are you winning?</em></h1>
-      <p class="hero-sub">Nolvek builds high-converting websites, runs Google &amp; Meta ads, and deploys AI automation that turns Atlanta businesses into local leaders.</p>
+      <p class="hero-sub">Nolvek builds high-converting websites, optimizes how you show up on Google, and deploys AI automation — plus self-serve products like Upcart that you can launch on your own.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-p" data-magnetic>Get Started →</a>
-        <a href="#work" class="btn-g" data-magnetic>See Our Work</a>
+        <a href="#contact" class="btn-p" data-magnetic>Start a Project →</a>
+        <a href="#products" class="btn-g" data-magnetic>Explore Products</a>
       </div>
-      <div class="hero-meta">
-        <div><span class="hero-meta-num">150+</span><span class="hero-meta-lbl">Projects Shipped</span></div>
-        <div><span class="hero-meta-num">98%</span><span class="hero-meta-lbl">Client Retention</span></div>
-        <div><span class="hero-meta-num">4.9★</span><span class="hero-meta-lbl">Avg Rating</span></div>
+      <div class="hero-chips">
+        <span class="hero-chip"><i></i><b>Websites</b> from $199</span>
+        <span class="hero-chip"><i></i>Google Profile optimization</span>
+        <span class="hero-chip"><i></i>Self-serve products</span>
       </div>
     </div>
     <div class="hero-visual">
@@ -612,7 +608,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
             <div class="mock-svc"><div class="mock-svc-icon">🔥</div><div class="mock-svc-name">Heating</div></div>
           </div>
           <div class="mock-footer-band">
-            <div class="mock-footer-text">⭐ 4.9 · 200+ reviews</div>
+            <div class="mock-footer-text">⭐ Top-rated locally</div>
             <div class="mock-badge">Powered by Nolvek</div>
           </div>
         </div>
@@ -624,59 +620,130 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 <!-- ===================== TICKER ===================== -->
 <section class="ticker-wrap" aria-hidden="true">
   <div class="ticker-track" id="ticker">
-    <div class="ticker-item"><span><b>Web Design</b></span><span class="ticker-dot"></span><span>AI Automation</span><span class="ticker-dot"></span><span>Google Ads</span><span class="ticker-dot"></span><span>Meta Ads</span><span class="ticker-dot"></span><span>Custom Software</span><span class="ticker-dot"></span><span>SEO</span><span class="ticker-dot"></span></div>
+    <div class="ticker-item"><span><b>Web Design</b></span><span class="ticker-dot"></span><span>Google Business Profile</span><span class="ticker-dot"></span><span>AI Automation</span><span class="ticker-dot"></span><span>Custom Software</span><span class="ticker-dot"></span><span><b>Upcart</b></span><span class="ticker-dot"></span><span>Self-Serve Products</span><span class="ticker-dot"></span></div>
   </div>
 </section>
 
-<!-- ===================== SERVICES ===================== -->
+<!-- ===================== SERVICES (done-for-you) ===================== -->
 <section class="sec reveal" id="services" aria-labelledby="services-h">
   <div class="sec-head">
-    <div class="eyebrow">#01 — What We Do</div>
-    <h2 id="services-h">Everything your business needs to win online.</h2>
-    <p class="sec-sub">From the first click to the final sale — we build the systems that make Atlanta businesses impossible to ignore.</p>
+    <div class="eyebrow">#01 — Services</div>
+    <h2 id="services-h">Done-for-you, built to convert.</h2>
+    <p class="sec-sub">Hands-on work where we design, build, and ship for you — websites, your Google presence, automation, and bespoke software for how your business actually runs.</p>
   </div>
   <div class="svc-grid">
-    <article class="svc tall">
-      <div class="svc-tag">Most Popular</div>
+    <article class="svc">
       <div class="svc-num">01</div>
       <div class="svc-icon-wrap" aria-hidden="true">🌐</div>
       <h3>Custom Websites</h3>
-      <p>Fast, mobile-first sites that turn visitors into customers. Built to rank, designed to convert.</p>
+      <p>Fast, mobile-first sites that turn visitors into customers. Built to load quick, rank well, and look like your business — not a template.</p>
     </article>
     <article class="svc">
       <div class="svc-num">02</div>
-      <div class="svc-icon-wrap" aria-hidden="true">🤖</div>
-      <h3>AI Automation</h3>
-      <p>Chatbots, lead capture, and workflows that run 24/7 so you never miss an opportunity.</p>
+      <div class="svc-icon-wrap" aria-hidden="true">📍</div>
+      <h3>Google Business Profile Optimization</h3>
+      <p>We set up and fine-tune the profile that shows in Google Maps and local search — categories, photos, posts, and reviews — so nearby customers find you first.</p>
     </article>
     <article class="svc">
       <div class="svc-num">03</div>
-      <div class="svc-icon-wrap" aria-hidden="true">📈</div>
-      <h3>Google &amp; Meta Ads</h3>
-      <p>Data-driven campaigns that put you in front of ready-to-buy customers in your area.</p>
+      <div class="svc-icon-wrap" aria-hidden="true">🤖</div>
+      <h3>AI Automation</h3>
+      <p>Instant lead replies, smart scheduling, and follow-up sequences that run 24/7 — so no message goes unanswered while you're on the job.</p>
     </article>
     <article class="svc">
       <div class="svc-num">04</div>
       <div class="svc-icon-wrap" aria-hidden="true">⚙️</div>
       <h3>Custom Software</h3>
-      <p>Bespoke tools, dashboards, and integrations tailored to how your business actually runs.</p>
+      <p>Dashboards, client portals, and integrations built from scratch — exactly the tool your operation needs when off-the-shelf doesn't fit.</p>
     </article>
-    <!-- Upcart product spotlight card -->
-    <article class="svc spotlight">
-      <div class="svc-body">
-        <div class="svc-tag">Product</div>
-        <div class="svc-num">05</div>
-        <div class="svc-icon-wrap" aria-hidden="true">🛒</div>
-        <h3>Upcart Commerce</h3>
-        <p>Our managed e-commerce platform. Launch a high-converting store without the headaches.</p>
-      </div>
-      <div class="spot-mini" aria-hidden="true">
-        <div class="spot-mini-bar"><i></i><i></i><i></i></div>
-        <div class="spot-mini-body">
-          <div class="spot-prod"><div></div><div></div><div></div><div></div></div>
-          <div class="spot-buy">Checkout</div>
+  </div>
+
+  <!-- AI automation phone demo (live chatbot example) -->
+  <div class="ai-demo">
+    <div class="ai-demo-copy">
+      <h3>Every lead gets a reply — instantly.</h3>
+      <p>Our AI automation responds the moment a customer reaches out, qualifies the lead, and books the appointment — while you're on a job, at dinner, or asleep. No message slips through.</p>
+      <ul class="ai-points">
+        <li>Replies in seconds, 24/7 — across web chat and text</li>
+        <li>Qualifies and books straight onto your calendar</li>
+        <li>Automatic follow-ups until they're ready</li>
+      </ul>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone" data-tilt aria-hidden="true">
+        <div class="phone-notch"><div class="phone-cam"></div></div>
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:42</span><span>📶 🔋</span></div>
+          <div class="chat-header">
+            <div class="chat-avatar">N</div>
+            <div>
+              <span class="chat-agent-name">Nolvek AI Assistant</span>
+              <span class="chat-agent-sub">● Online — replies instantly</span>
+            </div>
+          </div>
+          <div class="chat-body" id="chatBody">
+            <div class="bubble bot">👋 Hi! Thanks for reaching out. How can I help today?<div class="bubble-time">9:41 AM</div></div>
+            <div class="bubble user">Do you guys do free estimates?<div class="bubble-time">9:41 AM</div></div>
+            <div class="bubble bot">Yes! We offer free, no-obligation inspections. What area of Atlanta are you in?<div class="bubble-time">9:41 AM</div></div>
+            <div class="bubble user">Buckhead<div class="bubble-time">9:42 AM</div></div>
+            <div class="bubble bot">Perfect, we cover Buckhead! What works better — Thursday or Friday this week?<div class="bubble-time">9:42 AM</div></div>
+            <div class="bubble bot" id="typingBubble"><div class="typing-dots"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>
+          </div>
+          <div class="chat-quick">
+            <span class="qr">Thursday</span><span class="qr">Friday</span><span class="qr">Call me</span>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRODUCTS (self-serve suite) ===================== -->
+<section class="sec reveal" id="products" aria-labelledby="products-h">
+  <div class="sec-head">
+    <div class="eyebrow">#02 — Products</div>
+    <h2 id="products-h">Self-serve products you can launch yourself.</h2>
+    <p class="sec-sub">A growing suite of Nolvek-built software you can sign up for and run on your own — fully managed under the hood, no agency project required.</p>
+  </div>
+  <div class="prod-grid">
+    <!-- Upcart — live -->
+    <article class="prod-card live">
+      <span class="prod-status s-live"><span class="ld"></span>Available now</span>
+      <h3>Upcart</h3>
+      <div class="prod-kicker">Managed e-commerce</div>
+      <p>Launch a fast, beautiful online store without wrangling plugins. Hosting, checkout, and inventory — all handled.</p>
+      <ul class="prod-feats">
+        <li>Conversion-optimized checkout</li>
+        <li>Real-time inventory &amp; orders</li>
+        <li>Built-in marketing tools</li>
+      </ul>
+      <div class="prod-cta"><a href="#upcart" class="btn-p" data-magnetic>See Upcart →</a></div>
+    </article>
+    <!-- Scheduling — in development -->
+    <article class="prod-card soon">
+      <span class="prod-status s-soon">In development</span>
+      <h3>Scheduling</h3>
+      <div class="prod-kicker" style="color:var(--muted2);">Booking + branded pages</div>
+      <p>A scheduling platform in the spirit of Calendly — but with a built-in web-design layer like Upcart, so your booking page looks like your brand, not a generic link.</p>
+      <ul class="prod-feats">
+        <li>Shareable booking links</li>
+        <li>Designed, on-brand booking pages</li>
+        <li>Syncs with your calendar &amp; reminders</li>
+      </ul>
+      <div class="prod-cta"><a href="#contact" class="btn-g" data-magnetic>Get notified →</a></div>
+    </article>
+    <!-- More coming -->
+    <article class="prod-card soon">
+      <span class="prod-status s-soon">More on the way</span>
+      <h3>And more</h3>
+      <div class="prod-kicker" style="color:var(--muted2);">The suite is growing</div>
+      <p>We're building more self-serve tools that pair powerful software with Nolvek's design touch. Tell us what would move your business and help shape what's next.</p>
+      <ul class="prod-feats">
+        <li>Same managed, no-headache approach</li>
+        <li>Designed to work together</li>
+        <li>Built for local businesses</li>
+      </ul>
+      <div class="prod-cta"><a href="#contact" class="btn-g" data-magnetic>Request a product →</a></div>
     </article>
   </div>
 </section>
@@ -685,9 +752,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 <section id="upcart" aria-labelledby="upcart-h">
   <div class="sec reveal" style="padding-bottom:0;">
     <div class="sec-head">
-      <div class="eyebrow">#02 — Featured Product</div>
+      <div class="eyebrow">#03 — Featured Product</div>
       <h2 id="upcart-h">Built by Nolvek — Upcart.</h2>
-      <p class="sec-sub">Our flagship managed e-commerce platform. We handle hosting, design, payments, and optimization so you can focus on selling.</p>
+      <p class="sec-sub">Our flagship self-serve commerce platform. Sign up, set up your store, and we handle hosting, payments, and optimization behind the scenes.</p>
     </div>
   </div>
 
@@ -696,7 +763,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <div class="upcart-copy">
         <div class="upcart-badge">⚡ Powered by Nolvek</div>
         <h3 class="upcart-title">Your store, fully managed.</h3>
-        <p class="upcart-desc">Upcart is the all-in-one commerce platform we build and manage for Atlanta retailers. No plugins to wrangle, no downtime, no surprises — just a fast, beautiful store that sells.</p>
+        <p class="upcart-desc">Upcart is the all-in-one commerce platform you can run yourself. No plugins to wrangle, no downtime, no surprises — just a fast, beautiful store that sells.</p>
         <ul class="upcart-feats">
           <li><span class="uf-check" aria-hidden="true">✓</span> Lightning-fast managed hosting</li>
           <li><span class="uf-check" aria-hidden="true">✓</span> Conversion-optimized checkout</li>
@@ -706,7 +773,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
         <a href="https://upcart.online" target="_blank" rel="noopener" class="btn-p" data-magnetic>Visit Upcart →</a>
       </div>
 
-      <!-- interactive storefront mock (3D tilt, live checkout shine) -->
       <div class="upcart-visual">
         <div class="upcart-screen" data-tilt>
           <div class="us-bar">
@@ -715,7 +781,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
           </div>
           <div class="us-body">
             <div class="us-hero">
-              <div><h5>Summer Drop ’26</h5><p>Free shipping over $50</p></div>
+              <div><h5>Your Store</h5><p>Free shipping over $50</p></div>
               <div class="us-cart">Cart · 3</div>
             </div>
             <div class="us-grid">
@@ -733,49 +799,32 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     </div>
   </div>
 
-  <!-- admin dashboard strip, framed in brand style -->
-  <div class="upcart-admin reveal" style="margin-top:14px;padding:0 5%;max-width:1240px;">
-    <div class="admin-card">
-      <div class="lbl">Revenue · 30d</div>
-      <div class="big">$48.2k <span>▲ 32%</span></div>
-      <div class="admin-bars" aria-hidden="true"><i style="height:40%"></i><i style="height:60%"></i><i style="height:45%"></i><i style="height:80%"></i><i style="height:65%"></i><i style="height:100%"></i></div>
+  <!-- LIVE, time-based dashboard (no storage; derived from the clock) -->
+  <div class="upcart-admin reveal" style="padding:0 5%;">
+    <div class="admin-head">
+      <div class="lt">📊 Store today <span class="live-pill"><span class="ld"></span>Live</span></div>
+      <div class="admin-cap" id="adminCap">Resets at midnight · updates through the day</div>
     </div>
-    <div class="admin-card">
-      <div class="lbl">Orders Today</div>
-      <div class="big">137 <span>▲ 18%</span></div>
-      <div class="admin-bars" aria-hidden="true"><i style="height:55%"></i><i style="height:70%"></i><i style="height:50%"></i><i style="height:90%"></i><i style="height:60%"></i><i style="height:85%"></i></div>
+    <div class="admin-cards">
+      <div class="admin-card">
+        <div class="lbl">Orders Today</div>
+        <div class="big" id="mOrders">0</div>
+        <div class="sub" id="mOrdersSub">so far today</div>
+        <div class="admin-bars" id="ordersBars" aria-hidden="true"></div>
+      </div>
+      <div class="admin-card">
+        <div class="lbl">Revenue Today</div>
+        <div class="big" id="mRevenue">$0</div>
+        <div class="sub" id="mRevenueSub">net sales today</div>
+        <div class="admin-bars" id="revBars" aria-hidden="true"></div>
+      </div>
+      <div class="admin-card">
+        <div class="lbl">Visitors Online</div>
+        <div class="big" id="mVisitors">0</div>
+        <div class="sub">browsing right now</div>
+        <div class="admin-bars" id="visBars" aria-hidden="true"></div>
+      </div>
     </div>
-    <div class="admin-card">
-      <div class="lbl">Conversion Rate</div>
-      <div class="big">4.8% <span>▲ 0.9%</span></div>
-      <div class="admin-bars" aria-hidden="true"><i style="height:35%"></i><i style="height:55%"></i><i style="height:70%"></i><i style="height:60%"></i><i style="height:85%"></i><i style="height:95%"></i></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== WORK ===================== -->
-<section class="sec reveal" id="work" aria-labelledby="work-h">
-  <div class="sec-head">
-    <div class="eyebrow">#03 — Selected Work</div>
-    <h2 id="work-h">Results that speak for themselves.</h2>
-    <p class="sec-sub">Real Atlanta businesses. Real growth. Here's what happens when strategy meets execution.</p>
-  </div>
-  <div class="work-grid">
-    <article class="work-card">
-      <div class="work-meta"><span class="work-cat">Restaurant</span><span class="work-stat">+240%</span></div>
-      <h3 class="work-title">Online Orders Tripled</h3>
-      <p class="work-desc">Rebuilt ordering system and launched local ads for a family restaurant.</p>
-    </article>
-    <article class="work-card">
-      <div class="work-meta"><span class="work-cat">Home Services</span><span class="work-stat">+180%</span></div>
-      <h3 class="work-title">Booked Solid</h3>
-      <p class="work-desc">AI booking assistant and Google Ads filled the calendar for an HVAC company.</p>
-    </article>
-    <article class="work-card">
-      <div class="work-meta"><span class="work-cat">Retail</span><span class="work-stat">+320%</span></div>
-      <h3 class="work-title">Store Went Digital</h3>
-      <p class="work-desc">Launched an Upcart store that outsold their physical location in 6 months.</p>
-    </article>
   </div>
 </section>
 
@@ -784,13 +833,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   <div class="sec-head">
     <div class="eyebrow">#04 — How It Works</div>
     <h2 id="process-h">From idea to impact in four gears.</h2>
-    <p class="sec-sub">A proven process that gets you live fast — without cutting corners.</p>
+    <p class="sec-sub">A straightforward process that gets you live fast — without cutting corners.</p>
   </div>
   <div class="process-list">
     <div class="process-step"><div class="ps-num">01</div><div class="ps-body"><h3>Discovery</h3><p>We learn your business, goals, and what makes you different.</p></div></div>
     <div class="process-step"><div class="ps-num">02</div><div class="ps-body"><h3>Build</h3><p>We design and develop your solution with speed and precision.</p></div></div>
     <div class="process-step"><div class="ps-num">03</div><div class="ps-body"><h3>Launch</h3><p>We ship it live, test everything, and make sure it performs.</p></div></div>
-    <div class="process-step"><div class="ps-num">04</div><div class="ps-body"><h3>Grow</h3><p>We optimize, run ads, and scale what's working.</p></div></div>
+    <div class="process-step"><div class="ps-num">04</div><div class="ps-body"><h3>Grow</h3><p>We optimize, refine, and scale what's working.</p></div></div>
   </div>
 </section>
 
@@ -799,31 +848,31 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   <div class="sec-head" style="text-align:center;margin-left:auto;margin-right:auto;">
     <div class="eyebrow" style="justify-content:center;">#05 — Pricing</div>
     <h2 id="pricing-h">Straight pricing. No surprises.</h2>
-    <p class="sec-sub">Start small, scale when you're ready. Every plan includes hosting, support, and zero hidden fees.</p>
+    <p class="sec-sub">Start small, scale when you're ready. No hidden fees, no long contracts.</p>
   </div>
   <div class="price-grid">
     <div class="price-card">
       <div class="price-name">Starter Site</div>
       <div class="price-amt">$199<span>/site</span></div>
-      <div class="price-desc">Perfect for getting online fast with a clean, professional presence.</div>
+      <div class="price-desc">Get online fast with a clean, professional presence built to convert.</div>
       <ul class="price-feats">
         <li>5-page custom website</li>
         <li>Mobile-optimized design</li>
-        <li>Google Business setup</li>
-        <li>Basic SEO included</li>
+        <li>Google Business Profile setup</li>
+        <li>On-page SEO included</li>
       </ul>
       <a href="#contact" class="btn-g" data-magnetic>Get Started</a>
     </div>
     <div class="price-card featured">
       <div class="price-badge">Most Popular</div>
-      <div class="price-name">Growth</div>
-      <div class="price-amt">$397<span>/mo</span></div>
-      <div class="price-desc">Websites plus active ad management to drive real leads.</div>
+      <div class="price-name">Managed Care</div>
+      <div class="price-amt">$20<span>/mo</span></div>
+      <div class="price-desc">Keep your site fast, secure, and current — plus ongoing Google profile optimization.</div>
       <ul class="price-feats">
-        <li>Everything in Starter</li>
-        <li>Google &amp; Meta ad management</li>
-        <li>Monthly performance reports</li>
-        <li>AI lead capture chatbot</li>
+        <li>Hosting &amp; maintenance</li>
+        <li>Content &amp; design updates</li>
+        <li>Google Business Profile optimization</li>
+        <li>AI lead-capture add-on available</li>
         <li>Priority support</li>
       </ul>
       <a href="#contact" class="btn-p" data-magnetic>Get Started</a>
@@ -831,11 +880,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     <div class="price-card">
       <div class="price-name">Custom</div>
       <div class="price-amt">Let's talk</div>
-      <div class="price-desc">Bespoke software, integrations, and managed commerce.</div>
+      <div class="price-desc">Bespoke software, integrations, and self-serve products like Upcart.</div>
       <ul class="price-feats">
         <li>Custom software builds</li>
         <li>Upcart managed commerce</li>
-        <li>Dedicated account manager</li>
+        <li>AI automation workflows</li>
         <li>Custom integrations</li>
       </ul>
       <a href="#contact" class="btn-g" data-magnetic>Contact Us</a>
@@ -843,35 +892,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   </div>
 </section>
 
-<!-- ===================== STATS ===================== -->
-<section class="sec reveal" id="results" aria-label="Results by the numbers">
-  <div class="stats-band">
-    <div class="stat-item"><div class="stat-num" data-count="150" data-suffix="+">0</div><div class="stat-lbl">Projects Shipped</div></div>
-    <div class="stat-item"><div class="stat-num" data-count="98" data-suffix="%">0</div><div class="stat-lbl">Retention</div></div>
-    <div class="stat-item"><div class="stat-num" data-count="240" data-suffix="%">0</div><div class="stat-lbl">Avg Growth</div></div>
-    <div class="stat-item"><div class="stat-num" data-count="24" data-suffix="/7">0</div><div class="stat-lbl">AI Support</div></div>
-  </div>
-</section>
-
-<!-- ===================== TESTIMONIALS ===================== -->
-<section class="sec reveal" id="testimonials" aria-labelledby="tst-h">
-  <div class="sec-head">
-    <div class="eyebrow">#06 — Testimonials</div>
-    <h2 id="tst-h">Atlanta businesses, real results.</h2>
-  </div>
-  <div class="tst-grid" id="tstGrid"></div>
-</section>
-
 <!-- ===================== CONTACT ===================== -->
 <section class="sec reveal" id="contact" aria-labelledby="contact-h">
   <div class="contact-grid">
     <div class="contact-copy">
-      <div class="eyebrow">#07 — Get Started</div>
+      <div class="eyebrow">#06 — Get Started</div>
       <h2 id="contact-h">Let's put your business in the fast lane.</h2>
       <p class="sec-sub">Tell us what you need. We'll get back to you within one business day with a plan and a quote.</p>
       <div class="contact-meta">
         <div class="cm-row"><span class="cm-ic" aria-hidden="true">📍</span> Atlanta, Georgia</div>
-        <div class="cm-row"><span class="cm-ic" aria-hidden="true">✉️</span> hello@nolvek.online</div>
+        <div class="cm-row"><span class="cm-ic" aria-hidden="true">✉️</span> kevlongalloway1999@icloud.com</div>
         <div class="cm-row"><span class="cm-ic" aria-hidden="true">⚡</span> 1-business-day response</div>
       </div>
     </div>
@@ -884,10 +914,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <select name="service" aria-label="What do you need?" required>
         <option value="">What do you need?</option>
         <option>Website</option>
-        <option>Google / Meta Ads</option>
+        <option>Google Business Profile Optimization</option>
         <option>AI Automation</option>
         <option>Custom Software</option>
         <option>Upcart / E-commerce</option>
+        <option>Scheduling (notify me)</option>
       </select>
       <textarea name="message" rows="4" placeholder="Tell us about your project" aria-label="Tell us about your project"></textarea>
       <button type="submit" class="btn-p" style="width:100%;justify-content:center;">Send Message →</button>
@@ -900,7 +931,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 <section class="footer-cta reveal" aria-label="Book a consultation">
   <div class="footer-cta-inner">
     <h2>Ready to accelerate?</h2>
-    <p>Book a free consultation and we'll map out exactly how Nolvek + Upcart can grow your business — no tech headaches required.</p>
+    <p>Book a free consultation and we'll map out exactly how Nolvek can grow your business — no tech headaches required.</p>
     <div class="footer-cta-actions">
       <a href="#contact" class="btn-p" data-magnetic>Book Free Consultation →</a>
       <a href="https://upcart.online" target="_blank" rel="noopener" class="btn-g" data-magnetic>Explore Upcart</a>
@@ -917,26 +948,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
           <svg width="30" height="30" viewBox="0 0 200 200" style="border-radius:7px;" aria-hidden="true"><rect width="200" height="200" rx="42" fill="#1c1c1f"/><rect x="38" y="34" width="36" height="132" rx="6" fill="#a8ff3e"/><polygon points="74,34 110,34 126,166 90,166" fill="#a8ff3e"/><rect x="126" y="34" width="36" height="132" rx="6" fill="#a8ff3e"/></svg>
           <span class="logo-text" style="font-size:1.3rem;">Nolvek</span>
         </a>
-        <p class="footer-tag">Digital acceleration for Atlanta businesses. Websites, ads, AI, and custom software that drive real growth.</p>
-        <div class="footer-social">
-          <a href="#" aria-label="Twitter / X">𝕏</a>
-          <a href="#" aria-label="Instagram">IG</a>
-          <a href="#" aria-label="LinkedIn">in</a>
-        </div>
+        <p class="footer-tag">Digital acceleration for Atlanta businesses. Websites, Google presence, AI, custom software, and self-serve products that drive real growth.</p>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
           <h4>Services</h4>
           <a href="#services">Custom Websites</a>
+          <a href="#services">Google Business Profile</a>
           <a href="#services">AI Automation</a>
-          <a href="#services">Google &amp; Meta Ads</a>
           <a href="#services">Custom Software</a>
         </div>
         <div class="footer-col">
-          <h4>Product</h4>
+          <h4>Products</h4>
           <a href="https://upcart.online" target="_blank" rel="noopener">Upcart</a>
+          <a href="#products">Scheduling <span class="soon-tag">Soon</span></a>
           <a href="#pricing">Pricing</a>
-          <a href="#work">Our Work</a>
         </div>
         <div class="footer-col">
           <h4>Company</h4>
@@ -947,18 +973,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Nolvek. Atlanta, GA. All rights reserved.</p>
+      <p>© 2026 Nolvek. Atlanta, GA. All rights reserved.</p>
       <p>Built with velocity in Atlanta.</p>
     </div>
   </footer>
 </div>
 
-</div><!-- /#smooth-wrap -->
-
 <script>
 /* ============================================================
    NOLVEK VELOCITY ENGINE — lightweight, dependency-free
-   (chosen over GSAP/Locomotive for Lighthouse 95+; same feel)
 ============================================================ */
 (function(){
   'use strict';
@@ -1007,7 +1030,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     });
   });
 
-  /* ---------- SCROLL REVEAL (velocity entry + trails) ---------- */
+  /* ---------- SCROLL REVEAL ---------- */
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(en){
       if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
@@ -1015,7 +1038,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   }, {threshold:0.14, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-  /* ---------- HERO spotlight follows cursor ---------- */
+  /* ---------- HERO spotlight ---------- */
   if(fine){
     var spot = document.getElementById('heroSpot');
     var hero = document.querySelector('.hero');
@@ -1026,7 +1049,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     });
   }
 
-  /* ---------- CUSTOM CURSOR (lerp ring + magnetic + hot states) ---------- */
+  /* ---------- CUSTOM CURSOR ---------- */
   if(fine && !reduce){
     var dot = document.getElementById('cursorDot');
     var ring = document.getElementById('cursorRing');
@@ -1059,7 +1082,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     });
   }
 
-  /* ---------- 3D TILT (Noomo-style depth) ---------- */
+  /* ---------- 3D TILT ---------- */
   if(fine && !reduce){
     document.querySelectorAll('[data-tilt]').forEach(function(el){
       el.addEventListener('mousemove', function(e){
@@ -1072,55 +1095,200 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     });
   }
 
-  /* ---------- STAT COUNTERS ---------- */
-  var counted=false;
-  var statsBand=document.querySelector('.stats-band');
-  function runCounters(){
-    document.querySelectorAll('.stat-num').forEach(function(el){
-      var target=+el.dataset.count, suffix=el.dataset.suffix||'', start=null, dur=1500;
-      function step(ts){
-        if(!start) start=ts;
-        var p=Math.min((ts-start)/dur,1);
-        var eased=1-Math.pow(1-p,3);
-        el.textContent=Math.round(target*eased)+suffix;
-        if(p<1) requestAnimationFrame(step);
+  /* ============================================================
+     LIVE STORE METRICS — purely time-based, no storage.
+     ------------------------------------------------------------
+     Deterministic per calendar day (everyone sees the same shape
+     at the same moment) yet different each day. Orders accumulate
+     along a realistic hourly demand curve and reset at midnight;
+     revenue = orders x a per-day average order value. Visitors-
+     online reflects the current hour with gentle organic jitter.
+  ============================================================ */
+  // seeded PRNG (mulberry32) — stable for a given integer seed
+  function rng(seed){
+    return function(){
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function dayNumber(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var doy = Math.floor((d - start)/86400000);
+    return d.getFullYear()*1000 + doy;     // unique per calendar day
+  }
+  // relative order demand by hour of day (overnight low, mid/evening peak)
+  var HOURW = [1,0.6,0.4,0.3,0.3,0.5,1,2,3.4,5,6.4,7.4,8,7.6,7,7,6.6,6,6.4,7,6.6,5,3.6,2];
+  var HOURW_TOTAL = HOURW.reduce(function(a,b){return a+b;},0);
+  var HOURW_MAX = Math.max.apply(null, HOURW);
+
+  function fractionElapsed(now){           // 0..1 share of the day's orders placed by `now`
+    var h = now.getHours(), m = now.getMinutes()/60;
+    var acc = 0;
+    for(var i=0;i<h;i++) acc += HOURW[i];
+    acc += HOURW[h]*m;
+    return acc / HOURW_TOTAL;
+  }
+  function dayProfile(now){
+    var seed = dayNumber(now);
+    var r = rng(seed);
+    var dow = now.getDay();
+    var weekend = (dow===0 || dow===6) ? 1.18 : 1;       // retail leans up on weekends
+    var dailyOrders = Math.round((95 + r()*70) * weekend); // ~95–165 (×weekend)
+    var aov = 38 + r()*34;                                 // $38–$72 average order value
+    return {dailyOrders:dailyOrders, aov:aov, seed:seed};
+  }
+
+  var orderEl=document.getElementById('mOrders'),
+      ordSub=document.getElementById('mOrdersSub'),
+      revEl=document.getElementById('mRevenue'),
+      revSub=document.getElementById('mRevenueSub'),
+      visEl=document.getElementById('mVisitors'),
+      capEl=document.getElementById('adminCap');
+
+  function fmt(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+
+  // build mini sparkline bars from the hourly curve up to the current hour
+  function renderBars(id, uptoHour){
+    var wrap=document.getElementById(id); if(!wrap) return;
+    var html='';
+    var start=Math.max(0, uptoHour-7);
+    for(var i=start;i<=uptoHour;i++){
+      var hpct = Math.round((HOURW[i]/HOURW_MAX)*100);
+      var hot = (i===uptoHour) ? ' hot' : '';
+      html += '<i class="'+hot+'" style="height:'+Math.max(8,hpct)+'%"></i>';
+    }
+    wrap.innerHTML=html;
+  }
+
+  var shownOrders=0, shownRev=0;
+  function animateTo(el, from, to, dur, prefix){
+    var start=null;
+    function step(ts){
+      if(!start) start=ts;
+      var p=Math.min((ts-start)/dur,1);
+      var eased=1-Math.pow(1-p,3);
+      var val=Math.round(from+(to-from)*eased);
+      el.textContent=(prefix||'')+fmt(val);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function tickMetrics(animate){
+    if(!orderEl) return;
+    var now=new Date();
+    var prof=dayProfile(now);
+    var frac=fractionElapsed(now);
+    var orders=Math.round(prof.dailyOrders*frac);
+    var revenue=Math.round(orders*prof.aov);
+
+    if(animate){
+      animateTo(orderEl, 0, orders, 1400, '');
+      animateTo(revEl, 0, revenue, 1500, '$');
+    } else {
+      if(orders!==shownOrders) animateTo(orderEl, shownOrders, orders, 700, '');
+      if(revenue!==shownRev) animateTo(revEl, shownRev, revenue, 800, '$');
+    }
+    shownOrders=orders; shownRev=revenue;
+
+    // projection note (honest framing: pace, not a promise)
+    var projected=prof.dailyOrders;
+    ordSub.innerHTML='of ~'+fmt(projected)+' projected today';
+    revSub.innerHTML='at $'+prof.aov.toFixed(0)+' avg order';
+
+    renderBars('ordersBars', now.getHours());
+    renderBars('revBars', now.getHours());
+
+    var hh=now.getHours().toString().padStart(2,'0');
+    var mm=now.getMinutes().toString().padStart(2,'0');
+    capEl.textContent='Resets at midnight · as of '+hh+':'+mm+' local';
+  }
+
+  // visitors-online: current-hour baseline + slow organic drift (this is a "now" metric)
+  var visBars=document.getElementById('visBars');
+  function tickVisitors(){
+    if(!visEl) return;
+    var now=new Date();
+    var prof=dayProfile(now);
+    var r=rng(prof.seed ^ 0x55);
+    var base=HOURW[now.getHours()]/HOURW_MAX;            // 0..1 by time of day
+    var center=Math.round(4 + base*(26 + r()*16));       // typical concurrent visitors
+    // gentle sine drift + small noise so it breathes without storage
+    var t=now.getTime()/1000;
+    var drift=Math.sin(t/23)*3 + Math.sin(t/7)*1.5;
+    var val=Math.max(1, Math.round(center + drift + (Math.random()-0.5)*2));
+    visEl.textContent=fmt(val);
+    if(visBars){
+      var html='';
+      for(var i=0;i<8;i++){
+        var hpct=20 + Math.abs(Math.sin(t/5 + i))*70;
+        html+='<i class="'+(i===7?'hot':'')+'" style="height:'+Math.round(hpct)+'%"></i>';
       }
-      requestAnimationFrame(step);
-    });
-  }
-  if(statsBand){
-    var sio=new IntersectionObserver(function(en){
-      if(en[0].isIntersecting && !counted){ counted=true; reduce?runCountersInstant():runCounters(); sio.disconnect(); }
-    },{threshold:0.4});
-    sio.observe(statsBand);
-  }
-  function runCountersInstant(){
-    document.querySelectorAll('.stat-num').forEach(function(el){ el.textContent=el.dataset.count+(el.dataset.suffix||''); });
+      visBars.innerHTML=html;
+    }
   }
 
-  /* ---------- TESTIMONIALS render ---------- */
-  var testimonials=[
-    {q:"They built our whole online ordering system from scratch. Saturday morning rushes used to crash our old site — now it just works.",a:"Marcus T.",r:"Restaurant Owner"},
-    {q:"The AI chat assistant books appointments while I sleep. I wake up to a full calendar. Genuinely changed how I run my salon.",a:"Priya R.",r:"Salon Owner"},
-    {q:"Our Google Ads were bleeding money before Nolvek took over. Now every dollar brings three back. The reporting is crystal clear.",a:"David K.",r:"HVAC Company"},
-    {q:"Switched our store to Upcart and never looked back. It's fast, it's clean, and sales are up 40% since launch.",a:"Lena M.",r:"Boutique Owner"},
-    {q:"They don't just build and disappear. Every month they show me what's working and push for more. True partners.",a:"James O.",r:"Auto Detailing"},
-    {q:"From zero online presence to page one on Google in three months. My phone hasn't stopped ringing since.",a:"Sofia A.",r:"Med Spa Owner"}
-  ];
-  var grid=document.getElementById('tstGrid');
-  if(grid){
-    grid.innerHTML=testimonials.map(function(t){
-      var initials=t.a.split(' ').map(function(w){return w[0];}).join('').slice(0,2);
-      return '<article class="tst-card">'+
-        '<div class="tst-stars" aria-label="5 out of 5 stars">★★★★★</div>'+
-        '<p class="tst-q">“'+t.q+'”</p>'+
-        '<div class="tst-by"><span class="tst-av" aria-hidden="true">'+initials+'</span>'+
-        '<div><div class="tst-name">'+t.a+'</div><div class="tst-role">'+t.r+'</div></div></div>'+
-      '</article>';
-    }).join('');
+  // kick off when the dashboard scrolls into view; then keep it live
+  var adminEl=document.querySelector('.upcart-admin');
+  if(adminEl){
+    var started=false;
+    var aio=new IntersectionObserver(function(en){
+      if(en[0].isIntersecting && !started){
+        started=true;
+        tickMetrics(true);
+        tickVisitors();
+        setInterval(function(){ tickMetrics(false); }, 20000); // re-read clock
+        setInterval(tickVisitors, 4000);                       // live breathing
+        aio.disconnect();
+      }
+    },{threshold:0.3});
+    aio.observe(adminEl);
   }
 
-  /* ---------- CONTACT FORM ---------- */
+  /* ---------- AI CHAT DEMO (looping conversation) ---------- */
+  (function(){
+    var body=document.getElementById('chatBody');
+    var typing=document.getElementById('typingBubble');
+    if(!body||!typing||reduce) return;
+    var script=[
+      {side:'user', text:'Thursday works for me', time:'9:42 AM'},
+      {side:'bot',  text:"You're booked for Thursday, 10am–12pm. I'll text a reminder the morning of. See you then! 👍", time:'9:43 AM'}
+    ];
+    var i=0;
+    function clearAdded(){ body.querySelectorAll('.added').forEach(function(n){n.remove();}); }
+    function loop(){
+      if(i>=script.length){
+        setTimeout(function(){ clearAdded(); typing.style.display=''; i=0; setTimeout(loop,1800); },4200);
+        return;
+      }
+      var m=script[i];
+      if(m.side==='user'){
+        typing.style.display='none';
+        var b=document.createElement('div');
+        b.className='bubble user added';
+        b.innerHTML=m.text+'<div class="bubble-time">'+m.time+'</div>';
+        body.insertBefore(b,typing);
+        body.scrollTop=body.scrollHeight;
+        i++;
+        setTimeout(function(){ typing.style.display=''; body.scrollTop=body.scrollHeight; setTimeout(loop,1500); },500);
+      } else {
+        setTimeout(function(){
+          typing.style.display='none';
+          var b=document.createElement('div');
+          b.className='bubble bot added';
+          b.innerHTML=m.text+'<div class="bubble-time">'+m.time+'</div>';
+          body.insertBefore(b,typing);
+          body.scrollTop=body.scrollHeight;
+          i++; loop();
+        },1700);
+      }
+    }
+    setTimeout(loop,2500);
+  })();
+
+  /* ---------- CONTACT FORM (live FormSubmit) ---------- */
   var form=document.getElementById('contactForm');
   var note=document.getElementById('formNote');
   form && form.addEventListener('submit', function(e){
@@ -1154,7 +1322,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       form.reset(); btn.disabled=false; btn.innerHTML='Send Message →';
     })
     .catch(function(){
-      note.textContent='Something went wrong — email hello@nolvek.online and we’ll jump on it.';
+      note.textContent='Something went wrong — email kevlongalloway1999@icloud.com and we’ll jump on it.';
       note.className='form-note';
       btn.disabled=false; btn.innerHTML='Send Message →';
     });
