@@ -121,7 +121,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{
   background:var(--bg);color:var(--text);
   font-family:'Inter',sans-serif;line-height:1.6;
-  overflow-x:hidden;font-size:17px;
+  overflow-x:hidden;font-size:16px;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
 }
 ::selection{background:var(--accent);color:#000;}
@@ -198,7 +198,7 @@ nav.scrolled{box-shadow:0 6px 34px rgba(0,0,0,.55),0 0 0 1px rgba(var(--accent-r
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:600;color:var(--muted);margin-bottom:1.6rem;letter-spacing:.12em;text-transform:uppercase;}
 .hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0;box-shadow:0 0 10px var(--accent);}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.7rem,5.2vw,5rem);line-height:1.0;letter-spacing:-.045em;margin-bottom:1.6rem;overflow-wrap:break-word;}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.55rem,8.4vw,4.7rem);line-height:1.02;letter-spacing:-.045em;margin-bottom:1.4rem;overflow-wrap:normal;word-break:keep-all;hyphens:none;}
 h1 em{font-style:normal;color:var(--accent);position:relative;display:inline-block;}
 h1 em::after{content:'';position:absolute;left:0;bottom:-.06em;height:.07em;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;border-radius:4px;box-shadow:0 0 18px rgba(var(--accent-rgb),0.5);animation:drawLine 1s var(--ease) forwards .85s;}
 @keyframes drawLine{to{transform:scaleX(1);}}
@@ -299,19 +299,20 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.3r
 .ai-demo-copy p{color:var(--muted2);font-size:1rem;line-height:1.75;margin-bottom:1.4rem;max-width:440px;}
 .ai-points{list-style:none;display:grid;gap:.7rem;}
 .ai-points li{font-size:.93rem;color:var(--muted2);display:flex;gap:10px;align-items:flex-start;}
-.ai-points li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;}
+.ai-points li svg,.price-feats li svg{width:15px;height:15px;flex-shrink:0;margin-top:3px;stroke:var(--accent);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
 .phone-wrap{justify-self:center;perspective:1100px;}
-.phone{width:280px;background:var(--bg4);border:2px solid var(--border2);border-radius:38px;padding:11px;box-shadow:0 40px 80px rgba(0,0,0,.6);transform-style:preserve-3d;transition:transform .2s ease;}
-.phone-notch{width:78px;height:18px;background:var(--bg4);border-radius:0 0 14px 14px;margin:0 auto 8px;border-bottom:2px solid var(--border);display:flex;align-items:center;justify-content:center;}
-.phone-cam{width:7px;height:7px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);}
-.phone-screen{background:var(--bg3);border-radius:26px;overflow:hidden;height:520px;display:flex;flex-direction:column;}
-.phone-status{background:var(--bg4);padding:6px 16px;display:flex;justify-content:space-between;align-items:center;font-size:.7rem;font-weight:600;color:var(--muted2);}
-.chat-header{background:var(--bg4);padding:10px 14px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--border);}
-.chat-avatar{width:30px;height:30px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#000;flex-shrink:0;}
-.chat-agent-name{font-size:.8rem;font-weight:600;display:block;}
-.chat-agent-sub{font-size:.64rem;color:var(--green);}
-.chat-body{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
-.bubble{max-width:86%;border-radius:14px;padding:8px 11px;font-size:.78rem;line-height:1.45;animation:bubbleIn .35s var(--ease) both;}
+.phone{width:250px;background:#000;border:1px solid #2a2a2e;border-radius:44px;padding:6px;box-shadow:0 30px 70px rgba(0,0,0,.65),inset 0 0 0 1px rgba(255,255,255,.04);transform-style:preserve-3d;transition:transform .2s ease;position:relative;}
+.phone-screen{background:var(--bg);border-radius:38px;overflow:hidden;height:486px;display:flex;flex-direction:column;position:relative;}
+/* Dynamic Island */
+.phone-notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:74px;height:21px;background:#000;border-radius:100px;z-index:5;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;}
+.phone-cam{width:6px;height:6px;border-radius:50%;background:#16181d;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);}
+.phone-status{padding:13px 20px 7px;display:flex;justify-content:space-between;align-items:center;font-size:.66rem;font-weight:600;color:var(--text);}
+.chat-header{background:rgba(255,255,255,.02);padding:8px 13px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
+.chat-avatar{width:26px;height:26px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:#000;flex-shrink:0;}
+.chat-agent-name{font-size:.74rem;font-weight:600;display:block;letter-spacing:-.01em;}
+.chat-agent-sub{font-size:.6rem;color:var(--green);}
+.chat-body{flex:1;padding:11px 9px;display:flex;flex-direction:column;gap:7px;overflow-y:auto;}
+.bubble{max-width:85%;border-radius:15px;padding:7px 11px;font-size:.74rem;line-height:1.42;animation:bubbleIn .35s var(--ease) both;}
 .bubble.bot{background:var(--bg4);color:var(--text);border-radius:4px 14px 14px 14px;align-self:flex-start;}
 .bubble.user{background:var(--accent);color:#000;font-weight:500;border-radius:14px 4px 14px 14px;align-self:flex-end;}
 .bubble-time{font-size:.58rem;color:var(--muted);margin-top:3px;}
@@ -322,8 +323,9 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.3r
 .typing-dot:nth-child(2){animation-delay:.2s;}
 .typing-dot:nth-child(3){animation-delay:.4s;}
 @keyframes typingBounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-5px);}}
-.chat-quick{padding:8px 10px;display:flex;gap:6px;flex-wrap:wrap;border-top:1px solid var(--border);}
-.qr{background:var(--accent-dim);border:1px solid var(--accent-border);color:var(--accent);font-size:.66rem;padding:5px 9px;border-radius:100px;white-space:nowrap;}
+.bubble-time{font-size:.55rem;}
+.chat-quick{padding:7px 9px 11px;display:flex;gap:5px;flex-wrap:wrap;border-top:1px solid var(--border);}
+.qr{background:var(--accent-dim);border:1px solid var(--accent-border);color:var(--accent);font-size:.62rem;padding:4px 9px;border-radius:100px;white-space:nowrap;}
 
 /* ============================================================
    PRODUCTS — self-serve suite
@@ -442,7 +444,6 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.3r
 .price-desc{font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:20px;}
 .price-feats{list-style:none;display:grid;gap:.7rem;margin-bottom:26px;}
 .price-feats li{font-size:.94rem;color:var(--muted2);display:flex;gap:10px;align-items:flex-start;}
-.price-feats li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;}
 .price-card .btn-p,.price-card .btn-g{width:100%;justify-content:center;}
 
 /* ============================================================
@@ -502,11 +503,18 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.3r
   .admin-cards{grid-template-columns:repeat(3,1fr);}
 }
 @media (max-width:760px){
-  body{font-size:16px;}
+  body{font-size:15px;}
   .nav-links{display:none;}
   .nav-burger{display:flex;}
-  .sec{padding:80px 6%;}
-  .hero{padding:120px 6% 70px;}
+  .sec{padding:72px 6%;}
+  .sec-head{margin-bottom:2.4rem;}
+  h1{font-size:clamp(2.35rem,9.6vw,3.1rem);letter-spacing:-.04em;}
+  h2{font-size:clamp(1.75rem,6.6vw,2.3rem);}
+  .hero{min-height:auto;padding:118px 6% 64px;}
+  .hero-sub{font-size:.98rem;line-height:1.7;}
+  .hero-chips{margin-top:2rem;padding-top:1.5rem;}
+  .hero-chip{font-size:.74rem;padding:6px 11px;}
+  .sec-sub{font-size:.98rem;}
   .svc-grid,.price-grid,.admin-cards{grid-template-columns:1fr;}
   .ai-demo{grid-template-columns:1fr;gap:2.4rem;padding:26px;}
   .phone-wrap{order:-1;}
@@ -526,6 +534,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .reveal{opacity:1;transform:none;}
   .cursor-dot,.cursor-ring{display:none;}
 }
+/* ── inline icon system (replaces all emoji) ── */
+.ico{width:1em;height:1em;display:inline-block;vertical-align:-0.14em;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.svc-icon-wrap svg,.cm-ic svg{width:21px;height:21px;color:var(--accent);}
+.upcart-badge .ico,.live-pill .ico,.admin-head .lt .ico,.prod-status .ico{width:.95em;height:.95em;}
+.b-url .ico{width:11px;height:11px;margin-right:5px;vertical-align:-0.08em;}
+.uf-check svg{width:12px;height:12px;stroke-width:2.4;}
+.mock-badge .ico,.mock-footer-text .ico{width:.85em;height:.85em;margin-right:3px;}
+.chat-avatar svg{width:14px;height:14px;color:#000;}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
 </style>
 <noscript><style>.reveal{opacity:1!important;transform:none!important;}.cursor-dot,.cursor-ring{display:none;}</style></noscript>
@@ -591,7 +607,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <div class="browser-mock" data-tilt>
         <div class="browser-bar">
           <div class="b-dots"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
-          <div class="b-url">🔒 yourbusiness.com</div>
+          <div class="b-url"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>yourbusiness.com</div>
         </div>
         <div class="mock-site">
           <div class="mock-hero-band">
@@ -603,12 +619,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
             </div>
           </div>
           <div class="mock-services-row">
-            <div class="mock-svc"><div class="mock-svc-icon">🔧</div><div class="mock-svc-name">Repairs</div></div>
-            <div class="mock-svc"><div class="mock-svc-icon">🚿</div><div class="mock-svc-name">Install</div></div>
-            <div class="mock-svc"><div class="mock-svc-icon">🔥</div><div class="mock-svc-name">Heating</div></div>
+            <div class="mock-svc"><div class="mock-svc-icon"><svg class="ico" style="width:18px;height:18px;color:var(--accent)" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7a3 3 0 0 1-4 4l-5 5 2 2 5-5a3 3 0 0 1 4-4l2-2-2-2z"/></svg></div><div class="mock-svc-name">Repairs</div></div>
+            <div class="mock-svc"><div class="mock-svc-icon"><svg class="ico" style="width:18px;height:18px;color:var(--accent)" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6"/><path d="M9 9h6l-1 5a2 2 0 0 1-4 0z"/><path d="M12 17v3"/></svg></div><div class="mock-svc-name">Install</div></div>
+            <div class="mock-svc"><div class="mock-svc-icon"><svg class="ico" style="width:18px;height:18px;color:var(--accent)" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1.5 3-1.5 4 0 7 1 2 3 2 3 5a3 3 0 0 1-6 0c0-2 1-2 1-4-2 1-3 3-3 5a5 5 0 0 0 10 0c0-5-5-6-5-13z"/></svg></div><div class="mock-svc-name">Heating</div></div>
           </div>
           <div class="mock-footer-band">
-            <div class="mock-footer-text">⭐ Top-rated locally</div>
+            <div class="mock-footer-text"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="color:var(--accent)" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>Top-rated locally</div>
             <div class="mock-badge">Powered by Nolvek</div>
           </div>
         </div>
@@ -634,25 +650,25 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   <div class="svc-grid">
     <article class="svc">
       <div class="svc-num">01</div>
-      <div class="svc-icon-wrap" aria-hidden="true">🌐</div>
+      <div class="svc-icon-wrap" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div>
       <h3>Custom Websites</h3>
       <p>Fast, mobile-first sites that turn visitors into customers. Built to load quick, rank well, and look like your business — not a template.</p>
     </article>
     <article class="svc">
       <div class="svc-num">02</div>
-      <div class="svc-icon-wrap" aria-hidden="true">📍</div>
+      <div class="svc-icon-wrap" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
       <h3>Google Business Profile Optimization</h3>
       <p>We set up and fine-tune the profile that shows in Google Maps and local search — categories, photos, posts, and reviews — so nearby customers find you first.</p>
     </article>
     <article class="svc">
       <div class="svc-num">03</div>
-      <div class="svc-icon-wrap" aria-hidden="true">🤖</div>
+      <div class="svc-icon-wrap" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1.3"/><circle cx="9.5" cy="13" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="13" r="1.1" fill="currentColor" stroke="none"/><path d="M2.5 12v3M21.5 12v3"/></svg></div>
       <h3>AI Automation</h3>
       <p>Instant lead replies, smart scheduling, and follow-up sequences that run 24/7 — so no message goes unanswered while you're on the job.</p>
     </article>
     <article class="svc">
       <div class="svc-num">04</div>
-      <div class="svc-icon-wrap" aria-hidden="true">⚙️</div>
+      <div class="svc-icon-wrap" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13.5 7l-3 10"/></svg></div>
       <h3>Custom Software</h3>
       <p>Dashboards, client portals, and integrations built from scratch — exactly the tool your operation needs when off-the-shelf doesn't fit.</p>
     </article>
@@ -664,16 +680,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <h3>Every lead gets a reply — instantly.</h3>
       <p>Our AI automation responds the moment a customer reaches out, qualifies the lead, and books the appointment — while you're on a job, at dinner, or asleep. No message slips through.</p>
       <ul class="ai-points">
-        <li>Replies in seconds, 24/7 — across web chat and text</li>
-        <li>Qualifies and books straight onto your calendar</li>
-        <li>Automatic follow-ups until they're ready</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Replies in seconds, 24/7 — across web chat and text</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Qualifies and books straight onto your calendar</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Automatic follow-ups until they're ready</li>
       </ul>
     </div>
     <div class="phone-wrap">
       <div class="phone" data-tilt aria-hidden="true">
-        <div class="phone-notch"><div class="phone-cam"></div></div>
         <div class="phone-screen">
-          <div class="phone-status"><span>9:42</span><span>📶 🔋</span></div>
+          <div class="phone-notch"><div class="phone-cam"></div></div>
+          <div class="phone-status"><span>9:41</span><span>5G</span></div>
           <div class="chat-header">
             <div class="chat-avatar">N</div>
             <div>
@@ -682,7 +698,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
             </div>
           </div>
           <div class="chat-body" id="chatBody">
-            <div class="bubble bot">👋 Hi! Thanks for reaching out. How can I help today?<div class="bubble-time">9:41 AM</div></div>
+            <div class="bubble bot">Hi! Thanks for reaching out — how can I help today?<div class="bubble-time">9:41 AM</div></div>
             <div class="bubble user">Do you guys do free estimates?<div class="bubble-time">9:41 AM</div></div>
             <div class="bubble bot">Yes! We offer free, no-obligation inspections. What area of Atlanta are you in?<div class="bubble-time">9:41 AM</div></div>
             <div class="bubble user">Buckhead<div class="bubble-time">9:42 AM</div></div>
@@ -761,14 +777,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   <div class="upcart-band reveal">
     <div class="upcart-inner">
       <div class="upcart-copy">
-        <div class="upcart-badge">⚡ Powered by Nolvek</div>
+        <div class="upcart-badge"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg> Powered by Nolvek</div>
         <h3 class="upcart-title">Your store, fully managed.</h3>
         <p class="upcart-desc">Upcart is the all-in-one commerce platform you can run yourself. No plugins to wrangle, no downtime, no surprises — just a fast, beautiful store that sells.</p>
         <ul class="upcart-feats">
-          <li><span class="uf-check" aria-hidden="true">✓</span> Lightning-fast managed hosting</li>
-          <li><span class="uf-check" aria-hidden="true">✓</span> Conversion-optimized checkout</li>
-          <li><span class="uf-check" aria-hidden="true">✓</span> Real-time inventory &amp; orders</li>
-          <li><span class="uf-check" aria-hidden="true">✓</span> Built-in marketing &amp; email tools</li>
+          <li><span class="uf-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg></span> Lightning-fast managed hosting</li>
+          <li><span class="uf-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg></span> Conversion-optimized checkout</li>
+          <li><span class="uf-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg></span> Real-time inventory &amp; orders</li>
+          <li><span class="uf-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg></span> Built-in marketing &amp; email tools</li>
         </ul>
         <a href="https://upcart.online" target="_blank" rel="noopener" class="btn-p" data-magnetic>Visit Upcart →</a>
       </div>
@@ -777,7 +793,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
         <div class="upcart-screen" data-tilt>
           <div class="us-bar">
             <div class="b-dots"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
-            <div class="b-url">🔒 upcart.online</div>
+            <div class="b-url"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>upcart.online</div>
           </div>
           <div class="us-body">
             <div class="us-hero">
@@ -802,7 +818,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   <!-- LIVE, time-based dashboard (no storage; derived from the clock) -->
   <div class="upcart-admin reveal" style="padding:0 5%;">
     <div class="admin-head">
-      <div class="lt">📊 Store today <span class="live-pill"><span class="ld"></span>Live</span></div>
+      <div class="lt"><svg class="ico" viewBox="0 0 24 24" style="color:var(--accent)" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg> Store today <span class="live-pill"><span class="ld"></span>Live</span></div>
       <div class="admin-cap" id="adminCap">Resets at midnight · updates through the day</div>
     </div>
     <div class="admin-cards">
@@ -856,10 +872,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <div class="price-amt">$199<span>/site</span></div>
       <div class="price-desc">Get online fast with a clean, professional presence built to convert.</div>
       <ul class="price-feats">
-        <li>5-page custom website</li>
-        <li>Mobile-optimized design</li>
-        <li>Google Business Profile setup</li>
-        <li>On-page SEO included</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> 5-page custom website</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Mobile-optimized design</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Google Business Profile setup</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> On-page SEO included</li>
       </ul>
       <a href="#contact" class="btn-g" data-magnetic>Get Started</a>
     </div>
@@ -869,11 +885,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <div class="price-amt">$20<span>/mo</span></div>
       <div class="price-desc">Keep your site fast, secure, and current — plus ongoing Google profile optimization.</div>
       <ul class="price-feats">
-        <li>Hosting &amp; maintenance</li>
-        <li>Content &amp; design updates</li>
-        <li>Google Business Profile optimization</li>
-        <li>AI lead-capture add-on available</li>
-        <li>Priority support</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Hosting &amp; maintenance</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Content &amp; design updates</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Google Business Profile optimization</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> AI lead-capture add-on available</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Priority support</li>
       </ul>
       <a href="#contact" class="btn-p" data-magnetic>Get Started</a>
     </div>
@@ -882,10 +898,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <div class="price-amt">Let's talk</div>
       <div class="price-desc">Bespoke software, integrations, and self-serve products like Upcart.</div>
       <ul class="price-feats">
-        <li>Custom software builds</li>
-        <li>Upcart managed commerce</li>
-        <li>AI automation workflows</li>
-        <li>Custom integrations</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Custom software builds</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Upcart managed commerce</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> AI automation workflows</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Custom integrations</li>
       </ul>
       <a href="#contact" class="btn-g" data-magnetic>Contact Us</a>
     </div>
@@ -900,9 +916,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
       <h2 id="contact-h">Let's put your business in the fast lane.</h2>
       <p class="sec-sub">Tell us what you need. We'll get back to you within one business day with a plan and a quote.</p>
       <div class="contact-meta">
-        <div class="cm-row"><span class="cm-ic" aria-hidden="true">📍</span> Atlanta, Georgia</div>
-        <div class="cm-row"><span class="cm-ic" aria-hidden="true">✉️</span> kevlongalloway1999@icloud.com</div>
-        <div class="cm-row"><span class="cm-ic" aria-hidden="true">⚡</span> 1-business-day response</div>
+        <div class="cm-row"><span class="cm-ic" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span> Atlanta, Georgia</div>
+        <div class="cm-row"><span class="cm-ic" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span> kevlongalloway1999@icloud.com</div>
+        <div class="cm-row"><span class="cm-ic" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></span> 1-business-day response</div>
       </div>
     </div>
     <form class="contact-form" id="contactForm" novalidate>
@@ -1254,7 +1270,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     if(!body||!typing||reduce) return;
     var script=[
       {side:'user', text:'Thursday works for me', time:'9:42 AM'},
-      {side:'bot',  text:"You're booked for Thursday, 10am–12pm. I'll text a reminder the morning of. See you then! 👍", time:'9:43 AM'}
+      {side:'bot',  text:"You're booked for Thursday, 10am–12pm. I'll text a reminder the morning of. See you then.", time:'9:43 AM'}
     ];
     var i=0;
     function clearAdded(){ body.querySelectorAll('.added').forEach(function(n){n.remove();}); }
@@ -1317,7 +1333,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     })
     .then(function(r){return r.json();})
     .then(function(){
-      note.textContent='Thanks, '+first+'! We’ll be in touch within one business day. ⚡';
+      note.textContent='Thanks, '+first+'! We’ll be in touch within one business day.';
       note.className='form-note ok';
       form.reset(); btn.disabled=false; btn.innerHTML='Send Message →';
     })
