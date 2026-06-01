@@ -14,8 +14,8 @@
 <link rel="icon" type="image/svg+xml" href="/logo.svg">
 <link rel="apple-touch-icon" href="/favicon.png">
 
-<meta name="description" content="Nolvek helps Atlanta local businesses get found online and grow faster. Websites from $199, Google & Meta ad management, AI lead automation, and custom software. Based in Atlanta, GA.">
-<meta name="keywords" content="Atlanta web design, local business website Atlanta, Google Ads management Atlanta, AI automation small business, custom software Atlanta, Google Business Profile setup, digital marketing Atlanta">
+<meta name="description" content="Nolvek helps Atlanta local businesses get found online and grow faster. Websites from $199, Google & Meta ad management, AI lead automation, custom software, and Upcart managed online stores. Based in Atlanta, GA.">
+<meta name="keywords" content="Atlanta web design, local business website Atlanta, Google Ads management Atlanta, AI automation small business, custom software Atlanta, Google Business Profile setup, digital marketing Atlanta, Upcart online store, managed ecommerce Atlanta">
 <meta name="author" content="Nolvek">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 <meta name="geo.region" content="US-GA">
@@ -26,7 +26,7 @@
 <meta property="og:url" content="https://nolvek.online">
 <meta property="og:site_name" content="Nolvek">
 <meta property="og:title" content="Nolvek | Websites, Ads & AI for Atlanta Businesses">
-<meta property="og:description" content="Nolvek helps Atlanta local businesses get found online. Websites from $199, Google & Meta ads, AI lead automation, and custom software. Based in Atlanta, GA.">
+<meta property="og:description" content="Nolvek helps Atlanta local businesses get found online. Websites from $199, Google & Meta ads, AI lead automation, custom software, and Upcart managed stores. Based in Atlanta, GA.">
 <meta property="og:image" content="https://nolvek.online/og-image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
@@ -35,17 +35,21 @@
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nolvek | Websites, Ads & AI for Atlanta Businesses">
-<meta name="twitter:description" content="Nolvek helps Atlanta local businesses get found online. Websites from $199, Google & Meta ads, AI lead automation, and custom software.">
+<meta name="twitter:description" content="Nolvek helps Atlanta local businesses get found online. Websites from $199, Google & Meta ads, AI lead automation, custom software, and Upcart managed stores.">
 <meta name="twitter:image" content="https://nolvek.online/og-image.png">
 <meta name="twitter:image:alt" content="Nolvek — Your Competition Is Online. Are You Winning?">
 
 <style>
 /* ============================================================
-   DESIGN SYSTEM — Nolvek v2
-   Accent: Electric Lime #a8ff3e (replaces AI-template cyan)
-   Type: Syne display / Inter body
-   Radius: 8px (tighter, more precise than before)
-   Cards: border-only, no filled backgrounds
+   DESIGN SYSTEM — NOLVEK VELOCITY
+   ------------------------------------------------------------
+   Brand is 100% LOCKED to the live nolvek.online extraction:
+     Accent: Electric Lime #a8ff3e  ·  Gradient: #a8ff3e -> #34d399
+     Type:   Syne (display) / Inter (body)
+     Radius: 8px  ·  Cards: border-only, no filled backgrounds
+   The "Velocity" layer adds momentum-driven motion (trails,
+   thrust hovers, scroll parallax, cursor) — every effect is
+   derived ONLY from the extracted live colors. No new palette.
 ============================================================ */
 :root {
   --bg:    #09090b;
@@ -55,6 +59,7 @@
   --border:  rgba(255,255,255,0.07);
   --border2: rgba(255,255,255,0.13);
   --accent:  #a8ff3e;
+  --accent2: #34d399;          /* second logo gradient stop (live) */
   --accent-dim: rgba(168,255,62,0.07);
   --accent-border: rgba(168,255,62,0.2);
   --green:  #22c55e;
@@ -63,13 +68,20 @@
   --muted:  #71717a;
   --muted2: #a1a1aa;
   --r: 8px;
+  --ease: cubic-bezier(.16,1,.3,1);   /* velocity easing — fast in, smooth settle */
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.62;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+::selection{background:var(--accent);color:#000;}
 
-/* ── SCROLL PROGRESS LINE ── */
-#scroll-line{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:9999;width:0%;will-change:width;}
+/* ── SCROLL PROGRESS LINE (velocity meter) ── */
+#scroll-line{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:9999;width:0%;will-change:width;box-shadow:0 0 12px rgba(168,255,62,.5);}
+
+/* ── CURSOR DOT (desktop velocity cursor) ── */
+#cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;background:var(--accent);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease),background .25s,opacity .3s;mix-blend-mode:screen;opacity:0;will-change:transform;}
+#cursor-dot.hot{width:42px;height:42px;background:rgba(168,255,62,.18);border:1px solid var(--accent-border);}
+@media(hover:none){#cursor-dot{display:none;}}
 
 /* ── FLOATING PILL NAV ── */
 nav{
@@ -80,7 +92,9 @@ nav{
   border:1px solid var(--border2);border-radius:100px;
   width:max-content;max-width:calc(100vw - 32px);
   box-shadow:0 4px 24px rgba(0,0,0,.4);
+  transition:box-shadow .3s var(--ease),border-color .3s;
 }
+nav.scrolled{box-shadow:0 6px 30px rgba(0,0,0,.55),0 0 0 1px var(--accent-border),0 0 26px rgba(168,255,62,.08);}
 .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;padding:6px 16px 6px 10px;border-right:1px solid var(--border);margin-right:2px;}
 .logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--text);letter-spacing:-.04em;}
 .logo-text span{color:var(--accent);}
@@ -89,39 +103,78 @@ nav{
 .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06);}
 .nav-cta{background:var(--accent)!important;color:#000!important;font-weight:600!important;margin-left:3px;}
 .nav-cta:hover{background:#fff!important;}
+/* Upcart pill — pulses lightly with live accent */
+.nav-upcart{position:relative;color:#000!important;background:var(--accent)!important;font-weight:600!important;display:inline-flex;align-items:center;gap:6px;}
+.nav-upcart::before{content:'';position:absolute;inset:0;border-radius:100px;box-shadow:0 0 0 0 rgba(168,255,62,.45);animation:pillPulse 2.6s var(--ease) infinite;}
+.nav-upcart .dot{width:5px;height:5px;border-radius:50%;background:#000;}
+@keyframes pillPulse{0%{box-shadow:0 0 0 0 rgba(168,255,62,.45);}70%{box-shadow:0 0 0 9px rgba(168,255,62,0);}100%{box-shadow:0 0 0 0 rgba(168,255,62,0);}}
+
+/* Mobile menu */
+.nav-burger{display:none;background:none;border:none;cursor:pointer;padding:8px 12px;flex-direction:column;gap:4px;}
+.nav-burger span{display:block;width:18px;height:2px;background:var(--text);border-radius:2px;transition:transform .3s var(--ease),opacity .2s;}
+#mobile-menu{position:fixed;inset:0;z-index:790;background:rgba(9,9,11,.97);backdrop-filter:blur(20px);display:flex;flex-direction:column;justify-content:center;gap:.5rem;padding:2rem 8%;transform:translateX(100%);transition:transform .45s var(--ease);}
+#mobile-menu.open{transform:translateX(0);}
+#mobile-menu a{font-family:'Syne',sans-serif;font-weight:700;font-size:1.8rem;color:var(--text);text-decoration:none;letter-spacing:-.03em;padding:.5rem 0;border-bottom:1px solid var(--border);transition:color .2s,padding-left .3s var(--ease);}
+#mobile-menu a:hover{color:var(--accent);padding-left:10px;}
+#mobile-menu .mm-cta{color:var(--accent);}
+
+/* ── VELOCITY PRIMITIVES ─────────────────────────────────── */
+/* Numbered velocity marker with a trail line that draws on scroll */
+.v-marker{display:flex;align-items:center;gap:14px;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:1.3rem;}
+.v-marker .v-num{color:var(--accent);font-family:'Syne',sans-serif;font-weight:700;}
+.v-marker .v-trail{flex:1;height:1.5px;max-width:160px;background:linear-gradient(90deg,var(--accent),rgba(168,255,62,0));transform-origin:left;transform:scaleX(0);transition:transform 1.1s var(--ease) .15s;border-radius:2px;}
+.v-marker.visible .v-trail{transform:scaleX(1);}
+.v-marker.center{justify-content:center;}
+.v-marker.center .v-trail{max-width:90px;}
+
+/* Reveal — staggered momentum entrance (fade + upward slide) */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:var(--d,0s);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* Thrust — hover lift + accent glow + scale (signature interaction) */
+.thrust{transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s;}
+.thrust:hover{transform:translateY(-4px) scale(1.012);box-shadow:0 18px 50px rgba(0,0,0,.5),0 0 0 1px var(--accent-border),0 0 34px rgba(168,255,62,.1);border-color:var(--accent-border)!important;}
+
+/* Velocity heading underline that wipes in */
+.v-underline{position:relative;display:inline-block;}
+.v-underline::after{content:'';position:absolute;left:0;bottom:-.12em;height:.09em;width:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transform-origin:left;transform:scaleX(0);transition:transform .9s var(--ease) .25s;border-radius:4px;}
+.reveal.visible .v-underline::after,.visible.v-underline::after{transform:scaleX(1);}
+
+/* Section accent glow blobs (depth) */
+.glow-blob{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;background:radial-gradient(circle,rgba(168,255,62,.10),transparent 70%);z-index:0;}
 
 /* ── HERO ── */
 .hero{min-height:100vh;display:flex;align-items:center;padding:130px 5% 90px;position:relative;overflow:hidden;}
-.hero-dot-grid{
-  position:absolute;inset:0;
-  background-image:radial-gradient(rgba(255,255,255,0.055) 1px,transparent 1px);
-  background-size:28px 28px;
-  pointer-events:none;
-}
-.hero-spotlight{
-  position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(700px circle at var(--mx,55%) var(--my,45%),rgba(168,255,62,0.045),transparent 60%);
-  transition:background 0.4s ease;
-}
+.hero-dot-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.055) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;}
+.hero-spotlight{position:absolute;inset:0;pointer-events:none;background:radial-gradient(700px circle at var(--mx,55%) var(--my,45%),rgba(168,255,62,0.05),transparent 60%);transition:background 0.4s ease;}
+/* Velocity speed-lines that thrust forward on load */
+.speedlines{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;}
+.speedline{position:absolute;height:1px;width:40%;left:-40%;background:linear-gradient(90deg,transparent,rgba(168,255,62,.55),transparent);opacity:.0;animation:thrust 6.5s linear infinite;}
+.speedline:nth-child(1){top:22%;animation-delay:0s;}
+.speedline:nth-child(2){top:41%;width:28%;animation-delay:1.4s;}
+.speedline:nth-child(3){top:63%;width:50%;animation-delay:2.6s;}
+.speedline:nth-child(4){top:78%;width:33%;animation-delay:3.9s;}
+.speedline:nth-child(5){top:33%;width:22%;animation-delay:5s;}
+@keyframes thrust{0%{left:-40%;opacity:0;}10%{opacity:.7;}60%{opacity:.5;}100%{left:120%;opacity:0;}}
 .hero-inner{display:grid;grid-template-columns:55% 1fr;gap:4rem;align-items:center;width:100%;max-width:1240px;margin:0 auto;position:relative;z-index:2;}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.68rem;font-weight:600;color:var(--muted);margin-bottom:1.6rem;letter-spacing:.12em;text-transform:uppercase;}
-.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0;}
-h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,5.5vw,5rem);line-height:1.0;letter-spacing:-.05em;margin-bottom:1.6rem;}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0;box-shadow:0 0 10px rgba(168,255,62,.7);}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,6vw,5.6rem);line-height:1.0;letter-spacing:-.05em;margin-bottom:1.6rem;}
 h1 em{font-style:normal;color:var(--accent);}
-.hero-sub{font-size:.97rem;color:var(--muted2);max-width:420px;margin-bottom:2.5rem;font-weight:400;line-height:1.85;}
+.hero-sub{font-size:1.06rem;color:var(--muted2);max-width:440px;margin-bottom:2.5rem;font-weight:400;line-height:1.85;}
 .hero-actions{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;}
 .hero-meta{display:flex;gap:2.5rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);}
 .hero-meta-num{font-family:'Syne',sans-serif;font-weight:700;font-size:1.25rem;color:var(--text);display:block;letter-spacing:-.03em;}
 .hero-meta-lbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;}
 
-/* ── BUTTONS ── */
-.btn-p{background:var(--accent);color:#000;font-family:'Inter',sans-serif;font-weight:600;font-size:.87rem;padding:11px 22px;border-radius:var(--r);border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:all .15s;}
-.btn-p:hover{background:#fff;box-shadow:0 4px 20px rgba(168,255,62,.25);transform:translateY(-1px);}
-.btn-g{background:transparent;color:var(--muted2);font-family:'Inter',sans-serif;font-weight:500;font-size:.87rem;padding:11px 22px;border-radius:var(--r);border:1px solid var(--border2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:all .15s;}
-.btn-g:hover{color:var(--text);border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.04);}
+/* ── BUTTONS (thrust glow) ── */
+.btn-p{background:var(--accent);color:#000;font-family:'Inter',sans-serif;font-weight:600;font-size:.9rem;padding:12px 24px;border-radius:var(--r);border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:transform .25s var(--ease),background .15s,box-shadow .25s var(--ease);}
+.btn-p:hover{background:#fff;box-shadow:0 6px 26px rgba(168,255,62,.3);transform:translateY(-2px) scale(1.03);}
+.btn-g{background:transparent;color:var(--muted2);font-family:'Inter',sans-serif;font-weight:500;font-size:.9rem;padding:12px 24px;border-radius:var(--r);border:1px solid var(--border2);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:all .2s var(--ease);}
+.btn-g:hover{color:var(--text);border-color:var(--accent-border);background:rgba(255,255,255,.04);transform:translateY(-2px);}
 
 /* ── BROWSER MOCK ── */
-.browser-mock{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.04);animation:floatUp .9s ease both .2s;opacity:0;}
+.browser-mock{background:var(--bg3);border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.04);animation:floatUp .9s var(--ease) both .2s;opacity:0;}
 .browser-bar{background:var(--bg4);padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);}
 .b-dots{display:flex;gap:5px;}
 .b-dot{width:10px;height:10px;border-radius:50%;}
@@ -144,9 +197,10 @@ h1 em{font-style:normal;color:var(--accent);}
 .mock-footer-text{font-size:.6rem;color:var(--muted);}
 .mock-badge{font-size:.58rem;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border);padding:2px 7px;border-radius:100px;}
 
-/* ── TICKER (replaces static stats bar) ── */
+/* ── TICKER ── */
 .ticker-wrap{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:13px 0;overflow:hidden;}
 .ticker-track{display:flex;animation:ticker 28s linear infinite;width:max-content;}
+.ticker-wrap:hover .ticker-track{animation-play-state:paused;}
 .ticker-item{display:flex;align-items:center;gap:1.5rem;padding:0 3rem;white-space:nowrap;}
 .ticker-num{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--text);}
 .ticker-accent{color:var(--accent);}
@@ -154,14 +208,12 @@ h1 em{font-style:normal;color:var(--accent);}
 .ticker-sep{width:3px;height:3px;border-radius:50%;background:var(--border2);}
 
 /* ── SECTION STRUCTURE ── */
-.section{padding:100px 5%;}
-.inner{max-width:1200px;margin:0 auto;}
+.section{padding:110px 5%;position:relative;overflow:hidden;}
+.inner{max-width:1200px;margin:0 auto;position:relative;z-index:2;}
 .divider{height:1px;background:var(--border);}
 .section-header{margin-bottom:3.5rem;}
-.section-tag{display:inline-flex;align-items:center;gap:10px;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:1.1rem;}
-.section-tag-num{color:var(--accent);}
-.sec-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,3.5vw,3.2rem);letter-spacing:-.045em;line-height:1.02;margin-bottom:1rem;}
-.sec-sub{color:var(--muted2);font-size:.95rem;max-width:480px;line-height:1.85;font-weight:400;}
+.sec-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.2rem,3.8vw,3.4rem);letter-spacing:-.045em;line-height:1.02;margin-bottom:1rem;}
+.sec-sub{color:var(--muted2);font-size:1.02rem;max-width:500px;line-height:1.85;font-weight:400;}
 
 /* ── PRICE CALLOUT ── */
 .price-callout{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;border:1px solid var(--accent-border);border-radius:var(--r);padding:1.25rem 1.5rem;background:rgba(168,255,62,.03);}
@@ -173,21 +225,36 @@ h1 em{font-style:normal;color:var(--accent);}
 /* ── TWO COLUMN LAYOUT ── */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
 
-/* ── DETAIL CARDS (border-only, no fill) ── */
+/* ── DETAIL CARDS ── */
 .detail-card{border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:.75rem;transition:border-color .2s;}
 .detail-card:hover{border-color:var(--border2);}
-.detail-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;margin-bottom:.55rem;color:var(--text);}
-.detail-card p{font-size:.84rem;color:var(--muted2);line-height:1.75;}
+.detail-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.55rem;color:var(--text);}
+.detail-card p{font-size:.87rem;color:var(--muted2);line-height:1.75;}
+
+/* ── SERVICES GRID (asymmetric velocity cards) ── */
+.svc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;}
+.svc-card{position:relative;border:1px solid var(--border);border-radius:14px;padding:1.6rem;background:var(--bg2);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;min-height:230px;will-change:transform;}
+.svc-card .svc-trail{position:absolute;top:0;left:0;height:2px;width:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transform-origin:left;transform:scaleX(0);transition:transform .5s var(--ease);}
+.svc-card:hover .svc-trail{transform:scaleX(1);}
+.svc-card .svc-no{font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;color:var(--accent);letter-spacing:.1em;margin-bottom:auto;}
+.svc-card .svc-icon{font-size:1.6rem;margin-bottom:.9rem;}
+.svc-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:-.02em;margin-bottom:.4rem;}
+.svc-card p{font-size:.83rem;color:var(--muted2);line-height:1.65;}
+.svc-card .svc-go{margin-top:1rem;font-size:.78rem;color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:gap .25s var(--ease);}
+.svc-card:hover .svc-go{gap:12px;}
+/* asymmetric spans */
+.svc-card.wide{grid-column:span 3;}
+.svc-card.std{grid-column:span 2;}
+.svc-card.tall{grid-column:span 2;min-height:230px;}
+.svc-card.upcart{grid-column:span 4;background:linear-gradient(120deg,rgba(168,255,62,.05),rgba(52,211,153,.03));border-color:var(--accent-border);}
+.svc-card.upcart .product-badge{position:absolute;top:1.2rem;right:1.2rem;background:var(--accent);color:#000;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:100px;}
+.svc-upcart-shot{margin-top:1.1rem;border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--bg3);transition:transform .4s var(--ease);}
+.svc-card.upcart:hover .svc-upcart-shot{transform:scale(1.03);}
 
 /* ── CHECK LIST ── */
 .check-list{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-top:.9rem;}
-.check-list li{font-size:.83rem;color:var(--muted2);display:flex;align-items:flex-start;gap:10px;line-height:1.6;}
-.check-list li::before{
-  content:'';flex-shrink:0;margin-top:3px;
-  width:14px;height:14px;border-radius:50%;
-  background:rgba(168,255,62,.12) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 6l2.5 2.5 4.5-5' stroke='%23a8ff3e' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/10px no-repeat;
-  border:1px solid rgba(168,255,62,.3);
-}
+.check-list li{font-size:.85rem;color:var(--muted2);display:flex;align-items:flex-start;gap:10px;line-height:1.6;}
+.check-list li::before{content:'';flex-shrink:0;margin-top:3px;width:14px;height:14px;border-radius:50%;background:rgba(168,255,62,.12) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 6l2.5 2.5 4.5-5' stroke='%23a8ff3e' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/10px no-repeat;border:1px solid rgba(168,255,62,.3);}
 
 /* ── GBP MOCK ── */
 .gbp-mock{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);color:#202124;font-family:'Inter',sans-serif;}
@@ -224,7 +291,7 @@ h1 em{font-style:normal;color:var(--accent);}
 .google-sl{font-size:.72rem;color:#1a0dab;text-decoration:underline;}
 .meta-ad-mock{background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.3);}
 .meta-header{padding:9px 12px;display:flex;align-items:center;gap:8px;}
-.meta-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#34d399);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#000;flex-shrink:0;}
+.meta-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#000;flex-shrink:0;}
 .meta-page-name{font-size:.8rem;font-weight:600;color:#050505;display:block;}
 .meta-spon{font-size:.68rem;color:#65676b;}
 .meta-body-text{padding:0 12px 8px;font-size:.8rem;color:#050505;line-height:1.45;}
@@ -237,8 +304,8 @@ h1 em{font-style:normal;color:var(--accent);}
 
 /* ── PACKAGES ── */
 .packages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:.9rem;}
-.pkg{background:transparent;border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;position:relative;transition:border-color .2s,transform .2s;}
-.pkg:hover{border-color:var(--border2);transform:translateY(-2px);}
+.pkg{background:transparent;border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;position:relative;transition:border-color .25s,transform .25s var(--ease),box-shadow .25s var(--ease);}
+.pkg:hover{border-color:var(--accent-border);transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.4),0 0 26px rgba(168,255,62,.07);}
 .pkg.feat{border-color:rgba(168,255,62,.4);background:rgba(168,255,62,.02);}
 .pkg-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:2px 10px;border-radius:100px;white-space:nowrap;}
 .pkg-name{font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.5rem;}
@@ -266,19 +333,14 @@ h1 em{font-style:normal;color:var(--accent);}
 .bubble.bot{background:var(--bg4);color:var(--text);border-radius:4px 13px 13px 13px;align-self:flex-start;}
 .bubble.user{background:var(--accent);color:#000;font-weight:500;border-radius:13px 4px 13px 13px;align-self:flex-end;}
 .bubble-time{font-size:.58rem;color:var(--muted);margin-top:2px;}
-.typing-dots{display:flex;gap:3px;align-items:center;padding:2px 0;}
-.typing-dot{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:typingBounce 1.2s infinite;}
-.typing-dot:nth-child(2){animation-delay:.2s;}
-.typing-dot:nth-child(3){animation-delay:.4s;}
 .chat-quick{padding:7px 9px;display:flex;gap:5px;flex-wrap:wrap;border-top:1px solid var(--border);}
 .qr{background:var(--accent-dim);border:1px solid var(--accent-border);color:var(--accent);font-size:.65rem;padding:4px 8px;border-radius:100px;white-space:nowrap;}
-
 .auto-right{display:flex;flex-direction:column;gap:.85rem;}
-.auto-feat{border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;display:flex;gap:.9rem;align-items:flex-start;transition:border-color .2s;}
-.auto-feat:hover{border-color:rgba(168,255,62,.2);}
+.auto-feat{border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;display:flex;gap:.9rem;align-items:flex-start;transition:border-color .2s,transform .25s var(--ease);}
+.auto-feat:hover{border-color:var(--accent-border);transform:translateX(6px);}
 .auto-icon{width:34px;height:34px;border-radius:7px;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
-.auto-feat-text h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;margin-bottom:.25rem;}
-.auto-feat-text p{font-size:.8rem;color:var(--muted2);line-height:1.65;}
+.auto-feat-text h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:.25rem;}
+.auto-feat-text p{font-size:.82rem;color:var(--muted2);line-height:1.65;}
 
 /* ── SOFTWARE MOCK ── */
 .soft-visual{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;}
@@ -297,77 +359,151 @@ h1 em{font-style:normal;color:var(--accent);}
 .soft-chart-area{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:9px;height:90px;position:relative;}
 .soft-chart-label{font-size:.63rem;color:var(--muted);margin-bottom:6px;}
 .chart-bars{display:flex;align-items:flex-end;gap:3px;height:55px;}
-.bar{border-radius:2px 2px 0 0;flex:1;background:rgba(168,255,62,.15);}
+.bar{border-radius:2px 2px 0 0;flex:1;background:rgba(168,255,62,.15);transition:height .6s var(--ease);}
 .bar.hi{background:rgba(168,255,62,.5);}
 .soft-card{border:1px solid var(--border);border-radius:var(--r);padding:1.35rem;margin-bottom:.75rem;}
-.soft-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.93rem;margin-bottom:.45rem;}
-.soft-card p{font-size:.82rem;color:var(--muted2);line-height:1.7;}
+.soft-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.45rem;}
+.soft-card p{font-size:.85rem;color:var(--muted2);line-height:1.7;}
 .consult-box{background:rgba(168,255,62,.03);border:1px solid var(--accent-border);border-radius:var(--r);padding:1.5rem;text-align:center;}
 .consult-box h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:.45rem;}
-.consult-box p{font-size:.82rem;color:var(--muted2);margin-bottom:.9rem;line-height:1.65;}
+.consult-box p{font-size:.85rem;color:var(--muted2);margin-bottom:.9rem;line-height:1.65;}
+
+/* ══ UPCART VELOCITY SHOWCASE ══ */
+.upcart-band{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.upcart-band .glow-blob{width:520px;height:520px;top:-160px;right:-120px;}
+.upcart-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:4.5rem;align-items:center;}
+.upcart-tagline{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.6rem);letter-spacing:-.045em;line-height:1.04;margin-bottom:1.1rem;}
+.upcart-tagline .by{display:block;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:.7rem;}
+.upcart-feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1.6rem;}
+.upcart-feat{border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.1rem;display:flex;gap:.7rem;align-items:flex-start;transition:border-color .3s,transform .25s var(--ease);}
+.upcart-feat:hover{border-color:var(--accent-border);transform:translateY(-3px);}
+.upcart-feat .ig{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.7rem;font-weight:700;transition:background .4s var(--ease),box-shadow .4s var(--ease);}
+.upcart-feat.lit .ig{background:var(--accent);color:#000;box-shadow:0 0 14px rgba(168,255,62,.5);}
+.upcart-feat h4{font-family:'Syne',sans-serif;font-weight:700;font-size:.84rem;margin-bottom:.15rem;}
+.upcart-feat p{font-size:.74rem;color:var(--muted2);line-height:1.5;}
+/* Storefront mock */
+.store-mock{background:var(--bg3);border:1px solid var(--border2);border-radius:14px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.6);will-change:transform;}
+.store-top{background:var(--bg4);padding:9px 13px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.store-brand{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;}
+.store-cart{position:relative;font-size:.95rem;}
+.store-cart .cart-count{position:absolute;top:-6px;right:-9px;background:var(--accent);color:#000;font-size:.55rem;font-weight:700;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.store-products{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;padding:14px;}
+.store-prod{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--bg2);}
+.store-prod .thumb{height:74px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;background:linear-gradient(135deg,#13251a,#0f1621);}
+.store-prod .pinfo{padding:8px 9px;}
+.store-prod .pname{font-size:.72rem;font-weight:600;margin-bottom:2px;}
+.store-prod .pprice{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;color:var(--accent);}
+.store-prod .padd{margin-top:6px;width:100%;background:var(--accent);color:#000;border:none;border-radius:5px;font-size:.62rem;font-weight:700;padding:5px;cursor:pointer;transition:background .2s;}
+.store-checkout{margin:0 14px 14px;border:1px solid var(--accent-border);background:rgba(168,255,62,.04);border-radius:8px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between;}
+.store-checkout .ck-label{font-size:.68rem;color:var(--muted2);}
+.store-checkout .ck-total{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;}
+.store-checkout .ck-btn{background:var(--accent);color:#000;border:none;border-radius:6px;font-size:.68rem;font-weight:700;padding:7px 14px;cursor:pointer;}
+.checkout-flash{animation:flash 1.6s ease-in-out infinite;}
+@keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(168,255,62,0);}50%{box-shadow:0 0 18px rgba(168,255,62,.35);}}
+
+/* ── TESTIMONIAL / PROOF ── */
+.proof-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem;}
+.proof-card{border:1px solid var(--border);border-radius:14px;padding:1.6rem;background:var(--bg2);}
+.proof-card.a{grid-column:span 5;}
+.proof-card.b{grid-column:span 4;}
+.proof-card.c{grid-column:span 3;}
+.proof-card.d{grid-column:span 7;margin-top:-1.4rem;}
+.proof-card.e{grid-column:span 5;}
+.proof-quote{font-family:'Syne',sans-serif;font-weight:600;font-size:1.05rem;line-height:1.5;letter-spacing:-.02em;margin-bottom:1.1rem;}
+.proof-meta{display:flex;align-items:center;gap:10px;}
+.proof-logo{width:34px;height:34px;border-radius:8px;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Syne';font-weight:700;color:var(--accent);font-size:.85rem;}
+.proof-who strong{font-size:.82rem;display:block;}
+.proof-who span{font-size:.72rem;color:var(--muted);}
+.proof-stat{display:flex;flex-direction:column;justify-content:center;}
+.proof-stat .big{font-family:'Syne',sans-serif;font-weight:800;font-size:2.4rem;letter-spacing:-.04em;color:var(--accent);}
+.proof-stat .lbl{font-size:.78rem;color:var(--muted2);}
 
 /* ── CONTACT ── */
-.cta-wrap{background:var(--bg2);border-top:1px solid var(--border);padding:100px 5%;position:relative;overflow:hidden;}
+.cta-wrap{background:var(--bg2);border-top:1px solid var(--border);padding:110px 5%;position:relative;overflow:hidden;}
 .cta-wrap::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;}
 .cta-inner{max-width:520px;margin:0 auto;position:relative;z-index:2;text-align:center;}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem;text-align:left;}
 .fg{display:flex;flex-direction:column;gap:5px;}
 .fg.full{grid-column:1/-1;}
 label{font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);}
-input,textarea,select{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:'Inter',sans-serif;font-size:.87rem;padding:10px 12px;transition:border-color .15s,box-shadow .15s;outline:none;width:100%;}
+input,textarea,select{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:'Inter',sans-serif;font-size:.9rem;padding:11px 13px;transition:border-color .15s,box-shadow .15s;outline:none;width:100%;}
 input:focus,textarea:focus,select:focus{border-color:rgba(168,255,62,.4);box-shadow:0 0 0 3px rgba(168,255,62,.06);}
 textarea{resize:vertical;min-height:88px;}
 select option{background:#1a1d24;}
-.submit-btn{width:100%;margin-top:.5rem;background:var(--accent);color:#000;font-family:'Inter',sans-serif;font-weight:700;font-size:.93rem;padding:13px;border-radius:var(--r);border:none;cursor:pointer;transition:all .15s;}
-.submit-btn:hover{background:#fff;box-shadow:0 6px 20px rgba(168,255,62,.2);transform:translateY(-1px);}
+.submit-btn{width:100%;margin-top:.5rem;background:var(--accent);color:#000;font-family:'Inter',sans-serif;font-weight:700;font-size:.95rem;padding:14px;border-radius:var(--r);border:none;cursor:pointer;transition:transform .25s var(--ease),background .15s,box-shadow .25s var(--ease);}
+.submit-btn:hover{background:#fff;box-shadow:0 8px 26px rgba(168,255,62,.25);transform:translateY(-2px);}
 
-/* ── FOOTER ── */
+/* ── FOOTER + VELOCITY CTA BAR ── */
+.foot-cta{background:var(--bg);border-top:1px solid var(--border);padding:70px 5%;position:relative;overflow:hidden;}
+.foot-cta .glow-blob{width:600px;height:300px;bottom:-200px;left:50%;transform:translateX(-50%);}
+.foot-cta-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;z-index:2;}
+.foot-cta h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3.2vw,2.8rem);letter-spacing:-.04em;line-height:1.05;}
+.foot-cta h2 em{font-style:normal;color:var(--accent);}
 footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
 .foot-copy{font-size:.75rem;color:var(--muted);}
-.foot-links{display:flex;gap:1.5rem;list-style:none;}
+.foot-links{display:flex;gap:1.5rem;list-style:none;flex-wrap:wrap;}
 .foot-links a{font-size:.75rem;color:var(--muted);text-decoration:none;transition:color .15s;}
 .foot-links a:hover{color:var(--text);}
-
-/* ── REVEAL ── */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
 
 /* ── KEYFRAMES ── */
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
 @keyframes floatUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
-@keyframes typingBounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-5px);}}
 @keyframes slideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .bubble{animation:slideIn .35s ease both;}
 
 /* ── SECTION FOOTNOTE ── */
-.section-note{font-size:.76rem;color:var(--muted);margin-top:.65rem;line-height:1.65;}
+.section-note{font-size:.78rem;color:var(--muted);margin-top:.65rem;line-height:1.65;}
 .section-note strong{color:var(--muted2);}
 
-/* ── FAQ SECTION ── */
+/* ── FAQ ── */
 .faq-grid{display:grid;gap:.75rem;margin-top:2.5rem;}
 .faq-item{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s;}
 .faq-item:hover{border-color:var(--border2);}
-.faq-q{width:100%;background:none;border:none;color:var(--text);font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;text-align:left;padding:1.25rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;line-height:1.4;}
+.faq-q{width:100%;background:none;border:none;color:var(--text);font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;text-align:left;padding:1.25rem 1.5rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;line-height:1.4;}
 .faq-q .faq-icon{flex-shrink:0;width:20px;height:20px;border-radius:50%;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.85rem;transition:transform .25s,border-color .25s;}
 .faq-item.open .faq-icon{transform:rotate(45deg);border-color:var(--accent);}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
-.faq-item.open .faq-a{max-height:300px;}
-.faq-a p{padding:.25rem 1.5rem 1.25rem;font-size:.84rem;color:var(--muted2);line-height:1.85;margin:0;}
+.faq-item.open .faq-a{max-height:340px;}
+.faq-a p{padding:.25rem 1.5rem 1.25rem;font-size:.86rem;color:var(--muted2);line-height:1.85;margin:0;}
 
 /* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .svc-grid{grid-template-columns:repeat(2,1fr);}
+  .svc-card.wide,.svc-card.std,.svc-card.tall,.svc-card.upcart{grid-column:span 1;}
+  .svc-card.upcart{grid-column:span 2;}
+  .proof-card.a,.proof-card.b,.proof-card.c,.proof-card.d,.proof-card.e{grid-column:span 6;margin-top:0;}
+}
 @media(max-width:900px){
   nav{top:12px;padding:0 5px;height:46px;}
   .nav-links{display:none;}
+  .nav-burger{display:flex;}
+  .section{padding:80px 5%;}
   .hero{padding:100px 5% 70px;}
-  .hero-inner,.two-col,.auto-layout{grid-template-columns:1fr;}
+  .hero-inner,.two-col,.auto-layout,.upcart-grid{grid-template-columns:1fr;gap:3rem;}
   .hero-right{display:none;}
   .hero-meta{gap:1.2rem;flex-wrap:wrap;}
   .packages-grid{grid-template-columns:1fr;}
   .form-grid{grid-template-columns:1fr;}
   .soft-content{grid-template-columns:1fr;}
   .soft-sidebar{display:none;}
+  .upcart-feat-grid{grid-template-columns:1fr;}
 }
+@media(max-width:640px){
+  .svc-grid{grid-template-columns:1fr;}
+  .svc-card.upcart{grid-column:span 1;}
+  .proof-grid{grid-template-columns:1fr;}
+  .proof-card.a,.proof-card.b,.proof-card.c,.proof-card.d,.proof-card.e{grid-column:span 1;}
+}
+
+/* ── ACCESSIBILITY: honor reduced motion ── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important;}
+  .reveal{opacity:1!important;transform:none!important;}
+  .v-marker .v-trail,.v-underline::after,.svc-card .svc-trail{transform:scaleX(1)!important;}
+  .speedlines,#cursor-dot{display:none!important;}
+}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;}
 </style>
 
 <script type="application/ld+json">
@@ -378,22 +514,12 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
       "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": "https://nolvek.online/#business",
       "name": "Nolvek",
-      "description": "Nolvek builds websites, manages Google and Meta ad campaigns, deploys AI lead automation, and creates custom software for local businesses in Atlanta, GA.",
+      "description": "Nolvek builds websites, manages Google and Meta ad campaigns, deploys AI lead automation, creates custom software, and runs Upcart managed online stores for local businesses in Atlanta, GA.",
       "url": "https://nolvek.online",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://nolvek.online/logo.svg",
-        "width": 200,
-        "height": 200
-      },
+      "logo": { "@type": "ImageObject", "url": "https://nolvek.online/logo.svg", "width": 200, "height": 200 },
       "image": "https://nolvek.online/og-image.png",
       "email": "kevlongalloway1999@icloud.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Atlanta",
-        "addressRegion": "GA",
-        "addressCountry": "US"
-      },
+      "address": { "@type": "PostalAddress", "addressLocality": "Atlanta", "addressRegion": "GA", "addressCountry": "US" },
       "areaServed": [
         { "@type": "City", "name": "Atlanta", "sameAs": "https://www.wikidata.org/wiki/Q23556" },
         { "@type": "City", "name": "Buckhead" },
@@ -413,122 +539,43 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
         "@type": "OfferCatalog",
         "name": "Digital Services for Local Businesses",
         "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Website Design & Development",
-              "description": "Professional business websites with Google Business Profile setup, on-page local SEO, and $20/month hosting. Starting at $199.",
-              "serviceType": "Web Design"
-            },
-            "price": "199",
-            "priceCurrency": "USD"
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Digital Ad Management",
-              "description": "Managed Google Ads and Meta (Facebook/Instagram) advertising campaigns for local businesses. Packages from $397/month.",
-              "serviceType": "Digital Advertising"
-            },
-            "price": "397",
-            "priceCurrency": "USD"
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "AI Business Automation",
-              "description": "AI-powered lead response, smart scheduling, follow-up sequences, and weekly analytics reports. Automate your lead pipeline 24/7.",
-              "serviceType": "Marketing Automation"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Custom Software Development",
-              "description": "Custom-built web apps, dashboards, job management systems, client portals, and mobile tools built specifically for your business.",
-              "serviceType": "Software Development"
-            }
-          }
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Design & Development", "description": "Professional business websites with Google Business Profile setup, on-page local SEO, and $20/month hosting. Starting at $199.", "serviceType": "Web Design" }, "price": "199", "priceCurrency": "USD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Digital Ad Management", "description": "Managed Google Ads and Meta (Facebook/Instagram) advertising campaigns for local businesses. Packages from $397/month.", "serviceType": "Digital Advertising" }, "price": "397", "priceCurrency": "USD" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Business Automation", "description": "AI-powered lead response, smart scheduling, follow-up sequences, and weekly analytics reports. Automate your lead pipeline 24/7.", "serviceType": "Marketing Automation" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Software Development", "description": "Custom-built web apps, dashboards, job management systems, client portals, and mobile tools built specifically for your business.", "serviceType": "Software Development" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Upcart", "description": "Upcart is Nolvek's managed online store product — a done-for-you e-commerce storefront with built-in checkout, product management, and an admin dashboard." } }
         ]
       },
-      "knowsAbout": [
-        "Web Design", "Local SEO", "Google Business Profile", "Google Ads",
-        "Facebook Ads", "Instagram Ads", "AI Automation", "Lead Generation",
-        "Custom Software Development", "Small Business Marketing", "Atlanta Digital Marketing"
-      ],
+      "knowsAbout": [ "Web Design", "Local SEO", "Google Business Profile", "Google Ads", "Facebook Ads", "Instagram Ads", "AI Automation", "Lead Generation", "Custom Software Development", "E-commerce", "Managed Online Stores", "Small Business Marketing", "Atlanta Digital Marketing" ],
       "priceRange": "$$",
       "currenciesAccepted": "USD",
       "openingHours": "Mo-Fr 09:00-18:00"
     },
     {
-      "@type": "WebSite",
-      "@id": "https://nolvek.online/#website",
-      "url": "https://nolvek.online",
-      "name": "Nolvek",
-      "description": "Digital services for Atlanta local businesses — websites, ads, AI automation, and custom software.",
+      "@type": "WebSite", "@id": "https://nolvek.online/#website", "url": "https://nolvek.online", "name": "Nolvek",
+      "description": "Digital services for Atlanta local businesses — websites, ads, AI automation, custom software, and Upcart managed stores.",
       "publisher": { "@id": "https://nolvek.online/#business" }
     },
     {
-      "@type": "WebPage",
-      "@id": "https://nolvek.online/#webpage",
-      "url": "https://nolvek.online",
+      "@type": "WebPage", "@id": "https://nolvek.online/#webpage", "url": "https://nolvek.online",
       "name": "Nolvek | Websites, Ads & AI for Atlanta Businesses",
-      "isPartOf": { "@id": "https://nolvek.online/#website" },
-      "about": { "@id": "https://nolvek.online/#business" },
-      "description": "Nolvek helps Atlanta local businesses get found online and grow faster. Websites from $199, Google & Meta ad management, AI lead automation, and custom software.",
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nolvek.online" }
-        ]
-      },
-      "speakable": {
-        "@type": "SpeakableSpecification",
-        "cssSelector": [".hero-sub", ".sec-sub"]
-      }
+      "isPartOf": { "@id": "https://nolvek.online/#website" }, "about": { "@id": "https://nolvek.online/#business" },
+      "description": "Nolvek helps Atlanta local businesses get found online and grow faster. Websites from $199, Google & Meta ad management, AI lead automation, custom software, and Upcart managed online stores.",
+      "breadcrumb": { "@type": "BreadcrumbList", "itemListElement": [ { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nolvek.online" } ] },
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": [".hero-sub", ".sec-sub"] }
     },
     {
-      "@type": "Service",
-      "@id": "https://nolvek.online/#service-webdesign",
-      "name": "Website Design & Development",
-      "serviceType": "Web Design",
-      "provider": { "@id": "https://nolvek.online/#business" },
-      "areaServed": "United States",
-      "description": "Custom, mobile-responsive websites for small businesses. Includes Google Business Profile setup, on-page SEO, contact forms, and fast hosting. Starting at $199.",
-      "offers": { "@type": "Offer", "price": "199", "priceCurrency": "USD", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "199" } }
+      "@type": "Product", "@id": "https://nolvek.online/#upcart", "name": "Upcart",
+      "description": "Upcart is Nolvek's managed online store product — a done-for-you e-commerce storefront with built-in checkout, product and inventory management, and an admin dashboard. Built and maintained by Nolvek.",
+      "brand": { "@type": "Brand", "name": "Nolvek" },
+      "url": "https://upcart.online",
+      "category": "E-commerce Platform",
+      "manufacturer": { "@id": "https://nolvek.online/#business" }
     },
-    {
-      "@type": "Service",
-      "@id": "https://nolvek.online/#service-ads",
-      "name": "Google Ads & Meta Ad Management",
-      "serviceType": "Digital Advertising",
-      "provider": { "@id": "https://nolvek.online/#business" },
-      "areaServed": "United States",
-      "description": "Managed Google Ads and Facebook/Instagram ad campaigns for local businesses. Campaign setup, daily optimization, and weekly reports. Packages from $397/month.",
-      "offers": { "@type": "Offer", "price": "397", "priceCurrency": "USD", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "397" } }
-    },
-    {
-      "@type": "Service",
-      "@id": "https://nolvek.online/#service-ai",
-      "name": "AI Business Automation",
-      "serviceType": "Marketing Automation",
-      "provider": { "@id": "https://nolvek.online/#business" },
-      "areaServed": "United States",
-      "description": "AI-powered lead response, smart scheduling, follow-up sequences, and analytics — your business runs 24/7 without manual effort."
-    },
-    {
-      "@type": "Service",
-      "@id": "https://nolvek.online/#service-software",
-      "name": "Custom Software Development",
-      "serviceType": "Software Development",
-      "provider": { "@id": "https://nolvek.online/#business" },
-      "areaServed": "United States",
-      "description": "Custom-built web apps, dashboards, job management systems, client portals, and mobile tools tailored to your specific business workflows."
-    }
+    { "@type": "Service", "@id": "https://nolvek.online/#service-webdesign", "name": "Website Design & Development", "serviceType": "Web Design", "provider": { "@id": "https://nolvek.online/#business" }, "areaServed": "United States", "description": "Custom, mobile-responsive websites for small businesses. Includes Google Business Profile setup, on-page SEO, contact forms, and fast hosting. Starting at $199.", "offers": { "@type": "Offer", "price": "199", "priceCurrency": "USD", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "199" } } },
+    { "@type": "Service", "@id": "https://nolvek.online/#service-ads", "name": "Google Ads & Meta Ad Management", "serviceType": "Digital Advertising", "provider": { "@id": "https://nolvek.online/#business" }, "areaServed": "United States", "description": "Managed Google Ads and Facebook/Instagram ad campaigns for local businesses. Campaign setup, daily optimization, and weekly reports. Packages from $397/month.", "offers": { "@type": "Offer", "price": "397", "priceCurrency": "USD", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "397" } } },
+    { "@type": "Service", "@id": "https://nolvek.online/#service-ai", "name": "AI Business Automation", "serviceType": "Marketing Automation", "provider": { "@id": "https://nolvek.online/#business" }, "areaServed": "United States", "description": "AI-powered lead response, smart scheduling, follow-up sequences, and analytics — your business runs 24/7 without manual effort." },
+    { "@type": "Service", "@id": "https://nolvek.online/#service-software", "name": "Custom Software Development", "serviceType": "Software Development", "provider": { "@id": "https://nolvek.online/#business" }, "areaServed": "United States", "description": "Custom-built web apps, dashboards, job management systems, client portals, and mobile tools tailored to your specific business workflows." }
   ]
 }
 </script>
@@ -538,83 +585,29 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How much does a website cost for a small business in Atlanta?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Our website packages start at $199 with a $20/month hosting fee. That includes a fully designed, mobile-responsive website, contact forms, on-page SEO, and Google Business Profile setup — everything a local business needs to get found online."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you offer web design services near me?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Nolvek is based in Atlanta, GA and works with businesses across the Atlanta metro area — including Sandy Springs, Marietta, Alpharetta, Decatur, and beyond — as well as clients nationwide. Everything is handled remotely, so location is never a barrier."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How do I get my business found on Google in Atlanta?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "There are two main paths: organic search (SEO) and paid ads. We handle both. Every website we build includes on-page SEO and Google Business Profile setup so you start showing up in local search results. We also run Google Ads campaigns to put your business in front of buyers who are actively searching right now."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is included in your website packages?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Every site includes: a custom, mobile-responsive design; contact forms; on-page SEO optimization; Google Business Profile setup; fast hosting; and ongoing support. We build on a clean, lightweight stack — no bloated page builders — so your site loads fast and ranks well."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How long does it take to build a website?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Most small business websites are ready in 5–10 business days once we have your content and branding. More complex projects with custom functionality take 2–4 weeks. We move fast because we know your business can't afford to wait."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you run Google Ads for Atlanta businesses?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We manage Google Ads and Meta (Facebook/Instagram) ad campaigns for local businesses. Our ad management packages start at $397/month and include campaign setup, ad copywriting, daily optimization, and weekly performance reports."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is AI automation and does my business need it?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "AI automation means your business automatically responds to leads, books appointments, and follows up with prospects — 24/7, without you lifting a finger. If you're missing calls or leads outside business hours, or spending too much time on repetitive follow-ups, AI automation pays for itself fast."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What industries do you work with?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We work with any local service business — roofing contractors, HVAC companies, restaurants, salons, real estate agents, law firms, medical practices, and more. If your customers are searching for you on Google, we can help them find you and convert."
-      }
-    }
+    { "@type": "Question", "name": "How much does a website cost for a small business in Atlanta?", "acceptedAnswer": { "@type": "Answer", "text": "Our website packages start at $199 with a $20/month hosting fee. That includes a fully designed, mobile-responsive website, contact forms, on-page SEO, and Google Business Profile setup — everything a local business needs to get found online." } },
+    { "@type": "Question", "name": "Do you offer web design services near me?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Nolvek is based in Atlanta, GA and works with businesses across the Atlanta metro area — including Sandy Springs, Marietta, Alpharetta, Decatur, and beyond — as well as clients nationwide. Everything is handled remotely, so location is never a barrier." } },
+    { "@type": "Question", "name": "What is Upcart?", "acceptedAnswer": { "@type": "Answer", "text": "Upcart is Nolvek's managed online store product — a done-for-you e-commerce storefront with built-in checkout, product and inventory management, and an admin dashboard. We build it, launch it, and keep it running so you can sell online without the tech headaches." } },
+    { "@type": "Question", "name": "How do I get my business found on Google in Atlanta?", "acceptedAnswer": { "@type": "Answer", "text": "There are two main paths: organic search (SEO) and paid ads. We handle both. Every website we build includes on-page SEO and Google Business Profile setup so you start showing up in local search results. We also run Google Ads campaigns to put your business in front of buyers who are actively searching right now." } },
+    { "@type": "Question", "name": "How long does it take to build a website?", "acceptedAnswer": { "@type": "Answer", "text": "Most small business websites are ready in 5–10 business days once we have your content and branding. More complex projects with custom functionality take 2–4 weeks. We move fast because we know your business can't afford to wait." } },
+    { "@type": "Question", "name": "Do you run Google Ads for Atlanta businesses?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. We manage Google Ads and Meta (Facebook/Instagram) ad campaigns for local businesses. Our ad management packages start at $397/month and include campaign setup, ad copywriting, daily optimization, and weekly performance reports." } },
+    { "@type": "Question", "name": "What is AI automation and does my business need it?", "acceptedAnswer": { "@type": "Answer", "text": "AI automation means your business automatically responds to leads, books appointments, and follows up with prospects — 24/7, without you lifting a finger. If you're missing calls or leads outside business hours, or spending too much time on repetitive follow-ups, AI automation pays for itself fast." } },
+    { "@type": "Question", "name": "What industries do you work with?", "acceptedAnswer": { "@type": "Answer", "text": "We work with any local service business — roofing contractors, HVAC companies, restaurants, salons, real estate agents, law firms, medical practices, and more. If your customers are searching for you on Google, we can help them find you and convert." } }
   ]
 }
 </script>
 </head>
 <body>
 
-<!-- Scroll progress line -->
+<!-- Scroll progress / velocity meter -->
 <div id="scroll-line"></div>
+<!-- Desktop velocity cursor -->
+<div id="cursor-dot" aria-hidden="true"></div>
 
 <!-- ── FLOATING PILL NAV ── -->
-<nav>
+<nav id="nav">
   <a class="nav-logo" href="#">
-    <svg width="30" height="30" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="30" height="30" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Nolvek logo">
       <defs><linearGradient id="ng" x1="38" y1="0" x2="162" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a8ff3e"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs>
       <rect width="200" height="200" rx="42" fill="#111113"/>
       <rect x="38" y="34" width="36" height="132" rx="6" fill="url(#ng)"/>
@@ -624,47 +617,54 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
     <span class="logo-text">Nolv<span>ek</span></span>
   </a>
   <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
     <li><a href="#web">Websites</a></li>
     <li><a href="#ads">Ads</a></li>
     <li><a href="#automation">Automation</a></li>
-    <li><a href="#software">Software</a></li>
+    <li><a href="#upcart" class="nav-upcart"><span class="dot"></span>Upcart</a></li>
     <li><a href="#contact" class="nav-cta">Get Started</a></li>
   </ul>
+  <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
+
+<!-- Mobile menu (momentum slide-in) -->
+<div id="mobile-menu" aria-hidden="true">
+  <a href="#services">Services</a>
+  <a href="#web">Websites</a>
+  <a href="#ads">Ads</a>
+  <a href="#automation">Automation</a>
+  <a href="#software">Software</a>
+  <a href="#upcart">Upcart</a>
+  <a href="#contact" class="mm-cta">Get Started &rarr;</a>
+</div>
 
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-dot-grid"></div>
   <div class="hero-spotlight"></div>
+  <div class="speedlines" aria-hidden="true">
+    <span class="speedline"></span><span class="speedline"></span><span class="speedline"></span><span class="speedline"></span><span class="speedline"></span>
+  </div>
   <div class="hero-inner">
     <div>
       <div class="hero-eyebrow">
         <span class="hero-eyebrow-dot"></span>
         Atlanta Web Design &nbsp;·&nbsp; Google Ads &nbsp;·&nbsp; AI Automation
       </div>
-      <h1>Your business,<br>online &amp;<br><em>growing.</em></h1>
+      <h1>Your business,<br>online &amp;<br><em class="v-underline">growing.</em></h1>
       <p class="hero-sub">Nolvek builds websites, runs your ads, automates lead capture with AI, and creates custom software — so you stop losing customers to competitors who showed up first.</p>
       <div class="hero-actions">
-        <a href="#web" class="btn-p">See What We Do &rarr;</a>
+        <a href="#services" class="btn-p">See What We Do &rarr;</a>
         <a href="#contact" class="btn-g">Free Consultation</a>
       </div>
       <div class="hero-meta">
-        <div class="hero-meta-item">
-          <span class="hero-meta-num">$199</span>
-          <span class="hero-meta-lbl">Websites from</span>
-        </div>
-        <div class="hero-meta-item">
-          <span class="hero-meta-num">24/7</span>
-          <span class="hero-meta-lbl">AI lead response</span>
-        </div>
-        <div class="hero-meta-item">
-          <span class="hero-meta-num">$20<small style="font-size:.7rem;font-weight:400;color:var(--muted)">/mo</small></span>
-          <span class="hero-meta-lbl">Hosting & maintenance</span>
-        </div>
+        <div class="hero-meta-item"><span class="hero-meta-num">$199</span><span class="hero-meta-lbl">Websites from</span></div>
+        <div class="hero-meta-item"><span class="hero-meta-num">24/7</span><span class="hero-meta-lbl">AI lead response</span></div>
+        <div class="hero-meta-item"><span class="hero-meta-num">$20<small style="font-size:.7rem;font-weight:400;color:var(--muted)">/mo</small></span><span class="hero-meta-lbl">Hosting &amp; maintenance</span></div>
       </div>
     </div>
-    <div class="hero-right">
-      <div class="browser-mock">
+    <div class="hero-right" data-parallax="-0.06">
+      <div class="browser-mock tilt">
         <div class="browser-bar">
           <div class="b-dots"><div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div></div>
           <div class="b-url">🔒 innovativefix.com</div>
@@ -690,12 +690,13 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
   </div>
 </section>
 
-<!-- ── SCROLLING TICKER (replaces static stats bar) ── -->
+<!-- ── SCROLLING TICKER ── -->
 <div class="ticker-wrap" aria-hidden="true">
   <div class="ticker-track">
     <div class="ticker-item"><span class="ticker-num ticker-accent">$199</span><span class="ticker-sep"></span><span class="ticker-lbl">Websites starting from</span></div>
     <div class="ticker-item"><span class="ticker-num">24/7</span><span class="ticker-sep"></span><span class="ticker-lbl">AI systems running</span></div>
     <div class="ticker-item"><span class="ticker-num ticker-accent">$20/mo</span><span class="ticker-sep"></span><span class="ticker-lbl">Hosting &amp; maintenance</span></div>
+    <div class="ticker-item"><span class="ticker-num">Upcart</span><span class="ticker-sep"></span><span class="ticker-lbl">Managed online stores</span></div>
     <div class="ticker-item"><span class="ticker-num">Google · Meta · Instagram</span><span class="ticker-sep"></span><span class="ticker-lbl">Ad platforms managed</span></div>
     <div class="ticker-item"><span class="ticker-num ticker-accent">Atlanta, GA</span><span class="ticker-sep"></span><span class="ticker-lbl">Based &amp; operated</span></div>
     <div class="ticker-item"><span class="ticker-num">Instant</span><span class="ticker-sep"></span><span class="ticker-lbl">AI lead response time</span></div>
@@ -703,11 +704,81 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
     <div class="ticker-item"><span class="ticker-num ticker-accent">$199</span><span class="ticker-sep"></span><span class="ticker-lbl">Websites starting from</span></div>
     <div class="ticker-item"><span class="ticker-num">24/7</span><span class="ticker-sep"></span><span class="ticker-lbl">AI systems running</span></div>
     <div class="ticker-item"><span class="ticker-num ticker-accent">$20/mo</span><span class="ticker-sep"></span><span class="ticker-lbl">Hosting &amp; maintenance</span></div>
+    <div class="ticker-item"><span class="ticker-num">Upcart</span><span class="ticker-sep"></span><span class="ticker-lbl">Managed online stores</span></div>
     <div class="ticker-item"><span class="ticker-num">Google · Meta · Instagram</span><span class="ticker-sep"></span><span class="ticker-lbl">Ad platforms managed</span></div>
     <div class="ticker-item"><span class="ticker-num ticker-accent">Atlanta, GA</span><span class="ticker-sep"></span><span class="ticker-lbl">Based &amp; operated</span></div>
     <div class="ticker-item"><span class="ticker-num">Instant</span><span class="ticker-sep"></span><span class="ticker-lbl">AI lead response time</span></div>
   </div>
 </div>
+
+<!-- ══════════════════════════════════════════
+     SERVICES GRID — asymmetric velocity cards
+══════════════════════════════════════════ -->
+<section class="section" id="services">
+  <div class="glow-blob" style="width:480px;height:480px;top:-140px;left:-120px;"></div>
+  <div class="inner">
+    <div class="section-header">
+      <div class="v-marker reveal"><span class="v-num">00</span> Everything we do <span class="v-trail"></span></div>
+      <h2 class="sec-title reveal">Five gears of <em style="font-style:normal;color:var(--accent);">growth.</em></h2>
+      <p class="sec-sub reveal">One team for your whole online presence — built to get you found, get you booked, and keep you selling. Pick where you want to accelerate.</p>
+    </div>
+    <div class="svc-grid">
+      <a href="#web" class="svc-card wide thrust tilt reveal" style="--d:.05s">
+        <span class="svc-trail"></span>
+        <span class="svc-no">#01</span>
+        <div class="svc-icon">🌐</div>
+        <h3>Custom Websites</h3>
+        <p>Fast, mobile-first sites with Google Business Profile setup and on-page SEO. Built to be found. From $199.</p>
+        <span class="svc-go">Explore websites &rarr;</span>
+      </a>
+      <a href="#automation" class="svc-card std thrust tilt reveal" style="--d:.12s">
+        <span class="svc-trail"></span>
+        <span class="svc-no">#02</span>
+        <div class="svc-icon">⚡</div>
+        <h3>AI Automation</h3>
+        <p>Instant 24/7 lead response, smart scheduling, and auto follow-up. Never miss another lead.</p>
+        <span class="svc-go">See it work &rarr;</span>
+      </a>
+      <a href="#ads" class="svc-card std thrust tilt reveal" style="--d:.05s">
+        <span class="svc-trail"></span>
+        <span class="svc-no">#03</span>
+        <div class="svc-icon">🎯</div>
+        <h3>Google &amp; Meta Ads</h3>
+        <p>Managed campaigns that put you in front of buyers searching right now. From $397/mo.</p>
+        <span class="svc-go">View packages &rarr;</span>
+      </a>
+      <a href="#software" class="svc-card std thrust tilt reveal" style="--d:.12s">
+        <span class="svc-trail"></span>
+        <span class="svc-no">#04</span>
+        <div class="svc-icon">🧩</div>
+        <h3>Custom Software</h3>
+        <p>Dashboards, booking systems, client portals, internal tools — built around how you actually work.</p>
+        <span class="svc-go">What we build &rarr;</span>
+      </a>
+      <a href="#upcart" class="svc-card upcart thrust tilt reveal" style="--d:.05s">
+        <span class="svc-trail"></span>
+        <span class="product-badge">Product</span>
+        <span class="svc-no">#05</span>
+        <div class="svc-icon">🛒</div>
+        <h3>Upcart — Managed Online Stores</h3>
+        <p>Nolvek's done-for-you e-commerce product. A full storefront with checkout, product management, and an admin dashboard — built and run for you.</p>
+        <div class="svc-upcart-shot">
+          <div class="store-top" style="padding:7px 11px;">
+            <span class="store-brand" style="font-size:.75rem;">Your Store</span>
+            <span class="store-cart" style="font-size:.8rem;">🛒<span class="cart-count">2</span></span>
+          </div>
+          <div class="store-products" style="padding:10px;gap:7px;">
+            <div class="store-prod"><div class="thumb" style="height:48px;font-size:1.2rem;">👟</div><div class="pinfo" style="padding:6px 7px;"><div class="pname" style="font-size:.66rem;">Best Seller</div><div class="pprice" style="font-size:.72rem;">$49</div></div></div>
+            <div class="store-prod"><div class="thumb" style="height:48px;font-size:1.2rem;">🎁</div><div class="pinfo" style="padding:6px 7px;"><div class="pname" style="font-size:.66rem;">New Drop</div><div class="pprice" style="font-size:.72rem;">$29</div></div></div>
+          </div>
+        </div>
+        <span class="svc-go" style="margin-top:.9rem;">Open the showcase &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- ══════════════════════════════════════════
      SERVICE 01 — WEB DEVELOPMENT
@@ -716,13 +787,13 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
   <div class="inner">
     <div class="two-col">
       <div>
-        <div class="section-tag"><span class="section-tag-num">01</span> &mdash; Web Development</div>
-        <h2 class="sec-title">Your business needs<br>to be findable online.</h2>
-        <p class="sec-sub" style="margin-bottom:.75rem;">Right now, when someone Googles "HVAC near me" or "best roofer in Atlanta" — if you don't have a website and a Google profile, they'll never find you. We fix that, fast.</p>
-        <p class="sec-sub" style="margin-bottom:2rem;">Based in Atlanta and serving businesses across Sandy Springs, Marietta, Alpharetta, Decatur, and <strong style="color:var(--text);">nationwide</strong> — we build websites that help local customers find you first.</p>
+        <div class="v-marker reveal"><span class="v-num">01</span> Web Development <span class="v-trail"></span></div>
+        <h2 class="sec-title reveal">Your business needs<br>to be <span class="v-underline">findable</span> online.</h2>
+        <p class="sec-sub reveal" style="margin-bottom:.75rem;">Right now, when someone Googles "HVAC near me" or "best roofer in Atlanta" — if you don't have a website and a Google profile, they'll never find you. We fix that, fast.</p>
+        <p class="sec-sub reveal" style="margin-bottom:2rem;">Based in Atlanta and serving businesses across Sandy Springs, Marietta, Alpharetta, Decatur, and <strong style="color:var(--text);">nationwide</strong> — we build websites that help local customers find you first.</p>
 
-        <p style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.7rem;">What shows up on Google when customers search for you:</p>
-        <div class="gbp-mock reveal">
+        <p class="reveal" style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.7rem;">What shows up on Google when customers search for you:</p>
+        <div class="gbp-mock reveal thrust" data-parallax="-0.03">
           <div class="gbp-header">
             <div class="gbp-biz-name">Your Business Name</div>
             <div class="gbp-cat">Your trade or service · Atlanta, GA</div>
@@ -747,11 +818,11 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
             <div class="gbp-desc-badge">✓ Google Guaranteed</div>
           </div>
         </div>
-        <p class="section-note" style="margin-top:.75rem;"><strong>This is what shows up on Google</strong> when someone searches for your type of business. Without it, you're invisible to customers searching right now. We set this up for you along with your website.</p>
+        <p class="section-note reveal" style="margin-top:.75rem;"><strong>This is what shows up on Google</strong> when someone searches for your type of business. Without it, you're invisible to customers searching right now. We set this up for you along with your website.</p>
       </div>
 
       <div>
-        <div class="detail-card reveal">
+        <div class="detail-card reveal" style="--d:.05s">
           <h3>What's included in your website</h3>
           <p>A clean, professional website that looks great on any phone or computer. It tells customers exactly who you are, what you do, and how to reach you — all the basics a real business needs online.</p>
           <ul class="check-list">
@@ -761,7 +832,7 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
             <li>Fast loading — slow sites lose customers before they even read anything</li>
           </ul>
         </div>
-        <div class="detail-card reveal">
+        <div class="detail-card reveal" style="--d:.1s">
           <h3>What's a Google Business Profile?</h3>
           <p>It's the box that shows up when someone searches for a business like yours on Google. It shows your phone number, hours, location, reviews, and a link to your website. <strong style="color:var(--text);">Google's data shows businesses with complete profiles receive significantly more calls</strong> than those without one — and we set the whole thing up for you.</p>
           <ul class="check-list">
@@ -770,11 +841,11 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
             <li>Reviews show up here and build trust with new customers</li>
           </ul>
         </div>
-        <div class="detail-card reveal">
+        <div class="detail-card reveal" style="--d:.15s">
           <h3>SEO — Making sure Google knows who you are</h3>
           <p>SEO means we set up your website so Google understands what your business does and where you're located. That way, when someone nearby searches for your service, your business actually shows up. We build this in from day one.</p>
         </div>
-        <div class="price-callout reveal">
+        <div class="price-callout reveal thrust" style="--d:.2s">
           <div class="price-callout-text">
             <strong>Everything in one package</strong>
             <span>Website + GBP setup + SEO + hosting &amp; maintenance</span>
@@ -798,20 +869,20 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
   <div class="inner">
     <div class="two-col">
       <div>
-        <div class="section-tag"><span class="section-tag-num">02</span> &mdash; Ad Management</div>
-        <h2 class="sec-title">Put your business<br>in front of buyers.</h2>
-        <p class="sec-sub" style="margin-bottom:2rem;">Ads let you pay to show up right when someone is searching for what you offer. Done right, every dollar comes back as a new customer. Done wrong, it's wasted money — we make sure it's done right.</p>
+        <div class="v-marker reveal"><span class="v-num">02</span> Ad Management <span class="v-trail"></span></div>
+        <h2 class="sec-title reveal">Put your business<br>in front of <span class="v-underline">buyers.</span></h2>
+        <p class="sec-sub reveal" style="margin-bottom:2rem;">Ads let you pay to show up right when someone is searching for what you offer. Done right, every dollar comes back as a new customer. Done wrong, it's wasted money — we make sure it's done right.</p>
 
-        <p style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.7rem;">Example: What your Google ad looks like:</p>
-        <div class="google-ad-mock reveal">
+        <p class="reveal" style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.7rem;">Example: What your Google ad looks like:</p>
+        <div class="google-ad-mock reveal thrust">
           <div class="google-ad-top"><span class="sponsored">Sponsored</span><span class="google-url">yourbusiness.com</span></div>
           <div class="google-title">Your Business — Free Estimates, Fast Response</div>
           <div class="google-desc">Licensed &amp; insured local service in Atlanta. Serving the metro area for years. Call today for a free quote — we respond same day.</div>
           <div class="google-sitelinks"><span class="google-sl">Free Estimate</span><span class="google-sl">About Us</span><span class="google-sl">Our Reviews</span><span class="google-sl">Contact Us</span></div>
         </div>
 
-        <p style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.7rem;">Example: Facebook / Instagram ad:</p>
-        <div class="meta-ad-mock reveal">
+        <p class="reveal" style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.7rem;">Example: Facebook / Instagram ad:</p>
+        <div class="meta-ad-mock reveal thrust">
           <div class="meta-header">
             <div class="meta-avatar">YB</div>
             <div><span class="meta-page-name">Your Business Name</span><span class="meta-spon">Sponsored · 🌐</span></div>
@@ -820,7 +891,7 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
           <div class="meta-img"><div class="meta-img-glow"></div><div class="meta-img-text">📞 Free Consultation</div></div>
           <div class="meta-cta-row"><span class="meta-cta-text">Book your free consultation today</span><button class="meta-cta-btn">Book Now</button></div>
         </div>
-        <p class="section-note" style="margin-top:.75rem;"><strong>We write these ads, design them, and manage them daily</strong> — adjusting targeting, budget, and messaging so your money is always working as hard as possible.</p>
+        <p class="section-note reveal" style="margin-top:.75rem;"><strong>We write these ads, design them, and manage them daily</strong> — adjusting targeting, budget, and messaging so your money is always working as hard as possible.</p>
       </div>
 
       <div>
@@ -828,9 +899,9 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
           <h3>How ads actually work (plain English)</h3>
           <p>You set a budget — say $500/month. Every time someone in Atlanta searches "emergency roof repair," your ad shows up at the top of Google. You only pay when they actually click. We make sure those clicks turn into real calls and customers — not just wasted spend.</p>
         </div>
-        <p style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;">Choose the right package for your budget:</p>
+        <p class="reveal" style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;">Choose the right package for your budget:</p>
         <div class="packages-grid">
-          <div class="pkg reveal">
+          <div class="pkg reveal" style="--d:.05s">
             <div class="pkg-name">Starter</div>
             <div class="pkg-price">$397<small>/mo</small></div>
             <ul class="pkg-list">
@@ -840,7 +911,7 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
               <li>Ad copy &amp; creative</li>
             </ul>
           </div>
-          <div class="pkg feat reveal">
+          <div class="pkg feat reveal" style="--d:.12s">
             <div class="pkg-badge">Best Value</div>
             <div class="pkg-name">Growth</div>
             <div class="pkg-price">$797<small>/mo</small></div>
@@ -852,7 +923,7 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
               <li>Retargeting campaigns</li>
             </ul>
           </div>
-          <div class="pkg reveal">
+          <div class="pkg reveal" style="--d:.19s">
             <div class="pkg-name">Scale</div>
             <div class="pkg-price">$1,497<small>/mo</small></div>
             <ul class="pkg-list">
@@ -864,7 +935,7 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
             </ul>
           </div>
         </div>
-        <p class="section-note" style="margin-top:.7rem;">* Ad spend (the money that goes to Google/Meta) is separate from our management fee and paid directly by you.</p>
+        <p class="section-note reveal" style="margin-top:.7rem;">* Ad spend (the money that goes to Google/Meta) is separate from our management fee and paid directly by you.</p>
       </div>
     </div>
   </div>
@@ -878,75 +949,52 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
 <section class="section" id="automation">
   <div class="inner">
     <div class="auto-layout">
-      <div>
-        <div class="section-tag"><span class="section-tag-num">03</span> &mdash; AI Automation</div>
-        <h2 class="sec-title">Every lead gets<br>a response — fast.</h2>
-        <p class="sec-sub" style="margin-bottom:2rem;">Every unanswered message is a customer who called someone else. AI automation responds instantly, qualifies leads, and books appointments — while you're on a job, at dinner, or asleep.</p>
-        <p style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;margin-top:.5rem;">Live example — watch a lead get handled automatically:</p>
-        <div class="auto-phone reveal">
-          <div class="phone-frame">
-            <div class="phone-notch"><div class="phone-cam"></div></div>
+      <div class="auto-phone-wrap">
+        <div class="v-marker reveal"><span class="v-num">03</span> AI Automation <span class="v-trail"></span></div>
+        <h2 class="sec-title reveal">Never miss<br>another <span class="v-underline">lead.</span></h2>
+        <p class="sec-sub reveal" style="margin-bottom:2rem;">When a customer messages at 11 PM, AI responds instantly — answers questions, books the job, and follows up. You wake up to booked appointments, not missed chances.</p>
+        <div class="auto-phone reveal" data-parallax="-0.05">
+          <div class="phone-frame tilt">
             <div class="phone-screen">
-              <div class="phone-status"><span class="phone-time">9:42 AM</span><span>📶🔋</span></div>
+              <div class="phone-status"><span class="phone-time">9:41</span><span style="font-size:.62rem;">📶 🔋</span></div>
               <div class="chat-header">
-                <div class="chat-avatar">N</div>
-                <div>
-                  <span class="chat-agent-name">Nolvek AI Assistant</span>
-                  <span class="chat-agent-sub">● Online — replies instantly</span>
-                </div>
+                <div class="chat-avatar">AI</div>
+                <div><span class="chat-agent-name">Your Business AI</span><span class="chat-agent-sub">● Online now</span></div>
               </div>
-              <div class="chat-body" id="chatBody">
-                <div class="bubble bot">👋 Hi! Thanks for reaching out. How can I help you today?<div class="bubble-time">9:41 AM</div></div>
-                <div class="bubble user">Do you guys do free estimates?<div class="bubble-time">9:41 AM</div></div>
-                <div class="bubble bot">Yes! We offer free, no-obligation roof inspections. What area of Atlanta are you in?<div class="bubble-time">9:41 AM</div></div>
-                <div class="bubble user">Buckhead area<div class="bubble-time">9:42 AM</div></div>
-                <div class="bubble bot">Perfect, we cover Buckhead! What day works better — Thursday or Friday this week?<div class="bubble-time">9:42 AM</div></div>
-                <div class="bubble bot typing-bubble" id="typingBubble"><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>
+              <div class="chat-body">
+                <div class="bubble bot" style="animation-delay:.1s;">Hi! Thanks for reaching out 👋 How can we help you today?<div class="bubble-time">11:02 PM</div></div>
+                <div class="bubble user" style="animation-delay:.4s;">Do you do emergency repairs?<div class="bubble-time">11:02 PM</div></div>
+                <div class="bubble bot" style="animation-delay:.8s;">Absolutely! We offer 24/7 emergency service. I can book you in right now — what's your address and the issue?<div class="bubble-time">11:03 PM</div></div>
+                <div class="bubble user" style="animation-delay:1.2s;">Burst pipe, 14 Oak St<div class="bubble-time">11:03 PM</div></div>
+                <div class="bubble bot" style="animation-delay:1.6s;">Got it — a technician is booked for 7 AM tomorrow. You'll get a confirmation text shortly! 🔧<div class="bubble-time">11:03 PM</div></div>
               </div>
               <div class="chat-quick">
-                <span class="qr">Thursday</span><span class="qr">Friday</span><span class="qr">Call me instead</span>
+                <span class="qr">Book appointment</span><span class="qr">Get a quote</span><span class="qr">Hours</span>
               </div>
             </div>
           </div>
         </div>
-        <p class="section-note" style="margin-top:.75rem;max-width:290px;"><strong style="color:var(--text);">This happens automatically.</strong> The business owner didn't touch anything — the AI responded, qualified the lead, and is now booking the appointment.</p>
       </div>
-
-      <div class="auto-right" style="padding-top:5rem;">
-        <div class="auto-feat reveal">
-          <div class="auto-icon">💬</div>
-          <div class="auto-feat-text">
-            <h3>Auto Responders</h3>
-            <p>A lead messages your business at 11pm. The AI responds in seconds, asks the right questions, and books them — no action needed from you until they're on your schedule.</p>
-          </div>
+      <div class="auto-right">
+        <div class="detail-card reveal">
+          <h3>What AI automation does for you</h3>
+          <p>Think of it as a tireless employee who answers every message instantly, 24/7 — even at 2 AM or during the holidays. It never sleeps, never takes a day off, and never lets a lead slip through.</p>
         </div>
-        <div class="auto-feat reveal">
+        <div class="auto-feat reveal" style="--d:.05s">
+          <div class="auto-icon">⚡</div>
+          <div class="auto-feat-text"><h3>Instant Lead Response</h3><p>Responds to every inquiry in seconds — by text, web chat, or social media. Speed wins deals.</p></div>
+        </div>
+        <div class="auto-feat reveal" style="--d:.1s">
           <div class="auto-icon">📅</div>
-          <div class="auto-feat-text">
-            <h3>Smart Scheduling</h3>
-            <p>Customers pick a time directly from a calendar link. No phone tag. No back-and-forth. The job shows up on your schedule and they get an automatic reminder the morning of.</p>
-          </div>
+          <div class="auto-feat-text"><h3>Smart Scheduling</h3><p>Books appointments straight into your calendar. No back-and-forth, no double-booking.</p></div>
         </div>
-        <div class="auto-feat reveal">
+        <div class="auto-feat reveal" style="--d:.15s">
+          <div class="auto-icon">💬</div>
+          <div class="auto-feat-text"><h3>Auto Follow-Up</h3><p>Follows up with leads who go quiet — turning maybes into booked, paying customers.</p></div>
+        </div>
+        <div class="auto-feat reveal" style="--d:.2s">
           <div class="auto-icon">📊</div>
-          <div class="auto-feat-text">
-            <h3>Analytics &amp; Weekly Reports</h3>
-            <p>Every Monday you get an automated summary — how many leads came in, how many booked, what revenue looks like. Delivered to your inbox, no logging in required.</p>
-          </div>
-        </div>
-        <div class="auto-feat reveal">
-          <div class="auto-icon">📲</div>
-          <div class="auto-feat-text">
-            <h3>Missed Call Text-Back</h3>
-            <p>When a customer calls and you can't pick up, the AI texts them back within seconds — "Hey, we just missed you! When's a good time to chat?" Most leads go to whoever responds first. Now that's you, automatically.</p>
-          </div>
-        </div>
-        <div class="auto-feat reveal">
-          <div class="auto-icon">🔄</div>
-          <div class="auto-feat-text">
-            <h3>Follow-Up Sequences</h3>
-            <p>Most customers don't book on the first message. The AI automatically follows up at the right time with the right message until they're ready — so nothing slips through the cracks.</p>
-          </div>
+          <div class="auto-feat-text"><h3>Weekly Reports</h3><p>See how many leads came in, what got booked, and where your money's coming from.</p></div>
         </div>
       </div>
     </div>
@@ -962,180 +1010,213 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
   <div class="inner">
     <div class="two-col">
       <div>
-        <div class="section-tag"><span class="section-tag-num">04</span> &mdash; Custom Software</div>
-        <h2 class="sec-title">When no existing<br>tool fits your business.</h2>
-        <p class="sec-sub" style="margin-bottom:2rem;">Sometimes your operation is specific enough that off-the-shelf software doesn't cut it. We design and build software from scratch — exactly the way your business actually works.</p>
-
+        <div class="v-marker reveal"><span class="v-num">04</span> Custom Software <span class="v-trail"></span></div>
+        <h2 class="sec-title reveal">Software built<br>around your<br><span class="v-underline">business.</span></h2>
+        <p class="sec-sub reveal" style="margin-bottom:2rem;">Off-the-shelf tools force you to change how you work. We build custom software that fits your exact process — dashboards, booking systems, client portals, and internal tools.</p>
         <div class="soft-card reveal">
-          <h3>What does "custom software" actually mean?</h3>
-          <p>Instead of buying a tool that kinda fits, we build one that fits perfectly. An app for your crew to log jobs in the field. A portal where your clients can check project status. A dashboard that shows you your entire business at a glance. If you can describe the problem, we can build the solution.</p>
+          <h3>When do you need custom software?</h3>
+          <p>When you're juggling spreadsheets, sticky notes, and three different apps that don't talk to each other. We replace that chaos with one tool built for exactly how you work.</p>
         </div>
-        <div class="soft-card reveal">
-          <h3>What we build</h3>
-          <p>Job management apps for contractors · Client-facing portals · Custom booking &amp; dispatch systems · Internal dashboards · Mobile apps for field teams · API integrations connecting tools that don't talk to each other natively.</p>
-        </div>
-        <div class="consult-box reveal">
-          <h3>Not sure what you need?</h3>
-          <p>Tell us your biggest workflow headache. We'll figure out the right solution together — in plain English, no tech jargon, no pressure.</p>
-          <a href="#contact" class="btn-p" style="font-size:.85rem;padding:10px 20px;">Book Free Consultation &rarr;</a>
+        <div class="soft-card reveal" style="--d:.08s">
+          <h3>What we can build</h3>
+          <p>Job management systems, customer dashboards, booking platforms, inventory trackers, client portals, internal reporting tools — if you can describe the workflow, we can build it.</p>
         </div>
       </div>
-
       <div>
-        <p style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;">Example: Custom Job Management Dashboard</p>
-        <div class="soft-visual reveal">
+        <div class="soft-visual reveal thrust" data-parallax="-0.04">
           <div class="soft-topbar">
             <div class="b-dots"><div class="b-dot"></div><div class="b-dot"></div><div class="b-dot"></div></div>
-            <div class="soft-tabs">
-              <div class="soft-tab active">Dashboard</div>
-              <div class="soft-tab">Jobs</div>
-              <div class="soft-tab">Reports</div>
-            </div>
+            <div class="soft-tabs"><div class="soft-tab active">Dashboard</div><div class="soft-tab">Jobs</div><div class="soft-tab">Clients</div></div>
           </div>
           <div class="soft-content">
             <div class="soft-sidebar">
               <div class="soft-nav-item active">📊 Overview</div>
-              <div class="soft-nav-item">🔧 Active Jobs</div>
+              <div class="soft-nav-item">📋 Jobs</div>
               <div class="soft-nav-item">👥 Clients</div>
-              <div class="soft-nav-item">📅 Schedule</div>
               <div class="soft-nav-item">💰 Invoices</div>
-              <div class="soft-nav-item">⚙️ Settings</div>
+              <div class="soft-nav-item">📈 Reports</div>
             </div>
-            <div>
+            <div class="soft-main">
               <div class="soft-stat-row">
-                <div class="soft-stat"><div class="soft-stat-val" style="color:var(--accent);">14</div><div class="soft-stat-key">Active Jobs</div></div>
-                <div class="soft-stat"><div class="soft-stat-val" style="color:var(--green);">$18.4k</div><div class="soft-stat-key">This Month</div></div>
-                <div class="soft-stat"><div class="soft-stat-val">6</div><div class="soft-stat-key">Pending Quotes</div></div>
-                <div class="soft-stat"><div class="soft-stat-val" style="color:var(--yellow);">3</div><div class="soft-stat-key">Follow-Ups Due</div></div>
+                <div class="soft-stat"><div class="soft-stat-val">47</div><div class="soft-stat-key">Active Jobs</div></div>
+                <div class="soft-stat"><div class="soft-stat-val">$28k</div><div class="soft-stat-key">This Month</div></div>
               </div>
               <div class="soft-chart-area">
-                <div class="soft-chart-label">Revenue — Last 8 weeks</div>
+                <div class="soft-chart-label">Revenue — last 7 days</div>
                 <div class="chart-bars">
-                  <div class="bar" style="height:40%"></div>
-                  <div class="bar" style="height:58%"></div>
-                  <div class="bar" style="height:45%"></div>
-                  <div class="bar" style="height:70%"></div>
-                  <div class="bar" style="height:55%"></div>
-                  <div class="bar" style="height:80%"></div>
-                  <div class="bar" style="height:65%"></div>
-                  <div class="bar hi" style="height:100%"></div>
+                  <div class="bar" style="height:40%"></div><div class="bar" style="height:65%"></div><div class="bar hi" style="height:80%"></div><div class="bar" style="height:55%"></div><div class="bar hi" style="height:95%"></div><div class="bar" style="height:70%"></div><div class="bar hi" style="height:85%"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <p class="section-note" style="margin-top:.75rem;">This kind of dashboard gives you a real-time view of your entire operation — jobs, revenue, clients, and what needs attention today. <strong>Built from scratch, just for your business.</strong></p>
+        <div class="consult-box reveal" style="margin-top:.75rem;">
+          <h3>Not sure what you need?</h3>
+          <p>Most businesses aren't sure if they need custom software — that's exactly what a free consultation is for. We'll figure it out together.</p>
+          <a href="#contact" class="btn-p">Book a Free Consultation &rarr;</a>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ══════════════════════════════════════════
+     UPCART VELOCITY SHOWCASE — #05 product spotlight
+══════════════════════════════════════════ -->
+<section class="section upcart-band" id="upcart">
+  <div class="glow-blob"></div>
+  <div class="inner">
+    <div class="upcart-grid">
+      <div>
+        <div class="v-marker reveal"><span class="v-num">05</span> Product Spotlight <span class="v-trail"></span></div>
+        <h2 class="upcart-tagline reveal"><span class="by">Built by Nolvek</span>Upcart — your store, <span class="v-underline">built to scale.</span></h2>
+        <p class="sec-sub reveal" style="margin-bottom:.5rem;">Upcart is Nolvek's done-for-you e-commerce product. We build your online store, wire up secure checkout, load your products, and keep it running — so you sell online without touching the tech.</p>
+        <div class="upcart-feat-grid">
+          <div class="upcart-feat reveal ignite" style="--d:.05s"><span class="ig">✓</span><div><h4>Ready-to-Sell Storefront</h4><p>A clean, mobile-first shop that looks built for your brand from day one.</p></div></div>
+          <div class="upcart-feat reveal ignite" style="--d:.1s"><span class="ig">✓</span><div><h4>Secure Payments</h4><p>Built-in checkout with Stripe — payments processed and paid out straight to your bank.</p></div></div>
+          <div class="upcart-feat reveal ignite" style="--d:.15s"><span class="ig">✓</span><div><h4>Product Management</h4><p>Add products, prices, photos, and stock from one simple dashboard.</p></div></div>
+          <div class="upcart-feat reveal ignite" style="--d:.2s"><span class="ig">✓</span><div><h4>Admin Dashboard</h4><p>Track orders, customers, and revenue at a glance — no spreadsheets.</p></div></div>
+          <div class="upcart-feat reveal ignite" style="--d:.25s"><span class="ig">✓</span><div><h4>Managed by Nolvek</h4><p>We handle setup, hosting, and updates. You handle the orders coming in.</p></div></div>
+          <div class="upcart-feat reveal ignite" style="--d:.3s"><span class="ig">✓</span><div><h4>Grows With You</h4><p>Pair it with ads and AI automation to turn browsers into repeat buyers.</p></div></div>
+        </div>
+        <div class="hero-actions reveal" style="margin-top:1.8rem;">
+          <a href="https://upcart.online" target="_blank" rel="noopener" class="btn-p">Visit Upcart &rarr;</a>
+          <a href="#contact" class="btn-g">Launch My Store</a>
+        </div>
+      </div>
+      <div data-parallax="-0.05">
+        <!-- Interactive storefront mock with real-time checkout animation -->
+        <div class="store-mock tilt reveal">
+          <div class="store-top">
+            <span class="store-brand">Your Store</span>
+            <span class="store-cart">🛒<span class="cart-count" id="cart-count">3</span></span>
+          </div>
+          <div class="store-products">
+            <div class="store-prod"><div class="thumb">👟</div><div class="pinfo"><div class="pname">Trail Runner</div><div class="pprice">$89</div><button class="padd">Add to cart</button></div></div>
+            <div class="store-prod"><div class="thumb">🧴</div><div class="pinfo"><div class="pname">Daily Serum</div><div class="pprice">$34</div><button class="padd">Add to cart</button></div></div>
+            <div class="store-prod"><div class="thumb">🎧</div><div class="pinfo"><div class="pname">Wireless Buds</div><div class="pprice">$59</div><button class="padd">Add to cart</button></div></div>
+            <div class="store-prod"><div class="thumb">🕯️</div><div class="pinfo"><div class="pname">Soy Candle</div><div class="pprice">$22</div><button class="padd">Add to cart</button></div></div>
+          </div>
+          <div class="store-checkout" id="store-checkout">
+            <div><div class="ck-label">Subtotal</div><div class="ck-total" id="ck-total">$204</div></div>
+            <button class="ck-btn">Checkout &rarr;</button>
+          </div>
+        </div>
+        <p class="section-note reveal" style="text-align:center;margin-top:1rem;">Live demo of an Upcart storefront — your real store is loaded with your products and branding.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     PROOF / CLIENTS
+══════════════════════════════════════════ -->
+<section class="section" id="proof">
+  <div class="inner">
+    <div class="section-header">
+      <div class="v-marker reveal"><span class="v-num">06</span> Proof <span class="v-trail"></span></div>
+      <h2 class="sec-title reveal">Real work,<br>real <span class="v-underline">momentum.</span></h2>
+      <p class="sec-sub reveal">We'd rather show you honest work than invent reviews. Here's what we build and how we think about getting your business moving.</p>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-card a reveal thrust" style="--d:.05s">
+        <div class="proof-quote">"They built us a clean, professional site and got our Google profile set up — exactly what a real business needs to show up online."</div>
+        <div class="proof-meta">
+          <div class="proof-logo">IF</div>
+          <div class="proof-who"><strong>Innovative Fix</strong><span>Business Consulting · Sarasota, FL · Real Client</span></div>
+        </div>
+      </div>
+      <div class="proof-card b reveal thrust" style="--d:.12s">
+        <div class="proof-stat"><span class="big">24/7</span><span class="lbl">AI lead response — your business never sleeps, never misses a message.</span></div>
+      </div>
+      <div class="proof-card c reveal thrust" style="--d:.19s">
+        <div class="proof-stat"><span class="big">$199</span><span class="lbl">Websites from — full design, GBP setup &amp; SEO included.</span></div>
+      </div>
+      <div class="proof-card d reveal thrust" style="--d:.05s">
+        <div class="proof-quote">"One team for websites, ads, automation, custom software, and Upcart stores — so you're not stitching together five different vendors to grow online."</div>
+        <div class="proof-meta">
+          <div class="proof-logo" style="background:var(--bg4);color:var(--text);">N</div>
+          <div class="proof-who"><strong>The Nolvek approach</strong><span>Atlanta, GA · Websites · Ads · AI · Software · Upcart</span></div>
+        </div>
+      </div>
+      <div class="proof-card e reveal thrust" style="--d:.12s">
+        <div class="proof-stat"><span class="big">5–10</span><span class="lbl">Business days to launch most small-business websites.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════
+     PROCESS
+══════════════════════════════════════════ -->
+<section class="section" id="process">
+  <div class="inner">
+    <div class="section-header" style="text-align:center;max-width:620px;margin:0 auto 3.5rem;">
+      <div class="v-marker center reveal" style="justify-content:center;"><span class="v-trail"></span><span class="v-num">07</span> How It Works <span class="v-trail"></span></div>
+      <h2 class="sec-title reveal">From invisible<br>to <span class="v-underline">unmissable.</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;">
+      <div class="reveal" style="text-align:center;--d:.05s;">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Syne';font-weight:700;color:var(--accent);margin:0 auto 1rem;">1</div>
+        <h3 style="font-family:'Syne';font-weight:700;font-size:1rem;margin-bottom:.5rem;">Free Consultation</h3>
+        <p style="font-size:.85rem;color:var(--muted2);line-height:1.7;">We learn about your business, your goals, and what's holding you back online.</p>
+      </div>
+      <div class="reveal" style="text-align:center;--d:.12s;">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Syne';font-weight:700;color:var(--accent);margin:0 auto 1rem;">2</div>
+        <h3 style="font-family:'Syne';font-weight:700;font-size:1rem;margin-bottom:.5rem;">Custom Plan</h3>
+        <p style="font-size:.85rem;color:var(--muted2);line-height:1.7;">We build a plan around your budget and what'll move the needle fastest.</p>
+      </div>
+      <div class="reveal" style="text-align:center;--d:.19s;">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Syne';font-weight:700;color:var(--accent);margin:0 auto 1rem;">3</div>
+        <h3 style="font-family:'Syne';font-weight:700;font-size:1rem;margin-bottom:.5rem;">We Build It</h3>
+        <p style="font-size:.85rem;color:var(--muted2);line-height:1.7;">Website, ads, automation, store — we handle the technical work start to finish.</p>
+      </div>
+      <div class="reveal" style="text-align:center;--d:.26s;">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--accent-dim);border:1px solid var(--accent-border);display:flex;align-items:center;justify-content:center;font-family:'Syne';font-weight:700;color:var(--accent);margin:0 auto 1rem;">4</div>
+        <h3 style="font-family:'Syne';font-weight:700;font-size:1rem;margin-bottom:.5rem;">You Grow</h3>
+        <p style="font-size:.85rem;color:var(--muted2);line-height:1.7;">More calls, more bookings, more customers — while we handle the tech.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- ══════════════════════════════════════════
      FAQ
 ══════════════════════════════════════════ -->
-<div class="divider"></div>
 <section class="section" id="faq">
-  <div class="inner">
-    <div class="section-header">
-      <div class="section-tag"><span class="section-tag-num">FAQ</span> &mdash; Common Questions</div>
-      <h2 class="sec-title">Questions we<br>hear all the time.</h2>
-      <p class="sec-sub">Straightforward answers about how we work, what things cost, and whether we're the right fit for your business.</p>
+  <div class="inner" style="max-width:820px;">
+    <div class="section-header" style="text-align:center;">
+      <div class="v-marker center reveal" style="justify-content:center;"><span class="v-trail"></span><span class="v-num">08</span> FAQ <span class="v-trail"></span></div>
+      <h2 class="sec-title reveal">Questions?<br><span class="v-underline">Answered.</span></h2>
     </div>
     <div class="faq-grid">
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          How much does a website cost for a small business?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Our websites start at <strong>$199</strong> with a $20/month hosting fee. That includes a fully designed, mobile-responsive site, contact forms, on-page SEO, and Google Business Profile setup — everything you need to get found online from day one.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          Do you offer web design services near me?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>We're based in Atlanta, GA and work with businesses across the metro area — Sandy Springs, Marietta, Alpharetta, Decatur, and beyond. We also work with clients <strong>nationwide</strong>. Everything is handled remotely, so location is never a barrier.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          How do I get my Atlanta business found on Google?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Two paths: organic search (SEO) and paid ads. Every site we build includes on-page SEO and Google Business Profile setup so you start ranking in local results. We also run Google Ads to put you in front of buyers who are searching <em>right now</em>.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          How long does it take to build a website?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Most small business websites are ready in <strong>5–10 business days</strong> once we have your content and branding. More complex projects with custom functionality take 2–4 weeks. We move fast because your business can't afford to wait.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          Do you run Google Ads for local businesses?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Yes. We manage Google Ads and Meta (Facebook/Instagram) campaigns. Packages start at <strong>$397/month</strong> and include campaign setup, ad copy, daily optimization, and weekly performance reports. No long-term contracts required.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          What is AI automation and does my business need it?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>AI automation means your business automatically responds to leads, books appointments, and follows up with prospects — <strong>24/7, without you lifting a finger</strong>. If you're missing calls or spending hours on repetitive follow-ups, it pays for itself fast.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          What industries do you work with?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Any local service business — roofing, HVAC, restaurants, salons, real estate, law firms, medical practices, and more. If your customers search for you on Google, we can help them find you and convert.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q" aria-expanded="false">
-          What's included in your website packages?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a" role="region">
-          <p>Every site includes: custom mobile-responsive design, contact forms, on-page SEO, Google Business Profile setup, fast hosting, and ongoing support. We build on a clean, lightweight stack — no bloated page builders — so your site loads fast and ranks well.</p>
-        </div>
-      </div>
-
+      <div class="faq-item reveal"><button class="faq-q">How much does a website cost for a small business?<span class="faq-icon">+</span></button><div class="faq-a"><p>Our website packages start at $199 with a $20/month hosting fee. That includes a fully designed, mobile-responsive website, contact forms, on-page SEO, and Google Business Profile setup — everything a local business needs to get found online.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">What is Upcart?<span class="faq-icon">+</span></button><div class="faq-a"><p>Upcart is Nolvek's managed online store product — a done-for-you e-commerce storefront with built-in checkout, product and inventory management, and an admin dashboard. We build it, launch it, and keep it running so you can sell online without the tech headaches.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">Do you offer web design near me?<span class="faq-icon">+</span></button><div class="faq-a"><p>Yes. Nolvek is based in Atlanta, GA and works with businesses across the metro area — Sandy Springs, Marietta, Alpharetta, Decatur, and beyond — plus clients nationwide. Everything's handled remotely.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">How long does it take to build a website?<span class="faq-icon">+</span></button><div class="faq-a"><p>Most small business websites are ready in 5–10 business days once we have your content and branding. More complex projects with custom functionality take 2–4 weeks.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">What's included in your ad management?<span class="faq-icon">+</span></button><div class="faq-a"><p>Campaign setup, ad copywriting, creative, daily optimization, and regular performance reports. Packages start at $397/month. Ad spend is separate and paid directly to Google or Meta.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">Do I really need AI automation?<span class="faq-icon">+</span></button><div class="faq-a"><p>If you're missing calls or leads outside business hours, or spending hours on repetitive follow-ups, yes. AI automation responds instantly 24/7 and pays for itself fast.</p></div></div>
     </div>
   </div>
 </section>
 
+<div class="divider"></div>
+
 <!-- ══════════════════════════════════════════
-     CONTACT
+     CONTACT / CTA
 ══════════════════════════════════════════ -->
-<div class="cta-wrap" id="contact">
+<section class="cta-wrap" id="contact">
   <div class="cta-inner">
-    <div class="section-tag" style="justify-content:center;margin-bottom:1rem;"><span class="section-tag-num">Get Started</span></div>
-    <h2 class="sec-title" style="text-align:center;">Ready to grow?<br>Let's talk.</h2>
-    <p class="sec-sub" style="margin:0 auto 2rem;text-align:center;max-width:400px;">Fill this out and we'll reach out within 24 hours. No pressure, no pitch — just a real conversation about what would actually help your business.</p>
-    <form id="contactForm">
+    <div class="v-marker center reveal" style="justify-content:center;"><span class="v-trail"></span><span class="v-num">09</span> Get Started <span class="v-trail"></span></div>
+    <h2 class="sec-title reveal">Let's get your business<br><span class="v-underline">growing online.</span></h2>
+    <p class="sec-sub reveal" style="margin:0 auto 2.5rem;text-align:center;">Free consultation. No pressure, no jargon — just a clear plan for how to get you more customers. Tell us about your business and we'll be in touch within one business day.</p>
+    <form id="contactForm" class="reveal">
       <div class="form-grid">
         <div class="fg"><label>First Name</label><input type="text" name="first_name" placeholder="John" required></div>
         <div class="fg"><label>Last Name</label><input type="text" name="last_name" placeholder="Smith" required></div>
@@ -1148,158 +1229,222 @@ footer{border-top:1px solid var(--border);padding:28px 5%;display:flex;align-ite
             <option>Ad Management</option>
             <option>AI Automation</option>
             <option>Custom Software — Free Consultation</option>
+            <option>Upcart Online Store</option>
             <option>Multiple Services / Not Sure Yet</option>
           </select>
         </div>
         <div class="fg full"><label>Tell Us About Your Business</label><textarea name="message" placeholder="What does your business do? What's your biggest challenge right now? (Even just a sentence is fine)"></textarea></div>
       </div>
-      <button type="submit" class="submit-btn" id="submitBtn">Send Message — It's Free &rarr;</button>
+      <button type="submit" class="submit-btn" id="submitBtn">Get My Free Consultation &rarr;</button>
     </form>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER VELOCITY CTA BAR
+══════════════════════════════════════════ -->
+<div class="foot-cta">
+  <div class="glow-blob"></div>
+  <div class="foot-cta-inner">
+    <h2 class="reveal">Ready to <em>accelerate?</em><br>Let's build your momentum.</h2>
+    <div class="hero-actions reveal">
+      <a href="#contact" class="btn-p">Book Free Consultation &rarr;</a>
+      <a href="https://upcart.online" target="_blank" rel="noopener" class="btn-g">Explore Upcart</a>
+    </div>
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
 <footer>
-  <a class="nav-logo" href="#">
-    <svg width="28" height="28" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs><linearGradient id="fg" x1="38" y1="0" x2="162" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a8ff3e"/><stop offset="100%" stop-color="#34d399"/></linearGradient></defs>
-      <rect width="200" height="200" rx="42" fill="#111113"/>
-      <rect x="38" y="34" width="36" height="132" rx="6" fill="url(#fg)"/>
-      <polygon points="74,34 110,34 126,166 90,166" fill="url(#fg)"/>
-      <rect x="126" y="34" width="36" height="132" rx="6" fill="url(#fg)"/>
-    </svg>
-    <span class="logo-text" style="font-size:1rem;">Nolv<span>ek</span></span>
-  </a>
-  <p class="foot-copy">&copy; 2026 Nolvek. Atlanta, GA. All rights reserved.</p>
+  <div class="foot-copy">© 2026 Nolvek · Atlanta, GA · Websites, Ads, AI, Software &amp; Upcart for local businesses</div>
   <ul class="foot-links">
-    <li><a href="#web">Services</a></li>
+    <li><a href="#web">Websites</a></li>
+    <li><a href="#ads">Ads</a></li>
+    <li><a href="#automation">Automation</a></li>
+    <li><a href="#software">Software</a></li>
+    <li><a href="#upcart">Upcart</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="/privacy.html">Privacy</a></li>
   </ul>
 </footer>
 
 <script>
-// ── SCROLL PROGRESS LINE ──
-const scrollLine = document.getElementById('scroll-line');
-window.addEventListener('scroll', () => {
-  const total = document.documentElement.scrollHeight - window.innerHeight;
-  scrollLine.style.width = (window.scrollY / total * 100) + '%';
-}, { passive: true });
+/* ============================================================
+   NOLVEK VELOCITY — interaction engine (vanilla, 60fps, no deps)
+============================================================ */
+(function(){
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// ── CURSOR-REACTIVE HERO SPOTLIGHT ──
-const hero = document.querySelector('.hero');
-if (hero) {
-  hero.addEventListener('mousemove', e => {
-    const rect = hero.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
-    const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
-    hero.style.setProperty('--mx', x + '%');
-    hero.style.setProperty('--my', y + '%');
-  });
-}
+  /* ── Scroll progress / velocity meter ── */
+  var sl = document.getElementById('scroll-line');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    sl.style.width = (max>0 ? (h.scrollTop/max*100) : 0) + '%';
+    var nav = document.getElementById('nav');
+    if(nav) nav.classList.toggle('scrolled', h.scrollTop > 40);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
 
-// ── SCROLL REVEAL ──
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-// ── FAQ ACCORDION ──
-document.querySelectorAll('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.closest('.faq-item');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(el => {
-      el.classList.remove('open');
-      el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+  /* ── Reveal + velocity markers (staggered momentum entrance) ── */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
     });
-    if (!isOpen) {
-      item.classList.add('open');
-      btn.setAttribute('aria-expanded', 'true');
+  }, {threshold:.14});
+  document.querySelectorAll('.reveal, .v-marker').forEach(function(el){ io.observe(el); });
+
+  /* ── Upcart feature "ignite" on scroll (staggered) ── */
+  var igniteIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var els = document.querySelectorAll('.upcart-feat.ignite');
+        els.forEach(function(el,i){ setTimeout(function(){ el.classList.add('lit'); }, i*110); });
+        igniteIO.disconnect();
+      }
+    });
+  }, {threshold:.3});
+  var ufg = document.querySelector('.upcart-feat-grid');
+  if(ufg) igniteIO.observe(ufg);
+
+  if(!reduce){
+    /* ── Hero spotlight follows mouse ── */
+    var hero = document.querySelector('.hero');
+    if(hero){
+      hero.addEventListener('mousemove', function(e){
+        var r = hero.getBoundingClientRect();
+        hero.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100)+'%');
+        hero.style.setProperty('--my', ((e.clientY-r.top)/r.height*100)+'%');
+      });
     }
-  });
-});
 
-// ── CONTACT FORM — FormSubmit AJAX ──
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  const form = this;
-  const data = {
-    first_name: form.first_name.value,
-    last_name: form.last_name.value,
-    email: form.email.value,
-    phone: form.phone.value,
-    service: form.service.value,
-    message: form.message.value,
-    _subject: 'New Nolvek Inquiry from ' + form.first_name.value + ' ' + form.last_name.value,
-    _template: 'table',
-    _captcha: 'false'
-  };
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-  fetch('https://formsubmit.co/ajax/kevlongalloway1999@icloud.com', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify(data)
-  })
-  .then(res => res.json())
-  .then(() => {
-    btn.textContent = '✓ Sent! We\'ll be in touch within 24 hours.';
-    btn.style.background = '#22c55e';
-    btn.style.color = '#fff';
-    form.reset();
-  })
-  .catch(() => {
-    btn.textContent = 'Something went wrong — please try again.';
-    btn.style.background = '#ef4444';
-    btn.style.color = '#fff';
-    btn.disabled = false;
-  });
-});
+    /* ── Velocity cursor dot ── */
+    var dot = document.getElementById('cursor-dot');
+    var dx=0, dy=0, cx=0, cy=0, raf;
+    window.addEventListener('mousemove', function(e){
+      dx=e.clientX; dy=e.clientY; dot.style.opacity='1';
+      if(!raf) raf=requestAnimationFrame(loop);
+    });
+    function loop(){
+      cx += (dx-cx)*0.2; cy += (dy-cy)*0.2;
+      dot.style.transform = 'translate('+cx+'px,'+cy+'px) translate(-50%,-50%)';
+      raf = requestAnimationFrame(loop);
+    }
+    document.querySelectorAll('a, button, .thrust, .tilt, input, textarea, select').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ dot.classList.add('hot'); });
+      el.addEventListener('mouseleave', function(){ dot.classList.remove('hot'); });
+    });
 
-// ── ANIMATED CHAT LOOP ──
-const extraMessages = [
-  { side: 'user', text: 'Thursday works for me' },
-  { side: 'bot', text: "Perfect! You're booked for Thursday between 10am–12pm. You'll get a reminder text the morning of. See you then! 👍" }
-];
-let idx = 0;
+    /* ── 3D tilt (Noomo-style depth) on .tilt elements ── */
+    document.querySelectorAll('.tilt').forEach(function(el){
+      el.style.transformStyle='preserve-3d';
+      el.addEventListener('mousemove', function(e){
+        var r = el.getBoundingClientRect();
+        var px = (e.clientX-r.left)/r.width - .5;
+        var py = (e.clientY-r.top)/r.height - .5;
+        el.style.transform = 'perspective(900px) rotateX('+(-py*5).toFixed(2)+'deg) rotateY('+(px*5).toFixed(2)+'deg) translateY(-4px)';
+      });
+      el.addEventListener('mouseleave', function(){ el.style.transform=''; });
+    });
 
-function addMessage() {
-  const body = document.getElementById('chatBody');
-  const typing = document.getElementById('typingBubble');
-  if (idx >= extraMessages.length) {
-    setTimeout(() => {
-      document.querySelectorAll('.added').forEach(n => n.remove());
-      typing.style.display = '';
-      idx = 0;
-      setTimeout(addMessage, 2000);
-    }, 4500);
-    return;
+    /* ── Scroll parallax layers ── */
+    var pEls = [].slice.call(document.querySelectorAll('[data-parallax]'));
+    if(pEls.length){
+      var ticking=false;
+      function parallax(){
+        var vh = window.innerHeight;
+        pEls.forEach(function(el){
+          var r = el.getBoundingClientRect();
+          if(r.bottom<0 || r.top>vh) return;
+          var speed = parseFloat(el.getAttribute('data-parallax'))||0;
+          var offset = (r.top + r.height/2 - vh/2) * speed;
+          el.style.transform = 'translateY('+offset.toFixed(1)+'px)';
+        });
+        ticking=false;
+      }
+      window.addEventListener('scroll', function(){ if(!ticking){ ticking=true; requestAnimationFrame(parallax); } }, {passive:true});
+      parallax();
+    }
   }
-  const msg = extraMessages[idx];
-  if (msg.side === 'user') {
-    typing.style.display = 'none';
-    const b = document.createElement('div');
-    b.className = 'bubble user added';
-    b.innerHTML = msg.text + '<div class="bubble-time">9:42 AM</div>';
-    body.insertBefore(b, typing);
-    idx++;
-    setTimeout(() => { typing.style.display = ''; setTimeout(addMessage, 1500); }, 400);
-  } else {
-    setTimeout(() => {
-      typing.style.display = 'none';
-      const b = document.createElement('div');
-      b.className = 'bubble bot added';
-      b.innerHTML = msg.text + '<div class="bubble-time">9:43 AM</div>';
-      body.insertBefore(b, typing);
-      body.scrollTop = body.scrollHeight;
-      idx++;
-      addMessage();
-    }, 1700);
+
+  /* ── FAQ accordion ── */
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click', function(){ q.closest('.faq-item').classList.toggle('open'); });
+  });
+
+  /* ── Contact form — FormSubmit AJAX (same integration as live site) ── */
+  var cf = document.getElementById('contactForm');
+  if(cf){
+    cf.addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = document.getElementById('submitBtn');
+      var form = this;
+      var data = {
+        first_name: form.first_name.value,
+        last_name: form.last_name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        service: form.service.value,
+        message: form.message.value,
+        _subject: 'New Nolvek Inquiry from ' + form.first_name.value + ' ' + form.last_name.value,
+        _template: 'table',
+        _captcha: 'false'
+      };
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      fetch('https://formsubmit.co/ajax/kevlongalloway1999@icloud.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(){
+        btn.textContent = "✓ Sent! We'll be in touch within 24 hours.";
+        btn.style.background = '#22c55e'; btn.style.color = '#fff';
+        form.reset();
+      })
+      .catch(function(){
+        btn.textContent = 'Something went wrong — please try again.';
+        btn.style.background = '#ef4444'; btn.style.color = '#fff';
+        btn.disabled = false;
+      });
+    });
   }
-}
-setTimeout(addMessage, 2500);
+
+  /* ── Mobile menu (momentum slide-in) ── */
+  var burger = document.getElementById('burger');
+  var mm = document.getElementById('mobile-menu');
+  function closeMenu(){ mm.classList.remove('open'); burger.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  if(burger && mm){
+    burger.addEventListener('click', function(){
+      var open = mm.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open?'true':'false');
+      document.body.style.overflow = open?'hidden':'';
+    });
+    mm.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+  }
+
+  /* ── Upcart storefront: live "add to cart" + checkout flash ── */
+  var count = 3, total = 204;
+  var cc = document.getElementById('cart-count');
+  var ckTotal = document.getElementById('ck-total');
+  var checkout = document.getElementById('store-checkout');
+  document.querySelectorAll('.store-mock .padd').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      var price = parseInt((btn.closest('.store-prod').querySelector('.pprice').textContent||'0').replace(/\D/g,''),10)||0;
+      count++; total += price;
+      if(cc) cc.textContent = count;
+      if(ckTotal) ckTotal.textContent = '$'+total;
+      if(checkout){ checkout.classList.add('checkout-flash'); }
+      var old = btn.textContent; btn.textContent = 'Added ✓';
+      setTimeout(function(){ btn.textContent = old; }, 1100);
+    });
+  });
+})();
 </script>
-
 </body>
 </html>
