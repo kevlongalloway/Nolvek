@@ -193,8 +193,9 @@ nav.scrolled{box-shadow:0 6px 34px rgba(0,0,0,.55),0 0 0 1px rgba(var(--accent-r
 .streak:nth-child(3){top:71%;width:32%;animation-delay:3.1s;}
 .streak:nth-child(4){top:86%;width:48%;animation-delay:4.4s;}
 @keyframes streak{0%{transform:translateX(0);opacity:0;}10%{opacity:.7;}90%{opacity:.7;}100%{transform:translateX(330%);opacity:0;}}
-.hero-inner{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:3.5rem;align-items:center;width:100%;max-width:1240px;margin:0 auto;position:relative;z-index:2;}
-.hero-copy,.hero-visual{min-width:0;}
+.hero-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:3.5rem;align-items:center;width:100%;max-width:1240px;margin:0 auto;position:relative;z-index:2;}
+.hero-copy{min-width:0;max-width:880px;}
+h1{max-width:14ch;}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:600;color:var(--muted);margin-bottom:1.6rem;letter-spacing:.12em;text-transform:uppercase;}
 .hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0;box-shadow:0 0 10px var(--accent);}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
@@ -344,6 +345,12 @@ h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.1rem,4vw,3.3r
 .svc-example{display:none;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:3.4rem;align-items:center;padding:44px;}
 .svc-example.active{display:grid;animation:exFade .55s var(--ease);}
 @keyframes exFade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+/* tap feedback: briefly ring the revealed example */
+.svc-example.flash{animation:exFade .55s var(--ease),exFlash 1.1s var(--ease);}
+@keyframes exFlash{0%{box-shadow:inset 0 0 0 2px var(--accent),0 0 30px rgba(var(--accent-rgb),.25);}100%{box-shadow:inset 0 0 0 0 transparent,0 0 0 transparent;}}
+/* the active card pulses too, so the press registers immediately */
+@keyframes svcTap{0%{transform:scale(.985);}100%{transform:none;}}
+.svc[aria-selected="true"]{animation:svcTap .35s var(--ease);}
 .ex-eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
 .ex-copy h3{font-family:'Syne';font-weight:800;font-size:clamp(1.45rem,2.3vw,1.95rem);letter-spacing:-.03em;line-height:1.1;margin-bottom:.9rem;}
 .ex-copy p{color:var(--muted2);font-size:1rem;line-height:1.75;margin-bottom:1.4rem;}
@@ -678,33 +685,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
         <span class="hero-chip"><i></i><b>Websites</b> from $199</span>
         <span class="hero-chip"><i></i>Google Profile optimization</span>
         <span class="hero-chip"><i></i>Self-serve products</span>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="browser-mock" data-tilt>
-        <div class="browser-bar">
-          <div class="b-dots"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
-          <div class="b-url"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>yourbusiness.com</div>
-        </div>
-        <div class="mock-site">
-          <div class="mock-hero-band">
-            <div class="mock-biz-name">Atlanta's Best Plumbing</div>
-            <div class="mock-tagline">24/7 Emergency Service · Licensed &amp; Insured</div>
-            <div class="mock-cta-row">
-              <button class="mock-btn primary" tabindex="-1">Book Now</button>
-              <button class="mock-btn sec" tabindex="-1">Call Us</button>
-            </div>
-          </div>
-          <div class="mock-services-row">
-            <div class="mock-svc"><div class="mock-svc-icon"><svg class="ico" style="width:18px;height:18px;color:var(--accent)" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7a3 3 0 0 1-4 4l-5 5 2 2 5-5a3 3 0 0 1 4-4l2-2-2-2z"/></svg></div><div class="mock-svc-name">Repairs</div></div>
-            <div class="mock-svc"><div class="mock-svc-icon"><svg class="ico" style="width:18px;height:18px;color:var(--accent)" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6"/><path d="M9 9h6l-1 5a2 2 0 0 1-4 0z"/><path d="M12 17v3"/></svg></div><div class="mock-svc-name">Install</div></div>
-            <div class="mock-svc"><div class="mock-svc-icon"><svg class="ico" style="width:18px;height:18px;color:var(--accent)" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1.5 3-1.5 4 0 7 1 2 3 2 3 5a3 3 0 0 1-6 0c0-2 1-2 1-4-2 1-3 3-3 5a5 5 0 0 0 10 0c0-5-5-6-5-13z"/></svg></div><div class="mock-svc-name">Heating</div></div>
-          </div>
-          <div class="mock-footer-band">
-            <div class="mock-footer-text"><svg class="ico" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="color:var(--accent)" aria-hidden="true"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>Top-rated locally</div>
-            <div class="mock-badge">Powered by Nolvek</div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -1491,17 +1471,31 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     if(!grid||!showcase) return;
     var tabs=Array.prototype.slice.call(grid.querySelectorAll('.svc'));
     var panels=showcase.querySelectorAll('.svc-example');
-    function select(tab, focus){
+    var isMobile=function(){ return window.matchMedia('(max-width:760px)').matches; };
+    function select(tab, opts){
+      opts=opts||{};
       tabs.forEach(function(t){ t.setAttribute('aria-selected', t===tab ? 'true':'false'); });
-      panels.forEach(function(p){ p.classList.toggle('active', p.id==='ex-'+tab.dataset.ex); });
-      if(focus) tab.focus();
+      var active=null;
+      panels.forEach(function(p){
+        var on=(p.id==='ex-'+tab.dataset.ex);
+        p.classList.toggle('active', on);
+        if(on) active=p;
+      });
+      if(opts.focus) tab.focus();
+      // Feedback that the button worked — especially on mobile, where the
+      // example sits far below the stacked cards. Scroll it into view + flash.
+      if(opts.scroll && active){
+        active.classList.remove('flash'); void active.offsetWidth; active.classList.add('flash');
+        var top = active.getBoundingClientRect().top + window.pageYOffset - (isMobile()? 70 : 100);
+        window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+      }
     }
     tabs.forEach(function(tab, idx){
-      tab.addEventListener('click', function(){ select(tab); });
+      tab.addEventListener('click', function(){ select(tab, {scroll:true}); });
       tab.addEventListener('keydown', function(e){
-        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(tab); }
-        else if(e.key==='ArrowRight'||e.key==='ArrowDown'){ e.preventDefault(); select(tabs[(idx+1)%tabs.length], true); }
-        else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ e.preventDefault(); select(tabs[(idx-1+tabs.length)%tabs.length], true); }
+        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(tab, {scroll:true}); }
+        else if(e.key==='ArrowRight'||e.key==='ArrowDown'){ e.preventDefault(); select(tabs[(idx+1)%tabs.length], {focus:true}); }
+        else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){ e.preventDefault(); select(tabs[(idx-1+tabs.length)%tabs.length], {focus:true}); }
       });
     });
   })();
