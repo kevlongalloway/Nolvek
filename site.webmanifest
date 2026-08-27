@@ -1,0 +1,15 @@
+{
+  "name": "Nolvek — Digital Solutions & Marketing",
+  "short_name": "Nolvek",
+  "description": "Digital marketing that puts local businesses at the top of search — local SEO, Google Business Profile, paid ads, and websites built to convert.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#05080f",
+  "theme_color": "#05080f",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

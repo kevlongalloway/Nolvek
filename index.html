@@ -11,9 +11,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="icon" type="image/svg+xml" href="/logo.svg">
-<link rel="apple-touch-icon" href="/favicon.png">
+
+<!-- ===== BRAND ICONS ===== -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="application-name" content="Nolvek">
+<meta name="apple-mobile-web-app-title" content="Nolvek">
+<meta name="msapplication-TileColor" content="#05080f">
+<meta name="msapplication-TileImage" content="/icon-192.png">
 
 <!-- ===== SEO ===== -->
 <meta name="description" content="Nolvek is an Atlanta digital marketing agency: local SEO, Google Business Profile optimization, Google &amp; Meta ads, conversion-built websites, and AI lead follow-up. Custom software when you outgrow the tools. Websites from $199.">
@@ -33,13 +41,13 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Nolvek — Get found first. Get called first.">
+<meta property="og:image:alt" content="Nolvek — Digital Solutions &amp; Marketing">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nolvek | Digital Marketing for Atlanta Businesses">
 <meta name="twitter:description" content="Local SEO, Google Business Profile, paid ads, and websites engineered to convert — for Atlanta businesses.">
 <meta name="twitter:image" content="https://nolvek.online/og-image.png">
-<meta name="twitter:image:alt" content="Nolvek — Get found first. Get called first.">
+<meta name="twitter:image:alt" content="Nolvek — Digital Solutions &amp; Marketing">
 
 <!-- ===== STRUCTURED DATA ===== -->
 <script type="application/ld+json">
@@ -51,6 +59,13 @@
       "@id": "https://nolvek.online/#business",
       "name": "Nolvek",
       "image": "https://nolvek.online/og-image.png",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nolvek.online/icon-512.png",
+        "width": 512,
+        "height": 512,
+        "caption": "Nolvek"
+      },
       "url": "https://nolvek.online",
       "email": "kevlongalloway1999@icloud.com",
       "description": "Atlanta digital marketing agency specializing in local SEO, Google Business Profile optimization, paid search and social advertising, conversion-focused websites, and AI lead follow-up — plus custom software and self-serve products like Upcart.",
@@ -68,6 +83,31 @@
           {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Custom Software Development", "serviceType": "Software Development"}}
         ]
       }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://nolvek.online/#organization",
+      "name": "Nolvek",
+      "alternateName": "Nolvek Digital Solutions & Marketing",
+      "url": "https://nolvek.online",
+      "email": "kevlongalloway1999@icloud.com",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://nolvek.online/#logo",
+        "url": "https://nolvek.online/icon-512.png",
+        "contentUrl": "https://nolvek.online/icon-512.png",
+        "width": 512,
+        "height": 512,
+        "caption": "Nolvek"
+      },
+      "image": {"@id": "https://nolvek.online/#logo"}
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://nolvek.online/#website",
+      "url": "https://nolvek.online",
+      "name": "Nolvek",
+      "publisher": {"@id": "https://nolvek.online/#organization"}
     },
     {
       "@type": "Product",
@@ -266,9 +306,12 @@ a:hover>.link-arrow svg,.link-arrow:hover svg{transform:translateX(4px);}
   max-width:1280px;margin:0 auto;padding:0 var(--gutter);
   height:74px;display:flex;align-items:center;justify-content:space-between;gap:2rem;
 }
-/* Wordmark only — no city lock, so this still fits when Nolvek isn't Atlanta-only. */
-.brand{display:flex;align-items:flex-end;gap:0.16rem;font-weight:800;font-size:1.5rem;letter-spacing:-0.045em;color:var(--ink);}
-.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--blue);margin-bottom:0.42rem;}
+/* Mark + wordmark. The lockup's own lettering is white-on-black with a baked
+   glow, so it can't sit on a light nav — the disc mark travels, the wordmark
+   is set in Manrope to stay crisp at small sizes. */
+.brand{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.5rem;letter-spacing:-0.045em;color:var(--ink);}
+.brand-mark{width:32px;height:32px;flex:none;}
+.footer .brand-mark{width:34px;height:34px;}
 .nav-links{display:flex;align-items:center;gap:2.1rem;list-style:none;}
 .nav-links a{
   font-family:'JetBrains Mono',ui-monospace,monospace;
@@ -754,6 +797,11 @@ textarea.field{resize:vertical;min-height:120px;}
           mask-image:radial-gradient(100% 100% at 50% 0%, #000 20%, transparent 72%);
 }
 .cta-band .wrap{position:relative;}
+/* The full lockup finally gets a dark ground, which is what it was drawn for. */
+.cta-lockup{
+  width:clamp(260px,34vw,420px);height:auto;
+  margin:0 0 1.4rem -2%;                    /* nudge left: the art carries its own glow padding */
+}
 .cta-band .eyebrow,.cta-band .eyebrow .n{color:#7c9bff;}
 .cta-band h2{color:#fff;max-width:18ch;margin-bottom:1.5rem;}
 .cta-band p{color:rgba(255,255,255,.62);max-width:50ch;margin-bottom:2.4rem;font-size:1.05rem;line-height:1.6;}
@@ -833,7 +881,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <!-- ===================== NAV ===================== -->
 <nav class="nav" id="nav" aria-label="Primary">
   <div class="nav-in">
-    <a href="#top" class="brand" aria-label="Nolvek home">nolvek<span class="dot" aria-hidden="true"></span></a>
+    <a href="#top" class="brand" aria-label="Nolvek home"><img src="/logo-mark.png" alt="" width="32" height="32" class="brand-mark" decoding="async"><span>nolvek</span></a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#products">Products</a></li>
@@ -1460,6 +1508,11 @@ textarea.field{resize:vertical;min-height:120px;}
 <!-- ===================== CTA BAND ===================== -->
 <section class="cta-band reveal" aria-label="Book a consultation">
   <div class="wrap">
+    <picture>
+      <source srcset="/logo-lockup.webp" type="image/webp">
+      <img src="/logo-lockup.png" alt="Nolvek — Digital Solutions &amp; Marketing"
+           class="cta-lockup" width="760" height="529" loading="lazy" decoding="async">
+    </picture>
     <div class="eyebrow"><span class="n">//</span><span class="t" style="color:rgba(255,255,255,.5)">Last thing</span></div>
     <h2 class="display">Your competition is already bidding on your name.</h2>
     <p>Book a free consultation and we'll map out exactly where the traffic in your neighborhood is going — and what it takes to get it back.</p>
@@ -1475,7 +1528,7 @@ textarea.field{resize:vertical;min-height:120px;}
   <div class="wrap">
     <div class="footer-top">
       <div>
-        <a href="#top" class="brand" aria-label="Nolvek home">nolvek<span class="dot" aria-hidden="true"></span></a>
+        <a href="#top" class="brand" aria-label="Nolvek home"><img src="/logo-mark.png" alt="" width="34" height="34" class="brand-mark" decoding="async"><span>nolvek</span></a>
         <p class="footer-tag">Digital marketing for Atlanta businesses. Local search, paid ads, conversion websites, and the software to keep up with what they bring in.</p>
       </div>
       <div class="footer-cols">
