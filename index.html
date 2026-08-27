@@ -306,12 +306,13 @@ a:hover>.link-arrow svg,.link-arrow:hover svg{transform:translateX(4px);}
   max-width:1280px;margin:0 auto;padding:0 var(--gutter);
   height:74px;display:flex;align-items:center;justify-content:space-between;gap:2rem;
 }
-/* Mark + wordmark. The lockup's own lettering is white-on-black with a baked
-   glow, so it can't sit on a light nav — the disc mark travels, the wordmark
-   is set in Manrope to stay crisp at small sizes. */
-.brand{display:flex;align-items:center;gap:0.55rem;font-weight:800;font-size:1.5rem;letter-spacing:-0.045em;color:var(--ink);}
-.brand-mark{width:32px;height:32px;flex:none;}
-.footer .brand-mark{width:34px;height:34px;}
+/* The real wordmark, lifted out of the supplied lockup and recoloured for a
+   light ground: ink letterforms, the blue accent stroke kept at full chroma.
+   No disc badge here — the wordmark's own N already carries the mark, so
+   pairing the two just set the same letter twice in two different styles. */
+.brand{display:flex;align-items:center;}
+.brand-wordmark{width:clamp(132px,15vw,164px);height:auto;}
+.brand-lockup{width:clamp(190px,22vw,236px);height:auto;}
 .nav-links{display:flex;align-items:center;gap:2.1rem;list-style:none;}
 .nav-links a{
   font-family:'JetBrains Mono',ui-monospace,monospace;
@@ -881,7 +882,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <!-- ===================== NAV ===================== -->
 <nav class="nav" id="nav" aria-label="Primary">
   <div class="nav-in">
-    <a href="#top" class="brand" aria-label="Nolvek home"><img src="/logo-mark.png" alt="" width="32" height="32" class="brand-mark" decoding="async"><span>nolvek</span></a>
+    <a href="#top" class="brand" aria-label="Nolvek — home"><img src="/wordmark.png" alt="Nolvek" width="640" height="88" class="brand-wordmark" fetchpriority="high" decoding="async"></a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#products">Products</a></li>
@@ -1528,7 +1529,7 @@ textarea.field{resize:vertical;min-height:120px;}
   <div class="wrap">
     <div class="footer-top">
       <div>
-        <a href="#top" class="brand" aria-label="Nolvek home"><img src="/logo-mark.png" alt="" width="34" height="34" class="brand-mark" decoding="async"><span>nolvek</span></a>
+        <a href="#top" class="brand" aria-label="Nolvek — home"><img src="/wordmark-lockup.png" alt="Nolvek — Digital Solutions &amp; Marketing" width="720" height="137" class="brand-lockup" loading="lazy" decoding="async"></a>
         <p class="footer-tag">Digital marketing for Atlanta businesses. Local search, paid ads, conversion websites, and the software to keep up with what they bring in.</p>
       </div>
       <div class="footer-cols">
