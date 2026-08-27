@@ -396,6 +396,7 @@ textarea.field{resize:vertical;min-height:120px;}
   margin-top:1.1rem;font-size:0.84rem;color:var(--body);line-height:1.5;text-align:center;
 }
 .form-note.ok{color:var(--blue);font-weight:700;}
+.form-note.err{color:#b42318;font-weight:600;}
 .legal{
   margin-top:1.3rem;padding-top:1.2rem;border-top:1px solid var(--line-2);
   color:var(--label);text-align:center;
@@ -940,6 +941,7 @@ textarea.field{resize:vertical;min-height:120px;}
       <p class="audit-sub">A plain-English teardown of your Google presence, your site, and what happens after someone reaches out. No obligation.</p>
 
       <form id="auditForm" data-lead="Free Audit Request" novalidate>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
         <input class="field" type="text" name="name" placeholder="Your name" aria-label="Your name" autocomplete="name" required>
         <input class="field" type="email" name="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required>
         <div class="field-row">
@@ -1483,6 +1485,7 @@ textarea.field{resize:vertical;min-height:120px;}
 
     <div class="audit">
       <form id="contactForm" data-lead="Project Inquiry" novalidate>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
         <div class="field-row">
           <input class="field" type="text" name="name" placeholder="Your name" aria-label="Your name" autocomplete="name" required>
           <input class="field" type="email" name="email" placeholder="Email address" aria-label="Email address" autocomplete="email" required>
@@ -1833,6 +1836,13 @@ textarea.field{resize:vertical;min-height:120px;}
   }
 
   /* ---------- LEAD FORMS (FormSubmit) ---------- */
+  /* Where leads are delivered. FormSubmit also issues a hashed endpoint
+     (formsubmit.co/ajax/<token>) once the address is activated — swapping
+     this one constant to that URL keeps delivery identical while taking the
+     address out of the page source, where scrapers read it. */
+  var FORM_ENDPOINT  = 'https://formsubmit.co/ajax/kevlongalloway47@gmail.com';
+  var FALLBACK_EMAIL = 'kevlongalloway47@gmail.com';
+
   document.querySelectorAll('form[data-lead]').forEach(function(form){
     var note = form.querySelector('.form-note');
     var btn = form.querySelector('button[type="submit"]');
@@ -1850,17 +1860,30 @@ textarea.field{resize:vertical;min-height:120px;}
       data._subject = 'Nolvek — ' + form.dataset.lead + ' from ' + (data.name || 'website');
       data._template = 'table';
       data._captcha = 'false';
+      if(data.email) data._replyto = data.email;   // Reply goes straight to the lead
 
       var first = (data.name || 'there').split(' ')[0];
       btn.disabled = true; btn.textContent = 'Sending…';
       note.textContent = 'Sending…'; note.className = 'form-note';
 
-      fetch('https://formsubmit.co/ajax/kevlongalloway1999@icloud.com', {
+      fetch(FORM_ENDPOINT, {
         method:'POST',
         headers:{'Content-Type':'application/json','Accept':'application/json'},
         body: JSON.stringify(data)
       })
-      .then(function(r){ return r.json(); })
+      .then(function(r){
+        return r.json().catch(function(){ return {}; }).then(function(j){
+          // Only a 2xx carrying success:"true" means it was actually sent.
+          // FormSubmit answers 403 for an address that hasn't been activated,
+          // and that body still parses as JSON — treating any parsed response
+          // as success is what made this form claim delivery while sending
+          // nothing.
+          if(!r.ok || String(j.success) !== 'true'){
+            throw new Error(j.message || ('FormSubmit HTTP ' + r.status));
+          }
+          return j;
+        });
+      })
       .then(function(){
         note.textContent = 'Thanks, ' + first + '. We’ll be in touch within one business day.';
         note.className = 'form-note ok';
@@ -1869,10 +1892,12 @@ textarea.field{resize:vertical;min-height:120px;}
         var h = form.querySelector('input[name="needs"]'); if(h) h.value = '';
         btn.disabled = false; btn.textContent = label;
       })
-      .catch(function(){
-        note.textContent = 'Something went wrong — email kevlongalloway1999@icloud.com and we’ll jump on it.';
-        note.className = 'form-note';
+      .catch(function(err){
+        note.innerHTML = 'That didn’t go through. Email <a href="mailto:' + FALLBACK_EMAIL +
+                         '" style="color:var(--blue);font-weight:700;">' + FALLBACK_EMAIL + '</a> and we’ll pick it up.';
+        note.className = 'form-note err';
         btn.disabled = false; btn.textContent = label;
+        if(window.console) console.error('Lead form failed:', err && err.message);
       });
     });
   });
