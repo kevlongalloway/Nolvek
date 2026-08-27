@@ -417,6 +417,58 @@ textarea.field{resize:vertical;min-height:120px;}
 .svc-label .t{color:var(--blue);}
 .svc-copy h3{margin-bottom:1.1rem;}
 .svc-copy p{color:var(--body);margin-bottom:1.8rem;line-height:1.62;}
+
+/* Each example sits behind a deliberate click. The prompt has to say so
+   in plain words — the card IS the button, and it names what opens. */
+.ex-open{
+  width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:0.55rem;
+  text-align:left;cursor:pointer;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r2);
+  padding:clamp(1.6rem,3vw,2.3rem);
+  transition:background .2s var(--ease), border-color .2s var(--ease);
+}
+.ex-open:hover{background:var(--blue-w);border-color:var(--blue);}
+.ex-open:focus-visible{outline:2px solid var(--blue);outline-offset:3px;}
+.ex-open[aria-expanded="true"]{display:none;}
+.ex-open .cue{
+  display:inline-flex;align-items:center;gap:0.55rem;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);
+}
+.ex-open .cue svg{width:17px;height:17px;fill:currentColor;stroke:none;}
+.ex-open .t{font-size:1.2rem;font-weight:800;letter-spacing:-0.025em;color:var(--ink);}
+.ex-open .s{font-size:0.92rem;color:var(--body);line-height:1.5;}
+
+.ex-mock[hidden]{display:none;}
+.ex-mock{animation:fade .4s var(--ease);}
+@keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.ex-mock-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.9rem;}
+.ex-mock-head .lbl{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:0.74rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);
+}
+.ex-hide{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:0.74rem;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--body);background:none;cursor:pointer;
+  padding:0.6rem 0.9rem;min-height:44px;          /* comfortable tap target */
+  border:1px solid var(--line);border-radius:var(--r);
+}
+.ex-hide:hover{color:var(--ink);border-color:var(--ink);}
+.ex-hide:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
+
+/* Standing hint above the list, so the interaction is announced before
+   the first card rather than discovered by accident. */
+.svc-hint{
+  display:flex;align-items:flex-start;gap:0.7rem;
+  border:1px dashed var(--line);border-radius:var(--r2);
+  padding:0.95rem 1.2rem;margin-bottom:clamp(2rem,4vw,3rem);
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--body);
+  line-height:1.5;
+}
+.svc-hint svg{width:17px;height:17px;flex:none;fill:var(--blue);stroke:none;margin-top:0.15rem;}
+.svc-hint b{color:var(--blue);font-weight:600;}
 .ex-list{list-style:none;display:grid;gap:1rem;border-top:1px solid var(--line);padding-top:1.6rem;}
 .ex-list li{display:flex;gap:0.85rem;align-items:flex-start;font-size:0.95rem;color:var(--body);line-height:1.5;}
 .ex-list li b{color:var(--ink);font-weight:700;}
@@ -898,10 +950,11 @@ textarea.field{resize:vertical;min-height:120px;}
     <div class="sec-head">
       <div class="eyebrow"><span class="n num">02</span><span class="t">Services</span></div>
       <h2 class="display" id="services-h">Marketing that fills the calendar.</h2>
-      <p class="lede">Getting found is the job. Everything else exists to catch what the marketing brings in. Each service below shows a real example of the work and exactly what you get.</p>
+      <p class="lede">Getting found is the job. Everything else exists to catch what the marketing brings in. Each service below comes with a live example of the actual work — click to open it.</p>
     </div>
 
-        <div class="svc-list">
+        <div class="svc-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10.4 19z"/></svg><span><b>Click to view</b> &mdash; every service below opens a live example of the real work</span></div>
+    <div class="svc-list">
 
       <article class="svc-block" id="svc-gbp">
         <div class="svc-copy">
@@ -915,31 +968,43 @@ textarea.field{resize:vertical;min-height:120px;}
               </ul>
         </div>
         <div class="svc-visual">
-      <div class="mock gbp">
-                  <div class="name">Atlanta's Best Plumbing</div>
-                  <div class="cat">Plumber · Atlanta, GA</div>
-                  <div class="rate">
-                    <span class="stars">
-                      <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>
-                    </span>
-                    <b>4.9</b> <span class="rev">· 200+ reviews</span>
+          <button type="button" class="ex-open" aria-expanded="false" aria-controls="mock-gbp">
+            <span class="cue"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10.4 19z"/></svg>Click to view</span>
+            <span class="t">See a live example</span>
+            <span class="s">Your profile the way a nearby customer sees it in Maps.</span>
+          </button>
+          <div class="ex-mock" id="mock-gbp" hidden>
+            <div class="ex-mock-head">
+              <span class="lbl">Live example — Google Business Profile</span>
+              <button type="button" class="ex-hide">Hide</button>
+            </div>
+
+        <div class="mock gbp">
+                    <div class="name">Atlanta's Best Plumbing</div>
+                    <div class="cat">Plumber · Atlanta, GA</div>
+                    <div class="rate">
+                      <span class="stars">
+                        <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>
+                      </span>
+                      <b>4.9</b> <span class="rev">· 200+ reviews</span>
+                    </div>
+                    <div class="open"><b>Open now</b> · Closes 6 PM</div>
+                    <div class="gbp-acts">
+                      <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Call</span></div>
+                      <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M3 11l18-7-7 18-2-7-9-2z"/></svg><span>Route</span></div>
+                      <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Save</span></div>
+                      <div class="gbp-act"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg><span>Site</span></div>
+                    </div>
+                    <div class="gbp-map" aria-hidden="true">
+                      <span class="road r1"></span><span class="road r2"></span>
+                      <span class="pin"><svg viewBox="0 0 24 24"><path d="M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12z"/></svg></span>
+                    </div>
+                    <div class="gbp-foot">
+                      <div><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Serving Buckhead, Midtown &amp; Decatur</div>
+                      <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Responds in ~10 min</div>
+                    </div>
                   </div>
-                  <div class="open"><b>Open now</b> · Closes 6 PM</div>
-                  <div class="gbp-acts">
-                    <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Call</span></div>
-                    <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M3 11l18-7-7 18-2-7-9-2z"/></svg><span>Route</span></div>
-                    <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Save</span></div>
-                    <div class="gbp-act"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg><span>Site</span></div>
-                  </div>
-                  <div class="gbp-map" aria-hidden="true">
-                    <span class="road r1"></span><span class="road r2"></span>
-                    <span class="pin"><svg viewBox="0 0 24 24"><path d="M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12z"/></svg></span>
-                  </div>
-                  <div class="gbp-foot">
-                    <div><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Serving Buckhead, Midtown &amp; Decatur</div>
-                    <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Responds in ~10 min</div>
-                  </div>
-                </div>
+          </div>
         </div>
       </article>
 
@@ -955,32 +1020,44 @@ textarea.field{resize:vertical;min-height:120px;}
               </ul>
         </div>
         <div class="svc-visual">
-      <div class="mock">
-                  <div class="mock-bar">
-                    <div class="dots"><i></i><i></i><i></i></div>
-                    <div class="url"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>google.com/search</div>
+          <button type="button" class="ex-open" aria-expanded="false" aria-controls="mock-ads">
+            <span class="cue"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10.4 19z"/></svg>Click to view</span>
+            <span class="t">See a live example</span>
+            <span class="s">A search page with your ad sitting in the top slot.</span>
+          </button>
+          <div class="ex-mock" id="mock-ads" hidden>
+            <div class="ex-mock-head">
+              <span class="lbl">Live example — Paid search result</span>
+              <button type="button" class="ex-hide">Hide</button>
+            </div>
+
+        <div class="mock">
+                    <div class="mock-bar">
+                      <div class="dots"><i></i><i></i><i></i></div>
+                      <div class="url"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>google.com/search</div>
+                    </div>
+                    <div class="serp">
+                      <div class="serp-q">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                        emergency plumber near me
+                      </div>
+                      <div class="serp-ad">
+                        <span class="serp-badge">Sponsored</span>
+                        <div class="serp-title">Atlanta's Best Plumbing — 24/7 Emergency Service</div>
+                        <div class="serp-url">atlantasbestplumbing.com</div>
+                        <div class="serp-desc">Licensed &amp; insured. Upfront pricing, same-day dispatch across Buckhead, Midtown &amp; Decatur.</div>
+                        <div class="serp-links"><span>Book online</span><span>Pricing</span><span>Call now</span></div>
+                      </div>
+                      <div class="serp-org"><div class="t">Metro Drain &amp; Rooter</div><div class="u">metrodrainatl.com</div></div>
+                      <div class="serp-org"><div class="t">Peachtree Plumbing Co.</div><div class="u">peachtreeplumbing.com</div></div>
+                      <div class="serp-stats">
+                        <div class="serp-stat"><b>Top</b><span>Ad position</span></div>
+                        <div class="serp-stat"><b>Tracked</b><span>Every call</span></div>
+                        <div class="serp-stat"><b>Weekly</b><span>Spend review</span></div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="serp">
-                    <div class="serp-q">
-                      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-                      emergency plumber near me
-                    </div>
-                    <div class="serp-ad">
-                      <span class="serp-badge">Sponsored</span>
-                      <div class="serp-title">Atlanta's Best Plumbing — 24/7 Emergency Service</div>
-                      <div class="serp-url">atlantasbestplumbing.com</div>
-                      <div class="serp-desc">Licensed &amp; insured. Upfront pricing, same-day dispatch across Buckhead, Midtown &amp; Decatur.</div>
-                      <div class="serp-links"><span>Book online</span><span>Pricing</span><span>Call now</span></div>
-                    </div>
-                    <div class="serp-org"><div class="t">Metro Drain &amp; Rooter</div><div class="u">metrodrainatl.com</div></div>
-                    <div class="serp-org"><div class="t">Peachtree Plumbing Co.</div><div class="u">peachtreeplumbing.com</div></div>
-                    <div class="serp-stats">
-                      <div class="serp-stat"><b>Top</b><span>Ad position</span></div>
-                      <div class="serp-stat"><b>Tracked</b><span>Every call</span></div>
-                      <div class="serp-stat"><b>Weekly</b><span>Spend review</span></div>
-                    </div>
-                  </div>
-                </div>
+          </div>
         </div>
       </article>
 
@@ -996,26 +1073,38 @@ textarea.field{resize:vertical;min-height:120px;}
               </ul>
         </div>
         <div class="svc-visual">
-      <div class="mock">
-                  <div class="mock-bar">
-                    <div class="dots"><i></i><i></i><i></i></div>
-                    <div class="url"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>atlantasbestplumbing.com</div>
+          <button type="button" class="ex-open" aria-expanded="false" aria-controls="mock-web">
+            <span class="cue"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10.4 19z"/></svg>Click to view</span>
+            <span class="t">See a live example</span>
+            <span class="s">A site built to turn the visit into a phone call.</span>
+          </button>
+          <div class="ex-mock" id="mock-web" hidden>
+            <div class="ex-mock-head">
+              <span class="lbl">Live example — Conversion website</span>
+              <button type="button" class="ex-hide">Hide</button>
+            </div>
+
+        <div class="mock">
+                    <div class="mock-bar">
+                      <div class="dots"><i></i><i></i><i></i></div>
+                      <div class="url"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>atlantasbestplumbing.com</div>
+                    </div>
+                    <div class="site-hero">
+                      <div class="biz">Atlanta's Best Plumbing</div>
+                      <div class="tag">24/7 Emergency Service · Licensed &amp; Insured</div>
+                      <div class="site-btns"><span class="p">Book now</span><span class="s">Call us</span></div>
+                    </div>
+                    <div class="site-row">
+                      <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7a3 3 0 0 1-4 4l-5 5 2 2 5-5a3 3 0 0 1 4-4l2-2-2-2z"/></svg><span>Repairs</span></div>
+                      <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6"/><path d="M9 9h6l-1 5a2 2 0 0 1-4 0z"/><path d="M12 17v3"/></svg><span>Install</span></div>
+                      <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1.5 3-1.5 4 0 7 1 2 3 2 3 5a3 3 0 0 1-6 0c0-2 1-2 1-4-2 1-3 3-3 5a5 5 0 0 0 10 0c0-5-5-6-5-13z"/></svg><span>Heating</span></div>
+                    </div>
+                    <div class="site-foot">
+                      <div class="rate"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg> Top-rated locally</div>
+                      <div class="by">Built by Nolvek</div>
+                    </div>
                   </div>
-                  <div class="site-hero">
-                    <div class="biz">Atlanta's Best Plumbing</div>
-                    <div class="tag">24/7 Emergency Service · Licensed &amp; Insured</div>
-                    <div class="site-btns"><span class="p">Book now</span><span class="s">Call us</span></div>
-                  </div>
-                  <div class="site-row">
-                    <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7a3 3 0 0 1-4 4l-5 5 2 2 5-5a3 3 0 0 1 4-4l2-2-2-2z"/></svg><span>Repairs</span></div>
-                    <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6"/><path d="M9 9h6l-1 5a2 2 0 0 1-4 0z"/><path d="M12 17v3"/></svg><span>Install</span></div>
-                    <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1.5 3-1.5 4 0 7 1 2 3 2 3 5a3 3 0 0 1-6 0c0-2 1-2 1-4-2 1-3 3-3 5a5 5 0 0 0 10 0c0-5-5-6-5-13z"/></svg><span>Heating</span></div>
-                  </div>
-                  <div class="site-foot">
-                    <div class="rate"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg> Top-rated locally</div>
-                    <div class="by">Built by Nolvek</div>
-                  </div>
-                </div>
+          </div>
         </div>
       </article>
 
@@ -1031,27 +1120,39 @@ textarea.field{resize:vertical;min-height:120px;}
               </ul>
         </div>
         <div class="svc-visual">
-      <div class="phone-wrap">
-                  <div class="phone" aria-hidden="true">
-                    <div class="screen">
-                      <div class="notch"></div>
-                      <div class="status"><span>9:41</span><span>5G</span></div>
-                      <div class="chat-head">
-                        <div class="avatar">N</div>
-                        <div><span class="who">Nolvek AI Assistant</span><span class="st">● Online — replies instantly</span></div>
+          <button type="button" class="ex-open" aria-expanded="false" aria-controls="mock-ai">
+            <span class="cue"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10.4 19z"/></svg>Click to view</span>
+            <span class="t">See a live example</span>
+            <span class="s">A real inquiry, answered and booked without you.</span>
+          </button>
+          <div class="ex-mock" id="mock-ai" hidden>
+            <div class="ex-mock-head">
+              <span class="lbl">Live example — AI lead conversation</span>
+              <button type="button" class="ex-hide">Hide</button>
+            </div>
+
+        <div class="phone-wrap">
+                    <div class="phone" aria-hidden="true">
+                      <div class="screen">
+                        <div class="notch"></div>
+                        <div class="status"><span>9:41</span><span>5G</span></div>
+                        <div class="chat-head">
+                          <div class="avatar">N</div>
+                          <div><span class="who">Nolvek AI Assistant</span><span class="st">● Online — replies instantly</span></div>
+                        </div>
+                        <div class="chat-body" id="chatBody">
+                          <div class="bubble bot">Hi! Thanks for reaching out — how can I help today?<span class="t">9:41 AM</span></div>
+                          <div class="bubble user">Do you guys do free estimates?<span class="t">9:41 AM</span></div>
+                          <div class="bubble bot">Yes! We offer free, no-obligation inspections. What area of Atlanta are you in?<span class="t">9:41 AM</span></div>
+                          <div class="bubble user">Buckhead<span class="t">9:42 AM</span></div>
+                          <div class="bubble bot">Perfect, we cover Buckhead! What works better — Thursday or Friday this week?<span class="t">9:42 AM</span></div>
+                          <div class="bubble bot" id="typing"><span class="typing"><i></i><i></i><i></i></span></div>
+                        </div>
+                        <div class="quick"><span>Thursday</span><span>Friday</span><span>Call me</span></div>
                       </div>
-                      <div class="chat-body" id="chatBody">
-                        <div class="bubble bot">Hi! Thanks for reaching out — how can I help today?<span class="t">9:41 AM</span></div>
-                        <div class="bubble user">Do you guys do free estimates?<span class="t">9:41 AM</span></div>
-                        <div class="bubble bot">Yes! We offer free, no-obligation inspections. What area of Atlanta are you in?<span class="t">9:41 AM</span></div>
-                        <div class="bubble user">Buckhead<span class="t">9:42 AM</span></div>
-                        <div class="bubble bot">Perfect, we cover Buckhead! What works better — Thursday or Friday this week?<span class="t">9:42 AM</span></div>
-                        <div class="bubble bot" id="typing"><span class="typing"><i></i><i></i><i></i></span></div>
-                      </div>
-                      <div class="quick"><span>Thursday</span><span>Friday</span><span>Call me</span></div>
                     </div>
                   </div>
-                </div>
+          </div>
         </div>
       </article>
 
@@ -1067,32 +1168,44 @@ textarea.field{resize:vertical;min-height:120px;}
               </ul>
         </div>
         <div class="svc-visual">
-      <div class="mock">
-                  <div class="dash-bar">
-                    <div class="dots"><i></i><i></i><i></i></div>
-                    <div class="dash-tabs"><span class="on">Dashboard</span><span>Jobs</span><span>Reports</span></div>
-                  </div>
-                  <div class="dash-body">
-                    <div class="dash-nav">
-                      <span class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Overview</span>
-                      <span><svg viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3"/></svg> Jobs</span>
-                      <span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20a7 7 0 0 1 14 0"/></svg> Clients</span>
-                      <span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg> Schedule</span>
+          <button type="button" class="ex-open" aria-expanded="false" aria-controls="mock-soft">
+            <span class="cue"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10.4 19z"/></svg>Click to view</span>
+            <span class="t">See a live example</span>
+            <span class="s">Software shaped around how your team actually works.</span>
+          </button>
+          <div class="ex-mock" id="mock-soft" hidden>
+            <div class="ex-mock-head">
+              <span class="lbl">Live example — Custom dashboard</span>
+              <button type="button" class="ex-hide">Hide</button>
+            </div>
+
+        <div class="mock">
+                    <div class="dash-bar">
+                      <div class="dots"><i></i><i></i><i></i></div>
+                      <div class="dash-tabs"><span class="on">Dashboard</span><span>Jobs</span><span>Reports</span></div>
                     </div>
-                    <div class="dash-main">
-                      <div class="dash-stats">
-                        <div class="dash-stat"><b style="color:var(--blue)">14</b><span>Active jobs</span></div>
-                        <div class="dash-stat"><b style="color:var(--ok)">$18.4k</b><span>This month</span></div>
-                        <div class="dash-stat"><b>6</b><span>Pending quotes</span></div>
-                        <div class="dash-stat"><b style="color:var(--warn)">3</b><span>Follow-ups due</span></div>
+                    <div class="dash-body">
+                      <div class="dash-nav">
+                        <span class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Overview</span>
+                        <span><svg viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3"/></svg> Jobs</span>
+                        <span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20a7 7 0 0 1 14 0"/></svg> Clients</span>
+                        <span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg> Schedule</span>
                       </div>
-                      <div class="dash-chart">
-                        <div class="cl">Revenue — last 8 weeks</div>
-                        <div class="bars"><i style="height:40%"></i><i style="height:58%"></i><i style="height:46%"></i><i style="height:72%"></i><i style="height:55%"></i><i style="height:82%"></i><i style="height:66%"></i><i class="hot" style="height:100%"></i></div>
+                      <div class="dash-main">
+                        <div class="dash-stats">
+                          <div class="dash-stat"><b style="color:var(--blue)">14</b><span>Active jobs</span></div>
+                          <div class="dash-stat"><b style="color:var(--ok)">$18.4k</b><span>This month</span></div>
+                          <div class="dash-stat"><b>6</b><span>Pending quotes</span></div>
+                          <div class="dash-stat"><b style="color:var(--warn)">3</b><span>Follow-ups due</span></div>
+                        </div>
+                        <div class="dash-chart">
+                          <div class="cl">Revenue — last 8 weeks</div>
+                          <div class="bars"><i style="height:40%"></i><i style="height:58%"></i><i style="height:46%"></i><i style="height:72%"></i><i style="height:55%"></i><i style="height:82%"></i><i style="height:66%"></i><i class="hot" style="height:100%"></i></div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+          </div>
         </div>
       </article>
     </div>
@@ -1446,6 +1559,26 @@ textarea.field{resize:vertical;min-height:120px;}
     });
   }, {threshold:0.1, rootMargin:'0px 0px -6% 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* ---------- SERVICE EXAMPLES: click to open ---------- */
+  (function(){
+    document.querySelectorAll('.ex-open').forEach(function(btn){
+      var mock = document.getElementById(btn.getAttribute('aria-controls'));
+      if(!mock) return;
+      btn.addEventListener('click', function(){
+        btn.setAttribute('aria-expanded','true');
+        mock.hidden = false;
+        var hide = mock.querySelector('.ex-hide');
+        if(hide) hide.focus();
+      });
+      var hide = mock.querySelector('.ex-hide');
+      hide && hide.addEventListener('click', function(){
+        mock.hidden = true;
+        btn.setAttribute('aria-expanded','false');
+        btn.focus();
+      });
+    });
+  })();
 
   /* ---------- AUDIT "what do you need" chips ---------- */
   (function(){
