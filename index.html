@@ -105,7 +105,7 @@
   --ink:     #0c111e;
   --ink-2:   #1b2233;
   --body:    #545f78;
-  --label:   #8b93a5;
+  --label:   #667085;
   --blue:    #3661e3;
   --blue-d:  #2a4dbd;
   --blue-w:  #eef2fd;
@@ -162,36 +162,46 @@ h3.display{font-size:clamp(1.55rem, 3vw, 2.15rem);letter-spacing:-0.028em;line-h
   font-family:'JetBrains Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
   font-size:0.72rem;
   font-weight:500;
-  letter-spacing:0.15em;
+  letter-spacing:0.09em;
   text-transform:uppercase;
 }
+/* Section marker. One job: tell you plainly which section you're in.
+   Solid blue, sized to be read — not a decorative whisper. */
 .eyebrow{
   font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:0.72rem;
-  font-weight:500;
-  letter-spacing:0.18em;
+  font-size:0.82rem;
+  font-weight:600;
+  letter-spacing:0.08em;
   text-transform:uppercase;
   color:var(--blue);
   display:flex;
   align-items:center;
-  gap:0.85rem;
-  margin-bottom:1.35rem;
+  gap:0.7rem;
+  margin-bottom:1.5rem;
 }
 .eyebrow .n{color:var(--blue);}
-.eyebrow .t{color:var(--label);}
+.eyebrow .n.num{color:#fff;background:var(--blue);border-radius:var(--r);padding:0.2rem 0.5rem;font-size:0.76rem;}
+.eyebrow .t{color:var(--blue);}
 
 /* ---------- LAYOUT ---------- */
 .wrap{max-width:1280px;margin:0 auto;padding-inline:var(--gutter);}
-.sec{padding-block:clamp(3.5rem, 6vw, 5.75rem);}
+/* Every section opens on a full-width rule, so the page reads as a
+   stack of distinct blocks rather than one continuous scroll. */
+.sec{
+  padding-block:clamp(3.5rem, 6vw, 5.5rem);
+  border-top:1px solid var(--line);
+  scroll-margin-top:74px;
+}
 .sec-head{max-width:60ch;margin-bottom:clamp(2.25rem,4vw,3.25rem);}
 .sec-head .lede{margin-top:1.35rem;}
 .rule{height:1px;background:var(--line);border:0;}
+.marquee + .sec{border-top:0;}
 
 /* ---------- BUTTONS ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:0.7rem;
   font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:0.74rem;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;
+  font-size:0.74rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
   padding:1.15rem 1.75rem;
   border-radius:var(--r);
   border:1px solid var(--blue);
@@ -213,7 +223,7 @@ h3.display{font-size:clamp(1.55rem, 3vw, 2.15rem);letter-spacing:-0.028em;line-h
 .pill{
   display:inline-flex;align-items:center;gap:0.55rem;
   font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:0.68rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;
+  font-size:0.68rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
   padding:0.6rem 1.05rem;border:1px solid var(--line);border-radius:999px;
   color:var(--ink);background:var(--paper);
 }
@@ -222,7 +232,7 @@ h3.display{font-size:clamp(1.55rem, 3vw, 2.15rem);letter-spacing:-0.028em;line-h
 .link-arrow{
   display:inline-flex;align-items:center;gap:0.5rem;
   font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:0.7rem;letter-spacing:0.13em;text-transform:uppercase;font-weight:500;
+  font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;
   color:var(--blue);
 }
 .link-arrow svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s var(--ease);}
@@ -256,16 +266,13 @@ a:hover>.link-arrow svg,.link-arrow:hover svg{transform:translateX(4px);}
   max-width:1280px;margin:0 auto;padding:0 var(--gutter);
   height:74px;display:flex;align-items:center;justify-content:space-between;gap:2rem;
 }
-.brand{display:flex;align-items:flex-end;gap:0.15rem;font-weight:800;font-size:1.5rem;letter-spacing:-0.045em;color:var(--ink);}
-.brand .badge{
-  width:19px;height:19px;border-radius:50%;background:var(--blue);color:#fff;
-  font-family:'JetBrains Mono',monospace;font-size:0.5rem;font-weight:600;letter-spacing:0;
-  display:flex;align-items:center;justify-content:center;margin-bottom:0.42rem;
-}
+/* Wordmark only — no city lock, so this still fits when Nolvek isn't Atlanta-only. */
+.brand{display:flex;align-items:flex-end;gap:0.16rem;font-weight:800;font-size:1.5rem;letter-spacing:-0.045em;color:var(--ink);}
+.brand .dot{width:7px;height:7px;border-radius:50%;background:var(--blue);margin-bottom:0.42rem;}
 .nav-links{display:flex;align-items:center;gap:2.1rem;list-style:none;}
 .nav-links a{
   font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:0.71rem;letter-spacing:0.13em;text-transform:uppercase;font-weight:500;
+  font-size:0.71rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;
   color:var(--body);transition:color .18s;
 }
 .nav-links a:hover{color:var(--ink);}
@@ -357,7 +364,7 @@ textarea.field{resize:vertical;min-height:120px;}
 .marquee-track{display:flex;gap:3.5rem;width:max-content;animation:slide 46s linear infinite;}
 .marquee-track span{
   font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--label);
+  font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);
   display:flex;align-items:center;gap:3.5rem;white-space:nowrap;
 }
 .marquee-track i{width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;}
@@ -379,52 +386,37 @@ textarea.field{resize:vertical;min-height:120px;}
 .stat b i{color:var(--blue);font-style:normal;}
 .stat span{
   display:block;font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);line-height:1.5;
+  font-size:0.68rem;letter-spacing:0.09em;text-transform:uppercase;color:var(--label);line-height:1.5;
 }
 
 /* ============================================================
    SERVICES
 ============================================================ */
-.svc-grid{
-  display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
-  background:var(--line);border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;
+/* Every service is its own block, always visible, rule-separated.
+   No tabs: nothing is hidden behind a click, and the example that
+   proves each service sits directly beside its description. */
+.svc-list{display:grid;}
+.svc-block{
+  display:grid;grid-template-columns:1fr 1.06fr;
+  gap:clamp(2rem,4.5vw,4.5rem);
+  align-items:center;
+  padding-block:clamp(2.75rem,5vw,4.25rem);
+  border-top:1px solid var(--line);
+  scroll-margin-top:90px;
 }
-.svc{
-  background:var(--paper);padding:1.9rem 1.5rem 1.7rem;
-  cursor:pointer;text-align:left;border:0;
-  display:flex;flex-direction:column;gap:0.75rem;
-  transition:background .2s var(--ease);
-  position:relative;
+.svc-block:first-child{border-top:0;padding-top:0;}
+.svc-label{
+  display:flex;align-items:center;gap:0.75rem;margin-bottom:1.15rem;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
 }
-.svc::after{
-  content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--blue);
-  transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease);
+.svc-label .n{
+  color:#fff;background:var(--blue);border-radius:var(--r);
+  padding:0.2rem 0.5rem;font-size:0.76rem;
 }
-.svc:hover{background:var(--surface);}
-.svc[aria-selected="true"]{background:var(--surface);}
-.svc[aria-selected="true"]::after{transform:scaleX(1);}
-.svc:focus-visible{outline:2px solid var(--blue);outline-offset:-2px;}
-.svc-num{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;color:var(--label);}
-.svc[aria-selected="true"] .svc-num{color:var(--blue);}
-.svc-ico{width:24px;height:24px;fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
-.svc[aria-selected="true"] .svc-ico{stroke:var(--blue);}
-.svc h3{font-size:1.02rem;font-weight:700;letter-spacing:-0.02em;line-height:1.25;}
-.svc p{font-size:0.85rem;color:var(--body);line-height:1.5;}
-.svc-tag{
-  margin-top:auto;padding-top:0.6rem;
-  font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;
-  text-transform:uppercase;color:var(--label);
-}
-.svc[aria-selected="true"] .svc-tag{color:var(--blue);}
-
-/* --- example panels --- */
-.showcase{margin-top:clamp(2rem,4vw,3.5rem);}
-.example{display:none;}
-.example.on{display:grid;grid-template-columns:0.92fr 1.08fr;gap:clamp(2rem,4.5vw,4.5rem);align-items:center;animation:fade .45s var(--ease);}
-@keyframes fade{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
-.ex-copy .eyebrow{margin-bottom:1.1rem;}
-.ex-copy h3{margin-bottom:1.1rem;}
-.ex-copy p{color:var(--body);margin-bottom:1.8rem;line-height:1.62;}
+.svc-label .t{color:var(--blue);}
+.svc-copy h3{margin-bottom:1.1rem;}
+.svc-copy p{color:var(--body);margin-bottom:1.8rem;line-height:1.62;}
 .ex-list{list-style:none;display:grid;gap:1rem;border-top:1px solid var(--line);padding-top:1.6rem;}
 .ex-list li{display:flex;gap:0.85rem;align-items:flex-start;font-size:0.95rem;color:var(--body);line-height:1.5;}
 .ex-list li b{color:var(--ink);font-weight:700;}
@@ -446,7 +438,7 @@ textarea.field{resize:vertical;min-height:120px;}
 .url{
   flex:1;display:flex;align-items:center;gap:0.5rem;
   background:var(--paper);border:1px solid var(--line);border-radius:6px;
-  padding:0.4rem 0.7rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--body);
+  padding:0.4rem 0.7rem;font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--body);
 }
 .url svg{width:12px;height:12px;fill:none;stroke:var(--ok);stroke-width:2;}
 
@@ -456,7 +448,7 @@ textarea.field{resize:vertical;min-height:120px;}
 .site-hero .tag{font-size:0.76rem;color:rgba(255,255,255,.62);margin-bottom:1.2rem;}
 .site-btns{display:flex;gap:0.6rem;}
 .site-btns span{
-  font-family:'JetBrains Mono',monospace;font-size:0.63rem;letter-spacing:0.1em;text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;
   padding:0.6rem 1rem;border-radius:var(--r);
 }
 .site-btns .p{background:var(--blue);color:#fff;}
@@ -468,7 +460,7 @@ textarea.field{resize:vertical;min-height:120px;}
 .site-foot{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.2rem;gap:1rem;}
 .site-foot .rate{display:flex;align-items:center;gap:0.4rem;font-size:0.74rem;color:var(--body);}
 .site-foot .rate svg{width:13px;height:13px;fill:var(--star);stroke:none;}
-.site-foot .by{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
+.site-foot .by{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
 
 /* GBP mock */
 .gbp{padding:1.4rem;}
@@ -518,21 +510,21 @@ textarea.field{resize:vertical;min-height:120px;}
 .serp-q svg{width:15px;height:15px;flex:none;fill:none;stroke:var(--label);stroke-width:2.2;stroke-linecap:round;}
 .serp-ad{border:1px solid var(--blue);border-radius:10px;padding:1rem;margin-bottom:0.9rem;background:var(--blue-w);}
 .serp-badge{
-  display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.13em;
+  display:inline-block;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;
   text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:0.5rem;
 }
 .serp-title{font-size:0.98rem;font-weight:700;color:var(--blue-d);letter-spacing:-0.015em;line-height:1.3;}
-.serp-url{font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:var(--body);margin:0.3rem 0 0.5rem;}
+.serp-url{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--body);margin:0.3rem 0 0.5rem;}
 .serp-desc{font-size:0.79rem;color:var(--body);line-height:1.5;}
 .serp-links{display:flex;flex-wrap:wrap;gap:0.9rem;margin-top:0.7rem;}
 .serp-links span{font-size:0.72rem;color:var(--blue-d);border-bottom:1px solid transparent;}
 .serp-org{padding:0.85rem 0;border-top:1px solid var(--line-2);}
 .serp-org .t{font-size:0.9rem;font-weight:600;color:var(--body);letter-spacing:-0.01em;}
-.serp-org .u{font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--label);margin-top:0.2rem;}
+.serp-org .u{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--label);margin-top:0.2rem;}
 .serp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:1rem;}
 .serp-stat{background:var(--paper);padding:0.85rem 0.7rem;text-align:center;}
 .serp-stat b{display:block;font-size:1.15rem;font-weight:800;letter-spacing:-0.03em;color:var(--ink);}
-.serp-stat span{font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
+.serp-stat span{font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
 
 /* PHONE / chat mock */
 .phone-wrap{display:flex;justify-content:center;}
@@ -559,14 +551,14 @@ textarea.field{resize:vertical;min-height:120px;}
 @keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.45;}30%{transform:translateY(-5px);opacity:1;}}
 .quick{display:flex;gap:0.4rem;padding:0.7rem 0.9rem;border-top:1px solid var(--line);background:var(--paper);}
 .quick span{
-  font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.05em;
+  font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.05em;
   border:1px solid var(--line);border-radius:999px;padding:0.4rem 0.7rem;color:var(--body);
 }
 
 /* SOFTWARE dashboard mock */
 .dash-bar{display:flex;align-items:center;gap:1rem;padding:0.75rem 1rem;background:var(--surface);border-bottom:1px solid var(--line);}
 .dash-tabs{display:flex;gap:1.1rem;}
-.dash-tabs span{font-family:'JetBrains Mono',monospace;font-size:0.63rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
+.dash-tabs span{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
 .dash-tabs .on{color:var(--blue);}
 .dash-body{display:grid;grid-template-columns:132px 1fr;}
 .dash-nav{border-right:1px solid var(--line);padding:0.9rem 0.6rem;display:grid;gap:0.2rem;align-content:start;background:var(--surface);}
@@ -577,9 +569,9 @@ textarea.field{resize:vertical;min-height:120px;}
 .dash-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem;margin-bottom:1rem;}
 .dash-stat{border:1px solid var(--line);border-radius:8px;padding:0.75rem 0.85rem;}
 .dash-stat b{display:block;font-size:1.25rem;font-weight:800;letter-spacing:-0.03em;line-height:1.1;}
-.dash-stat span{font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
+.dash-stat span{font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
 .dash-chart{border:1px solid var(--line);border-radius:8px;padding:0.85rem;}
-.dash-chart .cl{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);margin-bottom:0.7rem;}
+.dash-chart .cl{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);margin-bottom:0.7rem;}
 .bars{display:flex;align-items:flex-end;gap:5px;height:74px;}
 .bars i{flex:1;background:var(--line);border-radius:2px 2px 0 0;}
 .bars i.hot{background:var(--blue);}
@@ -591,14 +583,14 @@ textarea.field{resize:vertical;min-height:120px;}
 .prod{background:var(--paper);padding:clamp(1.6rem,3vw,2.3rem);display:flex;flex-direction:column;}
 .prod-status{
   display:inline-flex;align-items:center;gap:0.5rem;align-self:flex-start;
-  font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.13em;text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;
   padding:0.4rem 0.75rem;border-radius:999px;border:1px solid var(--line);color:var(--label);margin-bottom:1.4rem;
 }
 .prod-status.live{border-color:var(--blue);color:var(--blue);}
 .prod-status .ld{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
 .prod h3{font-size:1.6rem;font-weight:800;letter-spacing:-0.035em;margin-bottom:0.3rem;}
-.prod .kick{font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--label);margin-bottom:1rem;}
+.prod .kick{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--label);margin-bottom:1rem;}
 .prod p{font-size:0.93rem;color:var(--body);line-height:1.58;margin-bottom:1.4rem;}
 .prod ul{list-style:none;display:grid;gap:0.6rem;margin-bottom:1.8rem;border-top:1px solid var(--line);padding-top:1.3rem;}
 .prod li{display:flex;gap:0.6rem;font-size:0.86rem;color:var(--body);}
@@ -612,7 +604,7 @@ textarea.field{resize:vertical;min-height:120px;}
 .upcart-in{display:grid;grid-template-columns:0.95fr 1.05fr;gap:clamp(2rem,4.5vw,4.5rem);align-items:center;}
 .upcart-badge{
   display:inline-flex;align-items:center;gap:0.5rem;
-  font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.13em;text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
   color:var(--blue);border:1px solid var(--blue);border-radius:999px;padding:0.42rem 0.8rem;margin-bottom:1.4rem;
 }
 .upcart-badge svg{width:12px;height:12px;fill:currentColor;stroke:none;}
@@ -627,7 +619,7 @@ textarea.field{resize:vertical;min-height:120px;}
 .store-hero{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:1rem;border-bottom:1px solid var(--line);margin-bottom:1.1rem;}
 .store-hero h5{font-size:1.05rem;font-weight:800;letter-spacing:-0.03em;}
 .store-hero p{font-size:0.72rem;color:var(--body);margin:0.2rem 0 0;}
-.store-cart{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;border:1px solid var(--line);border-radius:999px;padding:0.4rem 0.75rem;color:var(--body);white-space:nowrap;}
+.store-cart{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;border:1px solid var(--line);border-radius:999px;padding:0.4rem 0.75rem;color:var(--body);white-space:nowrap;}
 .store-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;margin-bottom:1.1rem;}
 .store-card .thumb{aspect-ratio:1;border-radius:8px;background:var(--surface2);border:1px solid var(--line);margin-bottom:0.5rem;}
 .store-card .meta{display:flex;justify-content:space-between;font-size:0.72rem;}
@@ -636,19 +628,19 @@ textarea.field{resize:vertical;min-height:120px;}
 .store-pay{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:1rem;}
 .store-pay .tot{font-size:0.8rem;color:var(--body);}
 .store-pay .tot b{color:var(--ink);font-weight:800;font-size:0.95rem;margin-left:0.3rem;}
-.store-pay .go{background:var(--blue);color:#fff;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.6rem 1rem;border-radius:var(--r);}
+.store-pay .go{background:var(--blue);color:#fff;font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.6rem 1rem;border-radius:var(--r);}
 
 /* live admin */
 .admin{padding-block:clamp(2.5rem,5vw,3.5rem);}
 .admin-head{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;margin-bottom:1.8rem;}
 .admin-head .lt{display:flex;align-items:center;gap:0.7rem;font-weight:700;letter-spacing:-0.01em;}
 .admin-head .lt svg{width:17px;height:17px;fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round;}
-.live-pill{display:inline-flex;align-items:center;gap:0.45rem;font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue);border-radius:999px;padding:0.25rem 0.6rem;}
+.live-pill{display:inline-flex;align-items:center;gap:0.45rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue);border-radius:999px;padding:0.25rem 0.6rem;}
 .live-pill .ld{width:5px;height:5px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite;}
-.admin-cap{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
+.admin-cap{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
 .admin-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;}
 .admin-card{background:var(--paper);padding:clamp(1.4rem,2.6vw,2rem);}
-.admin-card .lbl{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);margin-bottom:0.9rem;}
+.admin-card .lbl{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.09em;text-transform:uppercase;color:var(--label);margin-bottom:0.9rem;}
 .admin-card .big{font-size:clamp(2rem,4.4vw,2.9rem);font-weight:800;letter-spacing:-0.045em;line-height:1;margin-bottom:0.45rem;}
 .admin-card .sub{font-size:0.78rem;color:var(--body);margin-bottom:1.1rem;}
 .admin-bars{display:flex;align-items:flex-end;gap:4px;height:38px;}
@@ -664,7 +656,7 @@ textarea.field{resize:vertical;min-height:120px;}
   padding-block:clamp(1.6rem,3vw,2.4rem);border-bottom:1px solid var(--line);
   align-items:baseline;
 }
-.step .n{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.14em;color:var(--blue);}
+.step .n{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:0.09em;color:var(--blue);}
 .step h3{font-size:clamp(1.35rem,2.6vw,1.85rem);font-weight:800;letter-spacing:-0.03em;}
 .step p{color:var(--body);font-size:0.97rem;line-height:1.58;}
 
@@ -676,10 +668,10 @@ textarea.field{resize:vertical;min-height:120px;}
 .price.hot{background:var(--surface);}
 .price-badge{
   position:absolute;top:clamp(1.7rem,3vw,2.5rem);right:clamp(1.7rem,3vw,2.5rem);
-  font-family:'JetBrains Mono',monospace;font-size:0.56rem;letter-spacing:0.13em;text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;
   background:var(--blue);color:#fff;padding:0.3rem 0.6rem;border-radius:999px;
 }
-.price-name{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);margin-bottom:1.1rem;}
+.price-name{font-family:'JetBrains Mono',monospace;font-size:0.74rem;letter-spacing:0.09em;text-transform:uppercase;color:var(--label);margin-bottom:1.1rem;}
 .price-amt{font-size:clamp(2.3rem,4.6vw,3.1rem);font-weight:800;letter-spacing:-0.05em;line-height:1;margin-bottom:0.9rem;}
 .price-amt span{font-size:0.95rem;font-weight:600;color:var(--label);letter-spacing:0;}
 .price-desc{font-size:0.92rem;color:var(--body);line-height:1.55;margin-bottom:1.6rem;}
@@ -724,14 +716,14 @@ textarea.field{resize:vertical;min-height:120px;}
 .footer-top{display:grid;grid-template-columns:1.4fr 2fr;gap:clamp(2rem,5vw,4rem);padding-bottom:3rem;}
 .footer-tag{color:var(--body);font-size:0.93rem;line-height:1.6;max-width:38ch;margin-top:1.2rem;}
 .footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
-.footer-col h4{font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--label);margin-bottom:1.2rem;font-weight:500;}
+.footer-col h4{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.09em;text-transform:uppercase;color:var(--label);margin-bottom:1.2rem;font-weight:500;}
 .footer-col a{display:block;padding:0.42rem 0;font-size:0.92rem;color:var(--body);transition:color .18s;}
 .footer-col a:hover{color:var(--blue);}
-.soon{font-family:'JetBrains Mono',monospace;font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:0.1rem 0.4rem;color:var(--label);margin-left:0.35rem;}
+.soon{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:0.1rem 0.4rem;color:var(--label);margin-left:0.35rem;}
 .footer-bot{
   border-top:1px solid var(--line);padding-top:1.8rem;
   display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;
-  font-family:'JetBrains Mono',monospace;font-size:0.64rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);
+  font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);
 }
 
 /* ============================================================
@@ -745,16 +737,14 @@ textarea.field{resize:vertical;min-height:120px;}
   .reveal{opacity:1;transform:none;transition:none;}
   .marquee-track{animation:none;}
   .typing i,.prod-status .ld,.live-pill .ld{animation:none;}
-  .example.on{animation:none;}
 }
 
 /* ============================================================
    RESPONSIVE
 ============================================================ */
 @media (max-width:1080px){
-  .svc-grid{grid-template-columns:repeat(3,1fr);}
   .hero-grid{grid-template-columns:1fr;gap:3rem;}
-  .example.on{grid-template-columns:1fr;gap:2.5rem;}
+  .svc-block{grid-template-columns:1fr;gap:2.25rem;}
   .upcart-in{grid-template-columns:1fr;gap:2.5rem;}
   .contact-grid{grid-template-columns:1fr;gap:2.5rem;}
   .step{grid-template-columns:64px 1fr;}
@@ -770,7 +760,6 @@ textarea.field{resize:vertical;min-height:120px;}
 @media (max-width:760px){
   body{font-size:16px;}
   .stats{grid-template-columns:repeat(2,1fr);}
-  .svc-grid{grid-template-columns:repeat(2,1fr);}
   .serp-stats{grid-template-columns:1fr;}
   .dash-body{grid-template-columns:1fr;}
   .dash-nav{display:none;}
@@ -779,7 +768,6 @@ textarea.field{resize:vertical;min-height:120px;}
   .cta-band h2{max-width:none;}
 }
 @media (max-width:520px){
-  .svc-grid{grid-template-columns:1fr;}
   .store-grid{grid-template-columns:repeat(2,1fr);}
   .gbp-acts{grid-template-columns:repeat(2,1fr);}
   .btn{width:100%;}
@@ -793,7 +781,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <!-- ===================== NAV ===================== -->
 <nav class="nav" id="nav" aria-label="Primary">
   <div class="nav-in">
-    <a href="#top" class="brand" aria-label="Nolvek home">nolvek<span class="badge" aria-hidden="true">ATL</span></a>
+    <a href="#top" class="brand" aria-label="Nolvek home">nolvek<span class="dot" aria-hidden="true"></span></a>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#products">Products</a></li>
@@ -889,7 +877,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" aria-labelledby="numbers-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n">(01)</span><span class="t">The Deal</span></div>
+      <div class="eyebrow"><span class="n num">01</span><span class="t">The Deal</span></div>
       <h2 class="display" id="numbers-h">Straight numbers, before you ever talk to us.</h2>
       <p class="lede">No retainer roulette, no twelve-month lock-in, no invented case study. Here's what's actually on the table.</p>
     </div>
@@ -908,249 +896,205 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="services" aria-labelledby="services-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n">(02)</span><span class="t">Services</span></div>
+      <div class="eyebrow"><span class="n num">02</span><span class="t">Services</span></div>
       <h2 class="display" id="services-h">Marketing that fills the calendar.</h2>
-      <p class="lede">Getting found is the job. Everything else exists to catch what the marketing brings in. Pick a service to see a working example and exactly what you get.</p>
+      <p class="lede">Getting found is the job. Everything else exists to catch what the marketing brings in. Each service below shows a real example of the work and exactly what you get.</p>
     </div>
 
-    <div class="svc-grid" id="svcGrid" role="tablist" aria-label="Services">
-      <button class="svc" role="tab" type="button" aria-selected="true" aria-controls="ex-gbp" data-ex="gbp">
-        <span class="svc-num">01</span>
-        <svg class="svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-        <h3>Local SEO &amp; Google Profile</h3>
-        <p>Own the map pack for the searches happening in your neighborhood right now.</p>
-        <span class="svc-tag">View example →</span>
-      </button>
-      <button class="svc" role="tab" type="button" aria-selected="false" aria-controls="ex-ads" data-ex="ads">
-        <span class="svc-num">02</span>
-        <svg class="svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17 9a4 4 0 0 1 0 6"/><path d="M20 6.5a8 8 0 0 1 0 11"/></svg>
-        <h3>Google &amp; Meta Ads</h3>
-        <p>Spend that's tied to booked work, not impressions — built, tracked, and trimmed weekly.</p>
-        <span class="svc-tag">View example →</span>
-      </button>
-      <button class="svc" role="tab" type="button" aria-selected="false" aria-controls="ex-web" data-ex="web">
-        <span class="svc-num">03</span>
-        <svg class="svc-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 14h8"/><path d="M8 17h5"/></svg>
-        <h3>Conversion Websites</h3>
-        <p>The page the traffic lands on. Fast, mobile-first, and pointed at one action.</p>
-        <span class="svc-tag">View example →</span>
-      </button>
-      <button class="svc" role="tab" type="button" aria-selected="false" aria-controls="ex-ai" data-ex="ai">
-        <span class="svc-num">04</span>
-        <svg class="svc-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1.3"/><path d="M9.5 13h.01M14.5 13h.01"/><path d="M2.5 12v3M21.5 12v3"/></svg>
-        <h3>AI Lead Follow-Up</h3>
-        <p>Every inquiry answered in seconds, qualified, and booked — while you're on a job.</p>
-        <span class="svc-tag">View example →</span>
-      </button>
-      <button class="svc" role="tab" type="button" aria-selected="false" aria-controls="ex-soft" data-ex="soft">
-        <span class="svc-num">05</span>
-        <svg class="svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3M13.5 7l-3 10"/></svg>
-        <h3>Custom Software</h3>
-        <p>For when the marketing works and the off-the-shelf tools can't keep up.</p>
-        <span class="svc-tag">View example →</span>
-      </button>
-    </div>
+        <div class="svc-list">
 
-    <div class="showcase" id="showcase">
-
-      <!-- 01 — Local SEO / GBP -->
-      <div class="example on" id="ex-gbp" role="tabpanel" aria-label="Local SEO and Google Business Profile example">
-        <div class="ex-copy">
-          <div class="eyebrow"><span class="n">//</span><span class="t">Example · Google Profile</span></div>
-          <h3 class="display">Own the map pack in your neighborhood.</h3>
-          <p>Most local customers never scroll past the map. We optimize the profile that lives there — right categories, real photos, weekly posts, and a steady review flow — so you're the obvious choice nearby.</p>
-          <ul class="ex-list">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Show in Maps &amp; local search</b> for the terms that actually get typed</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Call &amp; directions in one tap</b> — no website visit needed</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Review prompts</b> that build trust and ranking over time</span></li>
-          </ul>
+      <article class="svc-block" id="svc-gbp">
+        <div class="svc-copy">
+          <div class="svc-label"><span class="n">01</span><span class="t">Local SEO &amp; Google Profile</span></div>
+      <h3 class="display">Own the map pack in your neighborhood.</h3>
+              <p>Most local customers never scroll past the map. We optimize the profile that lives there — right categories, real photos, weekly posts, and a steady review flow — so you're the obvious choice nearby.</p>
+              <ul class="ex-list">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Show in Maps &amp; local search</b> for the terms that actually get typed</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Call &amp; directions in one tap</b> — no website visit needed</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Review prompts</b> that build trust and ranking over time</span></li>
+              </ul>
         </div>
-        <div class="ex-visual">
-          <div class="mock gbp">
-            <div class="name">Atlanta's Best Plumbing</div>
-            <div class="cat">Plumber · Atlanta, GA</div>
-            <div class="rate">
-              <span class="stars">
-                <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>
-              </span>
-              <b>4.9</b> <span class="rev">· 200+ reviews</span>
-            </div>
-            <div class="open"><b>Open now</b> · Closes 6 PM</div>
-            <div class="gbp-acts">
-              <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Call</span></div>
-              <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M3 11l18-7-7 18-2-7-9-2z"/></svg><span>Route</span></div>
-              <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Save</span></div>
-              <div class="gbp-act"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg><span>Site</span></div>
-            </div>
-            <div class="gbp-map" aria-hidden="true">
-              <span class="road r1"></span><span class="road r2"></span>
-              <span class="pin"><svg viewBox="0 0 24 24"><path d="M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12z"/></svg></span>
-            </div>
-            <div class="gbp-foot">
-              <div><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Serving Buckhead, Midtown &amp; Decatur</div>
-              <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Responds in ~10 min</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 02 — Ads -->
-      <div class="example" id="ex-ads" role="tabpanel" aria-label="Google and Meta ads example">
-        <div class="ex-copy">
-          <div class="eyebrow"><span class="n">//</span><span class="t">Example · Paid Ads</span></div>
-          <h3 class="display">Be the first result — on purpose.</h3>
-          <p>SEO earns the long game. Ads buy the top of the page today. We build the campaign around the searches that mean someone is ready to call, then cut whatever isn't producing.</p>
-          <ul class="ex-list">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Intent keywords only</b> — the searches that end in a booking</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Call &amp; form tracking</b> so you know what a lead actually cost</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Weekly trims</b> — wasted spend gets cut, winners get more</span></li>
-          </ul>
-        </div>
-        <div class="ex-visual">
-          <div class="mock">
-            <div class="mock-bar">
-              <div class="dots"><i></i><i></i><i></i></div>
-              <div class="url"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>google.com/search</div>
-            </div>
-            <div class="serp">
-              <div class="serp-q">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-                emergency plumber near me
-              </div>
-              <div class="serp-ad">
-                <span class="serp-badge">Sponsored</span>
-                <div class="serp-title">Atlanta's Best Plumbing — 24/7 Emergency Service</div>
-                <div class="serp-url">atlantasbestplumbing.com</div>
-                <div class="serp-desc">Licensed &amp; insured. Upfront pricing, same-day dispatch across Buckhead, Midtown &amp; Decatur.</div>
-                <div class="serp-links"><span>Book online</span><span>Pricing</span><span>Call now</span></div>
-              </div>
-              <div class="serp-org"><div class="t">Metro Drain &amp; Rooter</div><div class="u">metrodrainatl.com</div></div>
-              <div class="serp-org"><div class="t">Peachtree Plumbing Co.</div><div class="u">peachtreeplumbing.com</div></div>
-              <div class="serp-stats">
-                <div class="serp-stat"><b>Top</b><span>Ad position</span></div>
-                <div class="serp-stat"><b>Tracked</b><span>Every call</span></div>
-                <div class="serp-stat"><b>Weekly</b><span>Spend review</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 03 — Website -->
-      <div class="example" id="ex-web" role="tabpanel" aria-label="Conversion website example">
-        <div class="ex-copy">
-          <div class="eyebrow"><span class="n">//</span><span class="t">Example · Conversion Website</span></div>
-          <h3 class="display">A site that earns the click — and the call.</h3>
-          <p>Traffic is only worth what it converts. We design around one thing: turning a visitor into a customer. Clear headline, obvious action, fast load, and a layout that holds up on the phone where most of your traffic lives.</p>
-          <ul class="ex-list">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Conversion-first layout</b> — book and call actions above the fold</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Built to rank</b> — clean code, on-page SEO, sub-second loads</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Looks like you</b> — custom design, never a template</span></li>
-          </ul>
-        </div>
-        <div class="ex-visual">
-          <div class="mock">
-            <div class="mock-bar">
-              <div class="dots"><i></i><i></i><i></i></div>
-              <div class="url"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>atlantasbestplumbing.com</div>
-            </div>
-            <div class="site-hero">
-              <div class="biz">Atlanta's Best Plumbing</div>
-              <div class="tag">24/7 Emergency Service · Licensed &amp; Insured</div>
-              <div class="site-btns"><span class="p">Book now</span><span class="s">Call us</span></div>
-            </div>
-            <div class="site-row">
-              <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7a3 3 0 0 1-4 4l-5 5 2 2 5-5a3 3 0 0 1 4-4l2-2-2-2z"/></svg><span>Repairs</span></div>
-              <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6"/><path d="M9 9h6l-1 5a2 2 0 0 1-4 0z"/><path d="M12 17v3"/></svg><span>Install</span></div>
-              <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1.5 3-1.5 4 0 7 1 2 3 2 3 5a3 3 0 0 1-6 0c0-2 1-2 1-4-2 1-3 3-3 5a5 5 0 0 0 10 0c0-5-5-6-5-13z"/></svg><span>Heating</span></div>
-            </div>
-            <div class="site-foot">
-              <div class="rate"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg> Top-rated locally</div>
-              <div class="by">Built by Nolvek</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 04 — AI follow-up -->
-      <div class="example" id="ex-ai" role="tabpanel" aria-label="AI lead follow-up example">
-        <div class="ex-copy">
-          <div class="eyebrow"><span class="n">//</span><span class="t">Example · AI Follow-Up</span></div>
-          <h3 class="display">Every lead gets a reply — instantly.</h3>
-          <p>Marketing that works creates a new problem: more inquiries than you can answer. Our AI responds the moment someone reaches out, qualifies them, and books the appointment — while you're on a job, at dinner, or asleep.</p>
-          <ul class="ex-list">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Replies in seconds, 24/7</b> across web chat and text</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Qualifies &amp; books</b> straight onto your calendar</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Automatic follow-ups</b> until they're ready</span></li>
-          </ul>
-        </div>
-        <div class="ex-visual">
-          <div class="phone-wrap">
-            <div class="phone" aria-hidden="true">
-              <div class="screen">
-                <div class="notch"></div>
-                <div class="status"><span>9:41</span><span>5G</span></div>
-                <div class="chat-head">
-                  <div class="avatar">N</div>
-                  <div><span class="who">Nolvek AI Assistant</span><span class="st">● Online — replies instantly</span></div>
+        <div class="svc-visual">
+      <div class="mock gbp">
+                  <div class="name">Atlanta's Best Plumbing</div>
+                  <div class="cat">Plumber · Atlanta, GA</div>
+                  <div class="rate">
+                    <span class="stars">
+                      <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg>
+                    </span>
+                    <b>4.9</b> <span class="rev">· 200+ reviews</span>
+                  </div>
+                  <div class="open"><b>Open now</b> · Closes 6 PM</div>
+                  <div class="gbp-acts">
+                    <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Call</span></div>
+                    <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M3 11l18-7-7 18-2-7-9-2z"/></svg><span>Route</span></div>
+                    <div class="gbp-act"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Save</span></div>
+                    <div class="gbp-act"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg><span>Site</span></div>
+                  </div>
+                  <div class="gbp-map" aria-hidden="true">
+                    <span class="road r1"></span><span class="road r2"></span>
+                    <span class="pin"><svg viewBox="0 0 24 24"><path d="M12 22s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12z"/></svg></span>
+                  </div>
+                  <div class="gbp-foot">
+                    <div><svg viewBox="0 0 24 24"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Serving Buckhead, Midtown &amp; Decatur</div>
+                    <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Responds in ~10 min</div>
+                  </div>
                 </div>
-                <div class="chat-body" id="chatBody">
-                  <div class="bubble bot">Hi! Thanks for reaching out — how can I help today?<span class="t">9:41 AM</span></div>
-                  <div class="bubble user">Do you guys do free estimates?<span class="t">9:41 AM</span></div>
-                  <div class="bubble bot">Yes! We offer free, no-obligation inspections. What area of Atlanta are you in?<span class="t">9:41 AM</span></div>
-                  <div class="bubble user">Buckhead<span class="t">9:42 AM</span></div>
-                  <div class="bubble bot">Perfect, we cover Buckhead! What works better — Thursday or Friday this week?<span class="t">9:42 AM</span></div>
-                  <div class="bubble bot" id="typing"><span class="typing"><i></i><i></i><i></i></span></div>
-                </div>
-                <div class="quick"><span>Thursday</span><span>Friday</span><span>Call me</span></div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+      </article>
 
-      <!-- 05 — Software -->
-      <div class="example" id="ex-soft" role="tabpanel" aria-label="Custom software example">
-        <div class="ex-copy">
-          <div class="eyebrow"><span class="n">//</span><span class="t">Example · Custom Software</span></div>
-          <h3 class="display">The exact tool your business runs on.</h3>
-          <p>Not every problem is a marketing problem. When off-the-shelf software almost fits but never quite does, we build the real thing — a dashboard, portal, or workflow shaped around how your team actually operates.</p>
-          <ul class="ex-list">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Job &amp; client dashboards</b> with the numbers that matter</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Client portals &amp; booking</b> branded to you</span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Integrations</b> that connect the tools you already use</span></li>
-          </ul>
+      <article class="svc-block" id="svc-ads">
+        <div class="svc-copy">
+          <div class="svc-label"><span class="n">02</span><span class="t">Google &amp; Meta Ads</span></div>
+      <h3 class="display">Be the first result — on purpose.</h3>
+              <p>SEO earns the long game. Ads buy the top of the page today. We build the campaign around the searches that mean someone is ready to call, then cut whatever isn't producing.</p>
+              <ul class="ex-list">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Intent keywords only</b> — the searches that end in a booking</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Call &amp; form tracking</b> so you know what a lead actually cost</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Weekly trims</b> — wasted spend gets cut, winners get more</span></li>
+              </ul>
         </div>
-        <div class="ex-visual">
-          <div class="mock">
-            <div class="dash-bar">
-              <div class="dots"><i></i><i></i><i></i></div>
-              <div class="dash-tabs"><span class="on">Dashboard</span><span>Jobs</span><span>Reports</span></div>
-            </div>
-            <div class="dash-body">
-              <div class="dash-nav">
-                <span class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Overview</span>
-                <span><svg viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3"/></svg> Jobs</span>
-                <span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20a7 7 0 0 1 14 0"/></svg> Clients</span>
-                <span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg> Schedule</span>
-              </div>
-              <div class="dash-main">
-                <div class="dash-stats">
-                  <div class="dash-stat"><b style="color:var(--blue)">14</b><span>Active jobs</span></div>
-                  <div class="dash-stat"><b style="color:var(--ok)">$18.4k</b><span>This month</span></div>
-                  <div class="dash-stat"><b>6</b><span>Pending quotes</span></div>
-                  <div class="dash-stat"><b style="color:var(--warn)">3</b><span>Follow-ups due</span></div>
+        <div class="svc-visual">
+      <div class="mock">
+                  <div class="mock-bar">
+                    <div class="dots"><i></i><i></i><i></i></div>
+                    <div class="url"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>google.com/search</div>
+                  </div>
+                  <div class="serp">
+                    <div class="serp-q">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                      emergency plumber near me
+                    </div>
+                    <div class="serp-ad">
+                      <span class="serp-badge">Sponsored</span>
+                      <div class="serp-title">Atlanta's Best Plumbing — 24/7 Emergency Service</div>
+                      <div class="serp-url">atlantasbestplumbing.com</div>
+                      <div class="serp-desc">Licensed &amp; insured. Upfront pricing, same-day dispatch across Buckhead, Midtown &amp; Decatur.</div>
+                      <div class="serp-links"><span>Book online</span><span>Pricing</span><span>Call now</span></div>
+                    </div>
+                    <div class="serp-org"><div class="t">Metro Drain &amp; Rooter</div><div class="u">metrodrainatl.com</div></div>
+                    <div class="serp-org"><div class="t">Peachtree Plumbing Co.</div><div class="u">peachtreeplumbing.com</div></div>
+                    <div class="serp-stats">
+                      <div class="serp-stat"><b>Top</b><span>Ad position</span></div>
+                      <div class="serp-stat"><b>Tracked</b><span>Every call</span></div>
+                      <div class="serp-stat"><b>Weekly</b><span>Spend review</span></div>
+                    </div>
+                  </div>
                 </div>
-                <div class="dash-chart">
-                  <div class="cl">Revenue — last 8 weeks</div>
-                  <div class="bars"><i style="height:40%"></i><i style="height:58%"></i><i style="height:46%"></i><i style="height:72%"></i><i style="height:55%"></i><i style="height:82%"></i><i style="height:66%"></i><i class="hot" style="height:100%"></i></div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+      </article>
 
+      <article class="svc-block" id="svc-web">
+        <div class="svc-copy">
+          <div class="svc-label"><span class="n">03</span><span class="t">Conversion Websites</span></div>
+      <h3 class="display">A site that earns the click — and the call.</h3>
+              <p>Traffic is only worth what it converts. We design around one thing: turning a visitor into a customer. Clear headline, obvious action, fast load, and a layout that holds up on the phone where most of your traffic lives.</p>
+              <ul class="ex-list">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Conversion-first layout</b> — book and call actions above the fold</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Built to rank</b> — clean code, on-page SEO, sub-second loads</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Looks like you</b> — custom design, never a template</span></li>
+              </ul>
+        </div>
+        <div class="svc-visual">
+      <div class="mock">
+                  <div class="mock-bar">
+                    <div class="dots"><i></i><i></i><i></i></div>
+                    <div class="url"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>atlantasbestplumbing.com</div>
+                  </div>
+                  <div class="site-hero">
+                    <div class="biz">Atlanta's Best Plumbing</div>
+                    <div class="tag">24/7 Emergency Service · Licensed &amp; Insured</div>
+                    <div class="site-btns"><span class="p">Book now</span><span class="s">Call us</span></div>
+                  </div>
+                  <div class="site-row">
+                    <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7a3 3 0 0 1-4 4l-5 5 2 2 5-5a3 3 0 0 1 4-4l2-2-2-2z"/></svg><span>Repairs</span></div>
+                    <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6"/><path d="M9 9h6l-1 5a2 2 0 0 1-4 0z"/><path d="M12 17v3"/></svg><span>Install</span></div>
+                    <div class="site-cell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1.5 3-1.5 4 0 7 1 2 3 2 3 5a3 3 0 0 1-6 0c0-2 1-2 1-4-2 1-3 3-3 5a5 5 0 0 0 10 0c0-5-5-6-5-13z"/></svg><span>Heating</span></div>
+                  </div>
+                  <div class="site-foot">
+                    <div class="rate"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z"/></svg> Top-rated locally</div>
+                    <div class="by">Built by Nolvek</div>
+                  </div>
+                </div>
+        </div>
+      </article>
+
+      <article class="svc-block" id="svc-ai">
+        <div class="svc-copy">
+          <div class="svc-label"><span class="n">04</span><span class="t">AI Lead Follow-Up</span></div>
+      <h3 class="display">Every lead gets a reply — instantly.</h3>
+              <p>Marketing that works creates a new problem: more inquiries than you can answer. Our AI responds the moment someone reaches out, qualifies them, and books the appointment — while you're on a job, at dinner, or asleep.</p>
+              <ul class="ex-list">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Replies in seconds, 24/7</b> across web chat and text</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Qualifies &amp; books</b> straight onto your calendar</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Automatic follow-ups</b> until they're ready</span></li>
+              </ul>
+        </div>
+        <div class="svc-visual">
+      <div class="phone-wrap">
+                  <div class="phone" aria-hidden="true">
+                    <div class="screen">
+                      <div class="notch"></div>
+                      <div class="status"><span>9:41</span><span>5G</span></div>
+                      <div class="chat-head">
+                        <div class="avatar">N</div>
+                        <div><span class="who">Nolvek AI Assistant</span><span class="st">● Online — replies instantly</span></div>
+                      </div>
+                      <div class="chat-body" id="chatBody">
+                        <div class="bubble bot">Hi! Thanks for reaching out — how can I help today?<span class="t">9:41 AM</span></div>
+                        <div class="bubble user">Do you guys do free estimates?<span class="t">9:41 AM</span></div>
+                        <div class="bubble bot">Yes! We offer free, no-obligation inspections. What area of Atlanta are you in?<span class="t">9:41 AM</span></div>
+                        <div class="bubble user">Buckhead<span class="t">9:42 AM</span></div>
+                        <div class="bubble bot">Perfect, we cover Buckhead! What works better — Thursday or Friday this week?<span class="t">9:42 AM</span></div>
+                        <div class="bubble bot" id="typing"><span class="typing"><i></i><i></i><i></i></span></div>
+                      </div>
+                      <div class="quick"><span>Thursday</span><span>Friday</span><span>Call me</span></div>
+                    </div>
+                  </div>
+                </div>
+        </div>
+      </article>
+
+      <article class="svc-block" id="svc-soft">
+        <div class="svc-copy">
+          <div class="svc-label"><span class="n">05</span><span class="t">Custom Software</span></div>
+      <h3 class="display">The exact tool your business runs on.</h3>
+              <p>Not every problem is a marketing problem. When off-the-shelf software almost fits but never quite does, we build the real thing — a dashboard, portal, or workflow shaped around how your team actually operates.</p>
+              <ul class="ex-list">
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Job &amp; client dashboards</b> with the numbers that matter</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Client portals &amp; booking</b> branded to you</span></li>
+                <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span><b>Integrations</b> that connect the tools you already use</span></li>
+              </ul>
+        </div>
+        <div class="svc-visual">
+      <div class="mock">
+                  <div class="dash-bar">
+                    <div class="dots"><i></i><i></i><i></i></div>
+                    <div class="dash-tabs"><span class="on">Dashboard</span><span>Jobs</span><span>Reports</span></div>
+                  </div>
+                  <div class="dash-body">
+                    <div class="dash-nav">
+                      <span class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Overview</span>
+                      <span><svg viewBox="0 0 24 24"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3"/></svg> Jobs</span>
+                      <span><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 20a7 7 0 0 1 14 0"/></svg> Clients</span>
+                      <span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg> Schedule</span>
+                    </div>
+                    <div class="dash-main">
+                      <div class="dash-stats">
+                        <div class="dash-stat"><b style="color:var(--blue)">14</b><span>Active jobs</span></div>
+                        <div class="dash-stat"><b style="color:var(--ok)">$18.4k</b><span>This month</span></div>
+                        <div class="dash-stat"><b>6</b><span>Pending quotes</span></div>
+                        <div class="dash-stat"><b style="color:var(--warn)">3</b><span>Follow-ups due</span></div>
+                      </div>
+                      <div class="dash-chart">
+                        <div class="cl">Revenue — last 8 weeks</div>
+                        <div class="bars"><i style="height:40%"></i><i style="height:58%"></i><i style="height:46%"></i><i style="height:72%"></i><i style="height:55%"></i><i style="height:82%"></i><i style="height:66%"></i><i class="hot" style="height:100%"></i></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -1159,7 +1103,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="products" aria-labelledby="products-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n">(03)</span><span class="t">Products</span></div>
+      <div class="eyebrow"><span class="n num">03</span><span class="t">Products</span></div>
       <h2 class="display" id="products-h">Software you can run yourself.</h2>
       <p class="lede">A growing suite of Nolvek-built tools you can sign up for and run on your own — fully managed under the hood, no agency project required.</p>
     </div>
@@ -1297,7 +1241,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="process" aria-labelledby="process-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n">(04)</span><span class="t">Process</span></div>
+      <div class="eyebrow"><span class="n num">04</span><span class="t">Process</span></div>
       <h2 class="display" id="process-h">Four steps. No mystery.</h2>
       <p class="lede">You'll know what's happening, what it costs, and what it produced. Every step.</p>
     </div>
@@ -1314,7 +1258,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="pricing" aria-labelledby="pricing-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n">(05)</span><span class="t">Pricing</span></div>
+      <div class="eyebrow"><span class="n num">05</span><span class="t">Pricing</span></div>
       <h2 class="display" id="pricing-h">Straight pricing. No surprises.</h2>
       <p class="lede">Start small, scale when you're ready. No hidden fees, no long contracts.</p>
     </div>
@@ -1365,7 +1309,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="contact" aria-labelledby="contact-h">
   <div class="wrap contact-grid">
     <div>
-      <div class="eyebrow"><span class="n">(06)</span><span class="t">Get Started</span></div>
+      <div class="eyebrow"><span class="n num">06</span><span class="t">Get Started</span></div>
       <h2 class="display" id="contact-h">Tell us what you're trying to grow.</h2>
       <p class="lede">We'll come back within one business day with a plan and a quote — not a discovery-call funnel.</p>
       <div class="contact-meta">
@@ -1418,20 +1362,20 @@ textarea.field{resize:vertical;min-height:120px;}
   <div class="wrap">
     <div class="footer-top">
       <div>
-        <a href="#top" class="brand" aria-label="Nolvek home">nolvek<span class="badge" aria-hidden="true">ATL</span></a>
+        <a href="#top" class="brand" aria-label="Nolvek home">nolvek<span class="dot" aria-hidden="true"></span></a>
         <p class="footer-tag">Digital marketing for Atlanta businesses. Local search, paid ads, conversion websites, and the software to keep up with what they bring in.</p>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
           <h4>Marketing</h4>
-          <a href="#services">Local SEO &amp; Google Profile</a>
-          <a href="#services">Google &amp; Meta Ads</a>
-          <a href="#services">Conversion Websites</a>
-          <a href="#services">AI Lead Follow-Up</a>
+          <a href="#svc-gbp">Local SEO &amp; Google Profile</a>
+          <a href="#svc-ads">Google &amp; Meta Ads</a>
+          <a href="#svc-web">Conversion Websites</a>
+          <a href="#svc-ai">AI Lead Follow-Up</a>
         </div>
         <div class="footer-col">
           <h4>Build</h4>
-          <a href="#services">Custom Software</a>
+          <a href="#svc-soft">Custom Software</a>
           <a href="https://upcart.online" target="_blank" rel="noopener">Upcart</a>
           <a href="#products">Scheduling <span class="soon">Soon</span></a>
         </div>
@@ -1502,40 +1446,6 @@ textarea.field{resize:vertical;min-height:120px;}
     });
   }, {threshold:0.1, rootMargin:'0px 0px -6% 0px'});
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
-
-  /* ---------- SERVICE TABS ---------- */
-  (function(){
-    var grid = document.getElementById('svcGrid');
-    var showcase = document.getElementById('showcase');
-    if(!grid || !showcase) return;
-    var tabs = Array.prototype.slice.call(grid.querySelectorAll('.svc'));
-    var panels = Array.prototype.slice.call(showcase.querySelectorAll('.example'));
-    var narrow = function(){ return window.matchMedia('(max-width:1080px)').matches; };
-
-    function select(tab, opts){
-      opts = opts || {};
-      tabs.forEach(function(t){ t.setAttribute('aria-selected', t === tab ? 'true' : 'false'); });
-      var active = null;
-      panels.forEach(function(p){
-        var on = (p.id === 'ex-' + tab.dataset.ex);
-        p.classList.toggle('on', on);
-        if(on) active = p;
-      });
-      if(opts.focus) tab.focus();
-      // On stacked layouts the example sits well below the cards — bring it up.
-      if(opts.scroll && active && narrow()){
-        var top = active.getBoundingClientRect().top + window.pageYOffset - 90;
-        window.scrollTo({top: top, behavior: reduce ? 'auto' : 'smooth'});
-      }
-    }
-    tabs.forEach(function(tab, idx){
-      tab.addEventListener('click', function(){ select(tab, {scroll:true}); });
-      tab.addEventListener('keydown', function(e){
-        if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){ e.preventDefault(); select(tabs[(idx+1)%tabs.length], {focus:true}); }
-        else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){ e.preventDefault(); select(tabs[(idx-1+tabs.length)%tabs.length], {focus:true}); }
-      });
-    });
-  })();
 
   /* ---------- AUDIT "what do you need" chips ---------- */
   (function(){
