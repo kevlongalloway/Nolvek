@@ -707,9 +707,18 @@ textarea.field{resize:vertical;min-height:120px;}
   content:attr(data-initial);
   font-weight:800;font-size:2.3rem;letter-spacing:-0.05em;color:#d3d8e0;
 }
-.work-shot img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:top center;
+/* The frame renders at a real desktop viewport (1440x900, exactly 16:10)
+   and is scaled to the tile, so the client's site lays out as a desktop
+   site instead of collapsing to its mobile breakpoint inside a ~550px box.
+   pointer-events:none keeps the tile a link and stops the embed swallowing
+   taps or trapping scroll on mobile. */
+.work-frame{
+  position:absolute;top:0;left:0;
+  width:1440px;height:900px;border:0;
+  transform-origin:top left;
+  transform:scale(.385);            /* replaced per-tile on load and resize */
+  pointer-events:none;
+  background:transparent;
 }
 .work-body{padding:1.25rem 1.35rem 1.4rem;display:flex;flex-direction:column;gap:0.3rem;flex:1;}
 .work-name{font-size:1.05rem;font-weight:800;letter-spacing:-0.025em;color:var(--ink);}
@@ -1308,8 +1317,10 @@ textarea.field{resize:vertical;min-height:120px;}
     <div class="work-grid">
       <a class="work" href="https://armvet-llc.com" target="_blank" rel="noopener noreferrer">
         <span class="work-shot" data-initial="AV">
-          <img src="/work/armvet.jpg" alt="ArmVet LLC — armvet-llc.com" loading="lazy" decoding="async">
-        </span>
+          <iframe class="work-frame" src="https://armvet-llc.com" title="ArmVet LLC — live preview"
+                  loading="lazy" tabindex="-1" aria-hidden="true" scrolling="no"
+                  sandbox="allow-scripts allow-same-origin"></iframe>
+          </span>
         <span class="work-body">
           <span class="work-name">ArmVet LLC</span>
           <span class="work-what">Business website build.</span>
@@ -1318,8 +1329,10 @@ textarea.field{resize:vertical;min-height:120px;}
       </a>
       <a class="work" href="https://eclaire.store" target="_blank" rel="noopener noreferrer">
         <span class="work-shot" data-initial="É">
-          <img src="/work/eclaire.jpg" alt="Éclaire — eclaire.store" loading="lazy" decoding="async">
-        </span>
+          <iframe class="work-frame" src="https://eclaire.store" title="Éclaire — live preview"
+                  loading="lazy" tabindex="-1" aria-hidden="true" scrolling="no"
+                  sandbox="allow-scripts allow-same-origin"></iframe>
+          </span>
         <span class="work-body">
           <span class="work-name">Éclaire</span>
           <span class="work-what">Online store.</span>
@@ -1328,8 +1341,10 @@ textarea.field{resize:vertical;min-height:120px;}
       </a>
       <a class="work" href="https://blackstarthebrand.com" target="_blank" rel="noopener noreferrer">
         <span class="work-shot" data-initial="BS">
-          <img src="/work/blackstar.jpg" alt="Blackstar The Brand — blackstarthebrand.com" loading="lazy" decoding="async">
-        </span>
+          <iframe class="work-frame" src="https://blackstarthebrand.com" title="Blackstar The Brand — live preview"
+                  loading="lazy" tabindex="-1" aria-hidden="true" scrolling="no"
+                  sandbox="allow-scripts allow-same-origin"></iframe>
+          </span>
         <span class="work-body">
           <span class="work-name">Blackstar The Brand</span>
           <span class="work-what">Brand website.</span>
@@ -1338,8 +1353,10 @@ textarea.field{resize:vertical;min-height:120px;}
       </a>
       <a class="work" href="https://tracythabarber.com" target="_blank" rel="noopener noreferrer">
         <span class="work-shot" data-initial="TB">
-          <img src="/work/tracytha.jpg" alt="Tracy Tha Barber — tracythabarber.com" loading="lazy" decoding="async">
-        </span>
+          <iframe class="work-frame" src="https://tracythabarber.com" title="Tracy Tha Barber — live preview"
+                  loading="lazy" tabindex="-1" aria-hidden="true" scrolling="no"
+                  sandbox="allow-scripts allow-same-origin"></iframe>
+          </span>
         <span class="work-body">
           <span class="work-name">Tracy Tha Barber</span>
           <span class="work-what">Barber site, built around bookings.</span>
@@ -1764,14 +1781,32 @@ textarea.field{resize:vertical;min-height:120px;}
   })();
 
   /* ---------- WORK TILES ----------
-     Drop a screenshot into /work/<slug>.jpg and it appears. Until then the
-     image 404s and is removed here so the tile falls back to its designed
-     ground instead of showing a broken-image stub. */
+     Each preview is the client's live site rendered at 1440x900 and scaled
+     to fit its tile. The frames are lazy so they only load near the
+     viewport, and pointer-events:none leaves the tile a plain link. */
   (function(){
-    document.querySelectorAll('.work-shot img').forEach(function(img){
-      var drop = function(){ if(img.parentNode) img.parentNode.removeChild(img); };
-      img.addEventListener('error', drop);
-      if(img.complete && img.naturalWidth === 0) drop();   // failed before this ran
+    var FRAME_W = 1440;
+    var shots = [].slice.call(document.querySelectorAll('.work-shot'));
+    if(!shots.length) return;
+    function fit(shot){
+      var f = shot.querySelector('.work-frame');
+      if(!f) return;
+      var w = shot.clientWidth;
+      if(w) f.style.transform = 'scale(' + (w / FRAME_W) + ')';
+    }
+    function fitAll(){ shots.forEach(fit); }
+    fitAll();
+    if(window.ResizeObserver){
+      var ro = new ResizeObserver(function(entries){
+        entries.forEach(function(en){ fit(en.target); });
+      });
+      shots.forEach(function(sh){ ro.observe(sh); });
+    } else {
+      window.addEventListener('resize', fitAll);
+    }
+    // a frame that never paints leaves the tile on its fallback ground
+    document.querySelectorAll('.work-frame').forEach(function(f){
+      f.addEventListener('error', function(){ f.style.display = 'none'; });
     });
   })();
 
