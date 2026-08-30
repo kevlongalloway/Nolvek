@@ -67,7 +67,7 @@
       },
       "url": "https://nolvek.online",
       "email": "hello@nolvek.online",
-      "description": "Atlanta digital marketing agency specializing in local SEO, Google Business Profile optimization, paid search and social advertising, conversion-focused websites, and AI lead follow-up — plus custom software and self-serve products like Upcart.",
+      "description": "Atlanta digital marketing agency specializing in local SEO, Google Business Profile optimization, paid search and social advertising, conversion-focused websites, and AI lead follow-up, plus custom software builds.",
       "areaServed": "Atlanta, GA",
       "address": {"@type": "PostalAddress", "addressLocality": "Atlanta", "addressRegion": "GA", "addressCountry": "US"},
       "priceRange": "$$",
@@ -733,60 +733,6 @@ textarea.field{resize:vertical;min-height:120px;}
 .work:hover .work-go svg{transform:translate(2px,-2px);}
 
 /* ============================================================
-   PRODUCTS
-============================================================ */
-.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;}
-.prod{background:var(--paper);padding:clamp(1.6rem,3vw,2.3rem);display:flex;flex-direction:column;}
-.prod-status{
-  display:inline-flex;align-items:center;gap:0.5rem;align-self:flex-start;
-  font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;
-  padding:0.4rem 0.75rem;border-radius:999px;border:1px solid var(--line);color:var(--label);margin-bottom:1.4rem;
-}
-.prod-status.live{border-color:var(--blue);color:var(--blue);}
-.prod-status .ld{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
-.prod h3{font-size:1.6rem;font-weight:800;letter-spacing:-0.035em;margin-bottom:0.3rem;}
-.prod .kick{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--label);margin-bottom:1rem;}
-.prod p{font-size:0.93rem;color:var(--body);line-height:1.58;margin-bottom:1.4rem;}
-.prod ul{list-style:none;display:grid;gap:0.6rem;margin-bottom:1.8rem;border-top:1px solid var(--line);padding-top:1.3rem;}
-.prod li{display:flex;gap:0.6rem;font-size:0.86rem;color:var(--body);}
-.prod li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;margin-top:0.55rem;}
-.prod .foot{margin-top:auto;}
-
-.panel{max-height:0;overflow:hidden;transition:max-height .5s var(--ease);}
-.panel.open{max-height:5200px;}
-
-.upcart-band{background:var(--surface);border-block:1px solid var(--line);padding-block:clamp(3rem,6vw,5rem);margin-top:clamp(3rem,6vw,5rem);}
-.upcart-in{display:grid;grid-template-columns:0.95fr 1.05fr;gap:clamp(2rem,4.5vw,4.5rem);align-items:center;}
-.upcart-badge{
-  display:inline-flex;align-items:center;gap:0.5rem;
-  font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--blue);border:1px solid var(--blue);border-radius:999px;padding:0.42rem 0.8rem;margin-bottom:1.4rem;
-}
-.upcart-badge svg{width:12px;height:12px;fill:currentColor;stroke:none;}
-.upcart-in h3{margin-bottom:1.1rem;}
-.upcart-in p{color:var(--body);margin-bottom:1.8rem;line-height:1.62;}
-.upcart-feats{list-style:none;display:grid;gap:0.95rem;margin-bottom:2.1rem;}
-.upcart-feats li{display:flex;gap:0.8rem;align-items:flex-start;font-size:0.95rem;color:var(--body);}
-.upcart-feats svg{width:17px;height:17px;flex:none;margin-top:0.22rem;fill:none;stroke:var(--blue);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
-
-/* upcart store screen */
-.store-body{padding:1.2rem;}
-.store-hero{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:1rem;border-bottom:1px solid var(--line);margin-bottom:1.1rem;}
-.store-hero h5{font-size:1.05rem;font-weight:800;letter-spacing:-0.03em;}
-.store-hero p{font-size:0.72rem;color:var(--body);margin:0.2rem 0 0;}
-.store-cart{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;border:1px solid var(--line);border-radius:999px;padding:0.4rem 0.75rem;color:var(--body);white-space:nowrap;}
-.store-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;margin-bottom:1.1rem;}
-.store-card .thumb{aspect-ratio:1;border-radius:8px;background:var(--surface2);border:1px solid var(--line);margin-bottom:0.5rem;}
-.store-card .meta{display:flex;justify-content:space-between;font-size:0.72rem;}
-.store-card .meta b{font-weight:700;}
-.store-card .meta span{color:var(--body);}
-.store-pay{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:1rem;}
-.store-pay .tot{font-size:0.8rem;color:var(--body);}
-.store-pay .tot b{color:var(--ink);font-weight:800;font-size:0.95rem;margin-left:0.3rem;}
-.store-pay .go{background:var(--blue);color:#fff;font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.6rem 1rem;border-radius:var(--r);}
-
-/* ============================================================
    PROCESS
 ============================================================ */
 .steps{border-top:1px solid var(--line);}
@@ -854,6 +800,21 @@ textarea.field{resize:vertical;min-height:120px;}
 .cta-band .btn-ghost:hover{background:#fff;border-color:#fff;color:var(--ink);}
 
 /* ============================================================
+   LABS — the one product that exists, kept deliberately quiet
+============================================================ */
+.labs{border-top:1px solid var(--line);background:var(--surface);}
+.labs-in{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:clamp(1.25rem,3vw,2.5rem);
+  padding-block:clamp(2.25rem,4vw,3rem);
+}
+.labs-copy{max-width:62ch;}
+.labs-eyebrow{color:var(--label);margin-bottom:0.6rem;}
+.labs h2{font-size:clamp(1.25rem,2.2vw,1.6rem);font-weight:800;letter-spacing:-0.03em;margin-bottom:0.4rem;}
+.labs p{color:var(--body);font-size:0.95rem;line-height:1.55;}
+.labs p b{color:var(--ink);font-weight:700;}
+
+/* ============================================================
    FOOTER
 ============================================================ */
 .footer{border-top:1px solid var(--line);padding-block:clamp(3rem,6vw,4.5rem) 2rem;}
@@ -880,7 +841,7 @@ textarea.field{resize:vertical;min-height:120px;}
   html{scroll-behavior:auto;}
   .reveal{opacity:1;transform:none;transition:none;}
   .marquee-track{animation:none;}
-  .typing i,.prod-status .ld{animation:none;}
+  .typing i{animation:none;}
 }
 
 /* ============================================================
@@ -889,7 +850,6 @@ textarea.field{resize:vertical;min-height:120px;}
 @media (max-width:1080px){
   .hero-grid{grid-template-columns:1fr;gap:3rem;}
   .svc-block{grid-template-columns:1fr;gap:2.25rem;}
-  .upcart-in{grid-template-columns:1fr;gap:2.5rem;}
   .contact-grid{grid-template-columns:1fr;gap:2.5rem;}
   .step{grid-template-columns:64px 1fr;}
   .step p{grid-column:2;}
@@ -897,7 +857,7 @@ textarea.field{resize:vertical;min-height:120px;}
 @media (max-width:900px){
   .nav-links{display:none;}
   .burger{display:flex;}
-  .prod-grid,.price-grid{grid-template-columns:1fr;}
+  .price-grid{grid-template-columns:1fr;}
   .footer-top{grid-template-columns:1fr;}
 }
 @media (max-width:760px){
@@ -911,7 +871,6 @@ textarea.field{resize:vertical;min-height:120px;}
   .cta-band h2{max-width:none;}
 }
 @media (max-width:520px){
-  .store-grid{grid-template-columns:repeat(2,1fr);}
   .gbp-acts{grid-template-columns:repeat(2,1fr);}
   .btn{width:100%;}
   .hero-actions{flex-direction:column;align-items:stretch;}
@@ -928,7 +887,6 @@ textarea.field{resize:vertical;min-height:120px;}
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#work">Work</a></li>
-      <li><a href="#products">Products</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#audit" class="btn nav-cta">Free Audit</a></li>
@@ -942,7 +900,6 @@ textarea.field{resize:vertical;min-height:120px;}
 <div class="drawer" id="drawer">
   <a href="#services">Services</a>
   <a href="#work">Work</a>
-  <a href="#products">Products</a>
   <a href="#process">Process</a>
   <a href="#pricing">Pricing</a>
   <a href="#contact">Contact</a>
@@ -1367,116 +1324,11 @@ textarea.field{resize:vertical;min-height:120px;}
   </div>
 </section>
 
-<!-- ===================== PRODUCTS ===================== -->
-<section class="sec reveal" id="products" aria-labelledby="products-h">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow"><span class="n num">04</span><span class="t">Products</span></div>
-      <h2 class="display" id="products-h">Software you can run yourself.</h2>
-      <p class="lede">A growing suite of Nolvek-built tools you can sign up for and run on your own — fully managed under the hood, no agency project required.</p>
-    </div>
-
-    <div class="prod-grid">
-      <article class="prod">
-        <span class="prod-status live"><span class="ld"></span>Available now</span>
-        <h3>Upcart</h3>
-        <div class="kick">Managed e-commerce</div>
-        <p>Launch a fast, beautiful online store without wrangling plugins. Hosting, checkout, and inventory — all handled.</p>
-        <ul>
-          <li>Conversion-optimized checkout</li>
-          <li>Real-time inventory &amp; orders</li>
-          <li>Built-in marketing tools</li>
-        </ul>
-        <div class="foot">
-          <button type="button" class="btn btn-ghost" id="upcartToggle" aria-expanded="false" aria-controls="upcartPanel">
-            <span class="lbl">Learn more</span>
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-        </div>
-      </article>
-
-      <article class="prod">
-        <span class="prod-status">In development</span>
-        <h3>Scheduling</h3>
-        <div class="kick">Booking + branded pages</div>
-        <p>A scheduling platform in the spirit of Calendly — but with a built-in design layer like Upcart, so your booking page looks like your brand, not a generic link.</p>
-        <ul>
-          <li>Shareable booking links</li>
-          <li>Designed, on-brand booking pages</li>
-          <li>Syncs with your calendar &amp; reminders</li>
-        </ul>
-        <div class="foot"><a href="#contact" class="btn btn-ghost">Get notified →</a></div>
-      </article>
-
-      <article class="prod">
-        <span class="prod-status">More on the way</span>
-        <h3>And more</h3>
-        <div class="kick">The suite is growing</div>
-        <p>We're building more self-serve tools that pair powerful software with Nolvek's design touch. Tell us what would move your business and help shape what's next.</p>
-        <ul>
-          <li>Same managed, no-headache approach</li>
-          <li>Designed to work together</li>
-          <li>Built for local businesses</li>
-        </ul>
-        <div class="foot"><a href="#contact" class="btn btn-ghost">Request a product →</a></div>
-      </article>
-    </div>
-  </div>
-
-  <!-- UPCART DEEP-DIVE -->
-  <div class="panel" id="upcartPanel">
-    <div id="upcart" style="scroll-margin-top:90px;">
-
-      <div class="upcart-band">
-        <div class="wrap upcart-in">
-          <div>
-            <div class="upcart-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg> Powered by Nolvek</div>
-            <h3 class="display">Your store, fully managed.</h3>
-            <p>Upcart is the all-in-one commerce platform you can run yourself. No plugins to wrangle, no downtime, no surprises — just a fast, beautiful store that sells.</p>
-            <ul class="upcart-feats">
-              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Lightning-fast managed hosting</li>
-              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Conversion-optimized checkout</li>
-              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Real-time inventory &amp; orders</li>
-              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Built-in marketing &amp; email tools</li>
-            </ul>
-            <a href="https://upcart.online" target="_blank" rel="noopener" class="btn">Visit Upcart →</a>
-          </div>
-
-          <div>
-            <div class="mock">
-              <div class="mock-bar">
-                <div class="dots"><i></i><i></i><i></i></div>
-                <div class="url"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>upcart.online</div>
-              </div>
-              <div class="store-body">
-                <div class="store-hero">
-                  <div><h5>Your Store</h5><p>Free shipping over $50</p></div>
-                  <div class="store-cart">Cart · 3</div>
-                </div>
-                <div class="store-grid">
-                  <div class="store-card"><div class="thumb"></div><div class="meta"><b>Tee</b><span>$28</span></div></div>
-                  <div class="store-card"><div class="thumb"></div><div class="meta"><b>Hoodie</b><span>$64</span></div></div>
-                  <div class="store-card"><div class="thumb"></div><div class="meta"><b>Cap</b><span>$22</span></div></div>
-                </div>
-                <div class="store-pay">
-                  <div class="tot">Total <b>$114.00</b></div>
-                  <div class="go">Checkout →</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- ===================== PROCESS ===================== -->
 <section class="sec reveal" id="process" aria-labelledby="process-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n num">05</span><span class="t">Process</span></div>
+      <div class="eyebrow"><span class="n num">04</span><span class="t">Process</span></div>
       <h2 class="display" id="process-h">Four steps. No mystery.</h2>
       <p class="lede">You'll know what's happening, what it costs, and what it produced. Every step.</p>
     </div>
@@ -1493,7 +1345,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="pricing" aria-labelledby="pricing-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n num">06</span><span class="t">Pricing</span></div>
+      <div class="eyebrow"><span class="n num">05</span><span class="t">Pricing</span></div>
       <h2 class="display" id="pricing-h">Straight pricing. No surprises.</h2>
       <p class="lede">Start small, scale when you're ready. No hidden fees, no long contracts.</p>
     </div>
@@ -1527,13 +1379,12 @@ textarea.field{resize:vertical;min-height:120px;}
       <div class="price">
         <div class="price-name">Custom</div>
         <div class="price-amt">Let's talk</div>
-        <div class="price-desc">Ad management, bespoke software, integrations, and self-serve products like Upcart.</div>
+        <div class="price-desc">Ad management, bespoke software builds, and custom integrations.</div>
         <ul>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Google &amp; Meta ad management</li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> AI automation workflows</li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Custom software builds</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg> Upcart managed commerce</li>
-        </ul>
+                  </ul>
         <div class="foot"><a href="#contact" class="btn btn-ghost btn-full">Contact us</a></div>
       </div>
     </div>
@@ -1544,7 +1395,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="contact" aria-labelledby="contact-h">
   <div class="wrap contact-grid">
     <div>
-      <div class="eyebrow"><span class="n num">07</span><span class="t">Get Started</span></div>
+      <div class="eyebrow"><span class="n num">06</span><span class="t">Get Started</span></div>
       <h2 class="display" id="contact-h">Tell us what you're trying to grow.</h2>
       <p class="lede">We'll come back within one business day with a plan and a quote — not a discovery-call funnel.</p>
       <div class="contact-meta">
@@ -1570,7 +1421,6 @@ textarea.field{resize:vertical;min-height:120px;}
           <option>AI Lead Follow-Up</option>
           <option>Custom Software</option>
           <option>Upcart / E-commerce</option>
-          <option>Scheduling (notify me)</option>
         </select>
         <textarea class="field" name="message" rows="4" placeholder="What are you trying to grow?" aria-label="What are you trying to grow?"></textarea>
         <button type="submit" class="btn btn-full">Send message →</button>
@@ -1593,10 +1443,22 @@ textarea.field{resize:vertical;min-height:120px;}
     <p>Book a free consultation and we'll map out exactly where the traffic in your neighborhood is going — and what it takes to get it back.</p>
     <div class="cta-actions">
       <a href="#audit" class="btn btn-inv">Get my free audit →</a>
-      <a href="https://upcart.online" target="_blank" rel="noopener" class="btn btn-ghost">Explore Upcart</a>
+      <a href="#work" class="btn btn-ghost">See the work</a>
     </div>
   </div>
 </section>
+
+<!-- ===================== LABS (products, demoted) ===================== -->
+<aside class="labs reveal" aria-labelledby="labs-h">
+  <div class="wrap labs-in">
+    <div class="labs-copy">
+      <div class="mono labs-eyebrow">Also from Nolvek</div>
+      <h2 id="labs-h">We build our own software, too.</h2>
+      <p><b>Upcart</b> is our managed e-commerce platform — sign up, set up your store, and hosting, checkout and inventory are handled. It runs on its own, separately from the agency work above.</p>
+    </div>
+    <a class="btn btn-ghost" href="https://upcart.online" target="_blank" rel="noopener noreferrer">Visit Upcart →</a>
+  </div>
+</aside>
 
 <!-- ===================== FOOTER ===================== -->
 <footer class="footer">
@@ -1608,17 +1470,16 @@ textarea.field{resize:vertical;min-height:120px;}
       </div>
       <div class="footer-cols">
         <div class="footer-col">
-          <h4>Marketing</h4>
+          <h4>Services</h4>
           <a href="#svc-gbp">Local SEO &amp; Google Profile</a>
           <a href="#svc-ads">Google &amp; Meta Ads</a>
           <a href="#svc-web">Conversion Websites</a>
           <a href="#svc-ai">AI Lead Follow-Up</a>
+          <a href="#svc-soft">Custom Software</a>
         </div>
         <div class="footer-col">
-          <h4>Build</h4>
-          <a href="#svc-soft">Custom Software</a>
-          <a href="https://upcart.online" target="_blank" rel="noopener">Upcart</a>
-          <a href="#products">Scheduling <span class="soon">Soon</span></a>
+          <h4>Also from Nolvek</h4>
+          <a href="https://upcart.online" target="_blank" rel="noopener noreferrer">Upcart — managed e-commerce</a>
         </div>
         <div class="footer-col">
           <h4>Company</h4>
@@ -1668,14 +1529,7 @@ textarea.field{resize:vertical;min-height:120px;}
       var el = document.querySelector(id);
       if(!el) return;
       e.preventDefault();
-      var panel = el.closest && el.closest('.panel');
-      if(panel && !panel.classList.contains('open')){
-        var tg = document.getElementById('upcartToggle');
-        if(tg) tg.click();
-        setTimeout(function(){ el.scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'}); }, 300);
-      } else {
-        el.scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'});
-      }
+      el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
       history.replaceState(null,'',id);
     });
   });
@@ -1720,23 +1574,6 @@ textarea.field{resize:vertical;min-height:120px;}
         wrap.querySelectorAll('.need[aria-pressed="true"]').forEach(function(x){ on.push(x.textContent.trim()); });
         hidden.value = on.join(', ');
       });
-    });
-  })();
-
-  /* ---------- UPCART PANEL ---------- */
-  (function(){
-    var toggle = document.getElementById('upcartToggle');
-    var panel = document.getElementById('upcartPanel');
-    if(!toggle || !panel) return;
-    toggle.addEventListener('click', function(){
-      var open = panel.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.querySelector('.lbl').textContent = open ? 'Hide details' : 'Learn more';
-      if(open){
-        setTimeout(function(){
-          document.getElementById('upcart').scrollIntoView({behavior: reduce?'auto':'smooth', block:'start'});
-        }, 260);
-      }
     });
   })();
 
