@@ -1,0 +1,18 @@
+# Wrangler's local secrets file. Never commit this — if the Render publish
+# directory is ever misconfigured to the repo root, a committed .dev.vars
+# would be a live API key on a public URL.
+.dev.vars
+.dev.vars.*
+
+# Wrangler build/state
+.wrangler/
+worker/dist/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
