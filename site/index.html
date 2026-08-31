@@ -798,6 +798,112 @@ textarea.field{resize:vertical;min-height:120px;}
 .labs p b{color:var(--ink);font-weight:700;}
 
 /* ============================================================
+   CHAT ASSISTANT WIDGET
+   ------------------------------------------------------------
+   Every class is nv- prefixed and shares NO name with the phone
+   mock in the services section. That mock owns global .bubble,
+   .typing, .avatar, .chat-body, .screen and .phone; reusing any
+   of them would inherit .chat-body{overflow:hidden} and
+   .screen{height:520px} — a chat log that cannot scroll — and
+   any rule written here would silently restyle the marketing
+   demo. The geometry is copied; the names are not.
+============================================================ */
+.nv-launch{
+  position:fixed;right:1rem;bottom:1rem;z-index:70;   /* under the nav (80); they never overlap */
+  display:inline-flex;align-items:center;gap:0.55rem;
+  padding:0.9rem 1.25rem;border-radius:999px;cursor:pointer;
+  background:var(--blue);color:#fff;border:1px solid var(--blue);
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  box-shadow:0 6px 24px -8px rgba(12,17,30,.4);
+  transition:background .2s var(--ease), transform .2s var(--ease);
+}
+.nv-launch:hover{background:var(--blue-d);}
+.nv-launch:active{transform:translateY(1px);}
+.nv-launch svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.nv-launch.hide{visibility:hidden;}   /* also drops it from the tab order */
+/* A class selector beats the UA's [hidden]{display:none}, so both of these
+   need saying explicitly — without them the "hidden" panel still lays out
+   over the launcher and swallows its clicks, and the launcher stays visible
+   but inert when JS is off. */
+.nv-launch[hidden],.nv-panel[hidden]{display:none;}
+
+.nv-panel{
+  position:fixed;right:1rem;bottom:1rem;z-index:90;   /* above the sticky nav (80) and drawer
+     (79): full-screen on mobile, so anything above it covers the close button */
+  width:380px;max-width:calc(100vw - 2rem);height:min(560px, calc(100vh - 2rem));
+  display:flex;flex-direction:column;overflow:hidden;
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r2);
+  box-shadow:0 24px 60px -20px rgba(12,17,30,.35);
+  opacity:0;transform:translateY(10px);
+  transition:opacity .22s var(--ease), transform .22s var(--ease);
+}
+.nv-panel.open{opacity:1;transform:none;}
+
+.nv-head{display:flex;align-items:center;gap:0.65rem;padding:0.85rem 1rem;border-bottom:1px solid var(--line);}
+.nv-mark{width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;flex:none;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;}
+.nv-id{flex:1;min-width:0;}
+.nv-id b{display:block;font-size:0.85rem;font-weight:700;letter-spacing:-0.01em;}
+.nv-id span{display:block;font-size:0.68rem;color:var(--label);}
+.nv-x{background:none;border:0;cursor:pointer;padding:0.4rem;color:var(--body);line-height:0;border-radius:var(--r);}
+.nv-x:hover{color:var(--ink);background:var(--surface);}
+.nv-x svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
+
+/* min-height:0 is load-bearing — without it the flex child refuses to
+   shrink and the log grows the panel instead of scrolling. */
+.nv-log{
+  flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;
+  padding:1rem;display:flex;flex-direction:column;gap:0.55rem;background:var(--surface);
+}
+.nv-b{max-width:85%;padding:0.6rem 0.8rem;border-radius:15px;font-size:0.85rem;line-height:1.5;
+  white-space:pre-wrap;overflow-wrap:anywhere;}
+.nv-b-bot{background:var(--paper);border:1px solid var(--line);color:var(--ink);
+  align-self:flex-start;border-bottom-left-radius:5px;}
+.nv-b-user{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:5px;}
+.nv-b-sys{background:var(--blue-w);border:1px solid var(--blue);color:var(--ink);
+  align-self:stretch;max-width:100%;font-size:0.82rem;}
+.nv-b-sys button{margin-top:0.6rem;}
+.nv-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+.nv-dots{display:flex;gap:4px;padding:0.2rem 0.1rem;}
+.nv-dots i{width:6px;height:6px;border-radius:50%;background:var(--label);animation:nv-dot 1.3s infinite;}
+.nv-dots i:nth-child(2){animation-delay:.18s;}
+.nv-dots i:nth-child(3){animation-delay:.36s;}
+@keyframes nv-dot{0%,60%,100%{transform:translateY(0);opacity:.45;}30%{transform:translateY(-5px);opacity:1;}}
+
+.nv-card{align-self:stretch;max-width:100%;background:var(--paper);
+  border:1px solid var(--blue);border-radius:12px;padding:0.9rem 1rem;}
+.nv-card h4{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:0.68rem;
+  font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--blue);margin-bottom:0.7rem;}
+.nv-card dl{display:grid;grid-template-columns:auto 1fr;gap:0.28rem 0.8rem;margin-bottom:0.9rem;}
+.nv-card dt{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:0.62rem;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--label);padding-top:0.15rem;}
+.nv-card dd{margin:0;font-size:0.83rem;color:var(--ink);overflow-wrap:anywhere;}
+.nv-card-act{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.nv-card-act .btn{padding:0.7rem 1rem;font-size:0.68rem;}
+.nv-card .nv-note{margin-top:0.7rem;font-size:0.78rem;color:var(--body);}
+.nv-card .nv-note.ok{color:var(--blue);font-weight:700;}
+.nv-card .nv-note.err{color:#b42318;font-weight:600;}
+.nv-card .nv-note a{color:var(--blue);font-weight:700;}
+
+.nv-foot{display:flex;gap:0.5rem;padding:0.75rem;border-top:1px solid var(--line);background:var(--paper);}
+.nv-foot .field{margin:0;flex:1;min-width:0;padding:0.75rem 0.85rem;font-size:0.88rem;}
+.nv-foot .btn{padding:0.75rem 1rem;font-size:0.68rem;flex:none;}
+.nv-legal{padding:0 0.75rem 0.7rem;font-size:0.6rem;letter-spacing:0.06em;
+  color:var(--label);text-align:center;background:var(--paper);}
+.nv-legal a{color:var(--label);text-decoration:underline;}
+
+@media (max-width:680px){
+  .nv-panel{right:0;bottom:0;left:0;top:0;width:auto;max-width:none;height:100%;border-radius:0;border:0;}
+  .nv-launch{right:0.85rem;bottom:0.85rem;}
+}
+@media (prefers-reduced-motion:reduce){
+  .nv-panel{transition:none;}
+  .nv-dots i{animation:none;}
+}
+
+/* ============================================================
    FOOTER
 ============================================================ */
 .footer{border-top:1px solid var(--line);padding-block:clamp(3rem,6vw,4.5rem) 2rem;}
@@ -1412,6 +1518,41 @@ textarea.field{resize:vertical;min-height:120px;}
   </div>
 </aside>
 
+<!-- ===================== CHAT ASSISTANT ===================== -->
+<!-- Launcher and close are real buttons, never in-page anchors: the
+     smooth-anchor module intercepts every anchor whose href starts with a
+     hash. Both ship hidden and are unhidden by JS, so with JS disabled no
+     inert widget is left on screen. -->
+<button id="nvLaunch" class="nv-launch" type="button" hidden
+        aria-expanded="false" aria-controls="nvPanel">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg>
+  <span>Chat with us</span>
+</button>
+
+<section id="nvPanel" class="nv-panel" role="dialog" aria-modal="false"
+         aria-labelledby="nvTitle" hidden>
+  <header class="nv-head">
+    <span class="nv-mark" aria-hidden="true">N</span>
+    <span class="nv-id">
+      <b id="nvTitle">Nolvek Assistant</b>
+      <span>Answers questions, passes you to a human</span>
+    </span>
+    <button id="nvClose" class="nv-x" type="button" aria-label="Close chat">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </header>
+
+  <div id="nvLog" class="nv-log" role="log" aria-live="polite" aria-relevant="additions"></div>
+
+  <form id="nvForm" class="nv-foot">
+    <input id="nvInput" class="field" type="text" maxlength="600" autocomplete="off"
+           placeholder="Ask about pricing, SEO, ads…" aria-label="Message">
+    <button class="btn" type="submit">Send</button>
+  </form>
+  <p class="nv-legal mono">AI assistant &middot; answers may be approximate &middot;
+    <a href="/privacy.html">Privacy</a></p>
+</section>
+
 <!-- ===================== FOOTER ===================== -->
 <footer class="footer">
   <div class="wrap">
@@ -1460,13 +1601,27 @@ textarea.field{resize:vertical;min-height:120px;}
     nav.classList.toggle('stuck', window.scrollY > 8);
   }, {passive:true});
 
+  /* Both the mobile drawer and the full-screen chat panel want to lock page
+     scroll. If each writes body.overflow directly, whichever closes last
+     clears the other's lock and the page ends up stuck or prematurely
+     scrollable. Count the locks instead. */
+  var scrollLocks = 0;
+  function lockScroll(on){
+    scrollLocks = Math.max(0, scrollLocks + (on ? 1 : -1));
+    document.body.style.overflow = scrollLocks ? 'hidden' : '';
+  }
+
   var burger = document.getElementById('burger');
   var drawer = document.getElementById('drawer');
+  var drawerOpen = false;
   function setDrawer(open){
+    if(open === drawerOpen) return;          // keep the refcount honest
+    drawerOpen = open;
     drawer.classList.toggle('open', open);
     burger.classList.toggle('on', open);
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    document.body.style.overflow = open ? 'hidden' : '';
+    lockScroll(open);
+    if(open && window.nvCloseChat) window.nvCloseChat();   // they cannot coexist
   }
   burger.addEventListener('click', function(){ setDrawer(!drawer.classList.contains('open')); });
   drawer.querySelectorAll('a').forEach(function(a){
@@ -1622,6 +1777,345 @@ textarea.field{resize:vertical;min-height:120px;}
       });
     });
   });
+  /* ---------- CHAT ASSISTANT ----------
+     Talks to the Worker, which holds the API key. The model never sends
+     anything: when it proposes a lead we render a confirm card, and only the
+     visitor's tap calls sendLead(). Every failure path lands on the contact
+     form, which works without any of this. */
+  (function(){
+    var CFG = {
+      // Flip to true only once the Worker is deployed and the keys below are
+      // set. While false the launcher stays hidden and the page behaves
+      // exactly as it did before — better than shipping a chat button that
+      // errors on every click.
+      enabled: false,
+      endpoint: 'https://chat.nolvek.online',
+      turnstileKey: '',            // Turnstile SITE key (public, safe to commit)
+      maxChars: 600,
+      clientTimeout: 20000,
+      mobile: '(max-width: 680px)'
+    };
+
+    var launch = document.getElementById('nvLaunch');
+    var panel  = document.getElementById('nvPanel');
+    var closeB = document.getElementById('nvClose');
+    var log    = document.getElementById('nvLog');
+    var form   = document.getElementById('nvForm');
+    var input  = document.getElementById('nvInput');
+    if(!launch || !panel) return;
+
+    var history = [];        // [{role, content}] mirrored to the Worker each turn
+    var session = null;      // signed token from /session
+    var leadSent = false;    // the confirm card is single-use
+    var busy = false;
+    var started = false;
+    var lastFocus = null;
+    var tsLoaded = false;
+
+    if(!CFG.enabled) return;   // nothing renders, nothing binds
+    launch.hidden = false;     // only appears when JS is alive AND configured
+
+    /* --- rendering (textContent only; never innerHTML for model output) --- */
+    function atBottom(){ return log.scrollHeight - log.scrollTop - log.clientHeight < 40; }
+    function stick(was){ if(was) log.scrollTop = log.scrollHeight; }
+
+    function bubble(role, text){
+      var was = atBottom();
+      var b = document.createElement('div');
+      b.className = 'nv-b nv-b-' + role;
+      var sr = document.createElement('span');
+      sr.className = 'nv-sr';
+      sr.textContent = (role === 'user' ? 'You: ' : 'Assistant: ');
+      b.appendChild(sr);
+      b.appendChild(document.createTextNode(text));
+      log.appendChild(b);
+      stick(was);
+      return b;
+    }
+
+    function systemNote(text, withFormLink){
+      var was = atBottom();
+      var b = document.createElement('div');
+      b.className = 'nv-b nv-b-sys';
+      b.appendChild(document.createTextNode(text));
+      if(withFormLink){
+        var go = document.createElement('button');
+        go.type = 'button';
+        go.className = 'btn btn-ghost';
+        go.textContent = 'Use the contact form';
+        go.addEventListener('click', function(){
+          closeChat();                       // close first: on mobile the panel covers the target
+          var el = document.getElementById('contact');
+          if(el) el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+        });
+        b.appendChild(document.createElement('br'));
+        b.appendChild(go);
+      }
+      log.appendChild(b);
+      stick(was);
+    }
+
+    var typingEl = null, typingTimer = null, slowTimer = null;
+    function showTyping(){
+      clearTimeout(typingTimer); clearTimeout(slowTimer);
+      typingTimer = setTimeout(function(){       // delay so a fast reply doesn't flash
+        var was = atBottom();
+        typingEl = document.createElement('div');
+        typingEl.className = 'nv-b nv-b-bot';
+        var d = document.createElement('span');
+        d.className = 'nv-dots';
+        d.setAttribute('aria-label', 'Assistant is typing');
+        d.innerHTML = '<i></i><i></i><i></i>';
+        typingEl.appendChild(d);
+        log.appendChild(typingEl);
+        stick(was);
+      }, 250);
+      slowTimer = setTimeout(function(){
+        if(typingEl) typingEl.textContent = 'Still thinking…';
+      }, 6000);
+    }
+    function hideTyping(){
+      clearTimeout(typingTimer); clearTimeout(slowTimer);
+      if(typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+      typingEl = null;
+    }
+
+    function setBusy(on){
+      busy = on;
+      input.disabled = on;
+      form.querySelector('button[type="submit"]').disabled = on;
+    }
+
+    /* --- the confirm card: the only route from model to inbox --- */
+    var LABELS = {name:'Name', email:'Email', phone:'Phone', business:'Business',
+                  website:'Website', service:'Service', message:'Notes'};
+
+    function confirmCard(lead){
+      if(leadSent) return;
+      var was = atBottom();
+      var card = document.createElement('div');
+      card.className = 'nv-card';
+
+      var h = document.createElement('h4');
+      h.textContent = 'Send this to Nolvek?';
+      card.appendChild(h);
+
+      var dl = document.createElement('dl');
+      Object.keys(LABELS).forEach(function(k){
+        if(!lead[k]) return;                       // omit empties rather than show blanks
+        var dt = document.createElement('dt'); dt.textContent = LABELS[k];
+        var dd = document.createElement('dd'); dd.textContent = lead[k];
+        dl.appendChild(dt); dl.appendChild(dd);
+      });
+      card.appendChild(dl);
+
+      var act = document.createElement('div');
+      act.className = 'nv-card-act';
+      var send = document.createElement('button');
+      send.type = 'button'; send.className = 'btn'; send.textContent = 'Send to Nolvek';
+      var edit = document.createElement('button');
+      edit.type = 'button'; edit.className = 'btn btn-ghost'; edit.textContent = 'Edit';
+      act.appendChild(send); act.appendChild(edit);
+      card.appendChild(act);
+
+      var note = document.createElement('p');
+      note.className = 'nv-note';
+      note.textContent = 'We reply within one business day.';
+      card.appendChild(note);
+
+      edit.addEventListener('click', function(){
+        act.remove();
+        bubble('bot', 'Sure — what should I change?');
+        input.focus();
+      });
+
+      send.addEventListener('click', function(){
+        send.disabled = true; edit.disabled = true;
+        send.textContent = 'Sending…';
+        note.className = 'nv-note';
+        note.textContent = 'Sending…';
+        sendLead(lead, 'Chat Assistant')
+          .then(function(){
+            leadSent = true;
+            act.remove();
+            note.className = 'nv-note ok';
+            note.textContent = 'Sent. We reply within one business day.';
+            setBusy(true);
+            input.placeholder = 'Sent — thanks!';
+          })
+          .catch(function(err){
+            send.disabled = false; edit.disabled = false;
+            send.textContent = 'Send to Nolvek';
+            note.className = 'nv-note err';
+            note.innerHTML = 'That didn’t go through. Email <a href="mailto:' + FALLBACK_EMAIL +
+                             '">' + FALLBACK_EMAIL + '</a> and we’ll pick it up.';
+            if(window.console) console.error('Chat lead failed:', err && err.message);
+          });
+      });
+
+      log.appendChild(card);
+      stick(was);
+    }
+
+    /* --- Turnstile, loaded only when someone actually opens the chat --- */
+    function loadTurnstile(){
+      if(!CFG.turnstileKey) return Promise.resolve(null);
+      if(tsLoaded) return Promise.resolve(getToken());
+      return new Promise(function(resolve, reject){
+        var s = document.createElement('script');
+        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        s.async = true;
+        var to = setTimeout(function(){ reject(new Error('turnstile-timeout')); }, 8000);
+        s.onload = function(){ clearTimeout(to); tsLoaded = true; resolve(getToken()); };
+        s.onerror = function(){ clearTimeout(to); reject(new Error('turnstile-blocked')); };
+        document.head.appendChild(s);
+      });
+    }
+    function getToken(){
+      return new Promise(function(resolve, reject){
+        var holder = document.createElement('div');
+        holder.style.display = 'none';
+        document.body.appendChild(holder);
+        try {
+          window.turnstile.render(holder, {
+            sitekey: CFG.turnstileKey,
+            callback: function(tok){ resolve(tok); },
+            'error-callback': function(){ reject(new Error('turnstile-failed')); }
+          });
+        } catch(e){ reject(e); }
+      });
+    }
+
+    function api(path, body){
+      var ctrl = new AbortController();
+      var to = setTimeout(function(){ ctrl.abort(); }, CFG.clientTimeout);
+      return fetch(CFG.endpoint + path, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(body),
+        signal: ctrl.signal
+      }).then(function(r){
+        clearTimeout(to);
+        return r.json().catch(function(){ return {}; }).then(function(j){
+          if(!r.ok){ var e = new Error(j.error || ('HTTP ' + r.status)); e.status = r.status; throw e; }
+          return j;
+        });
+      });
+    }
+
+    function ensureSession(){
+      if(session) return Promise.resolve(session);
+      return loadTurnstile()
+        .then(function(tok){ return api('/session', {turnstileToken: tok || ''}); })
+        .then(function(j){ session = j.session; return session; });
+    }
+
+    function fail(err){
+      hideTyping();
+      var s = err && err.status;
+      if(s === 429){
+        systemNote('You’re going quicker than I can keep up. Give me a minute — or send it through the form now.', true);
+      } else if(s === 409){
+        systemNote('That’s everything I can cover here. Send your details through the form and a person will pick it up.', true);
+        setBusy(true);
+      } else if(err && (err.message === 'turnstile-blocked' || err.message === 'turnstile-timeout' || err.message === 'turnstile-failed' || s === 403)){
+        systemNote('The quick anti-bot check didn’t pass — usually an ad-blocker or a strict browser. The contact form works without it.', true);
+      } else {
+        systemNote('I’m having trouble connecting. The contact form always works, or email ' + FALLBACK_EMAIL + '.', true);
+      }
+      if(window.console) console.error('Chat failed:', err && (err.message || err));
+    }
+
+    function send(text){
+      history.push({role:'user', content:text});
+      bubble('user', text);
+      setBusy(true);
+      showTyping();
+
+      ensureSession()
+        .then(function(){ return api('/chat', {session: session, messages: history}); })
+        .then(function(j){
+          hideTyping();
+          session = j.session || session;
+          history.push({role:'assistant', content:j.reply});
+          bubble('bot', j.reply);
+          if(j.lead) confirmCard(j.lead);
+          if(j.turnsLeft === 3){
+            systemNote('Heads up — I can take a few more messages, then I’ll hand you to the team.');
+          }
+          if(!leadSent) setBusy(false);
+          input.focus();
+        })
+        .catch(function(err){
+          // one silent retry if the session simply aged out
+          if(err && (err.status === 401) && session){
+            session = null;
+            return ensureSession()
+              .then(function(){ return api('/chat', {session: session, messages: history}); })
+              .then(function(j){
+                hideTyping();
+                session = j.session || session;
+                history.push({role:'assistant', content:j.reply});
+                bubble('bot', j.reply);
+                if(j.lead) confirmCard(j.lead);
+                setBusy(false);
+              })
+              .catch(function(e2){ fail(e2); setBusy(false); });
+          }
+          fail(err);
+          if(err && err.status !== 409) setBusy(false);
+        });
+    }
+
+    /* --- open / close --- */
+    function isMobile(){ return window.matchMedia(CFG.mobile).matches; }
+
+    function openChat(){
+      if(!panel.hidden) return;
+      lastFocus = document.activeElement;
+      if(drawerOpen) setDrawer(false);          // they cannot coexist on mobile
+      panel.hidden = false;
+      void panel.offsetWidth;                    // force reflow so the transition runs
+      panel.classList.add('open');
+      launch.classList.add('hide');
+      launch.setAttribute('aria-expanded','true');
+      if(isMobile()) lockScroll(true);
+      panel.dataset.locked = isMobile() ? '1' : '';
+      if(!started){
+        started = true;
+        bubble('bot', 'Hey — I can help you work out which service fits, then pass your details to the team. What are you trying to fix?');
+      }
+      input.focus({preventScroll:true});
+    }
+
+    function closeChat(){
+      if(panel.hidden) return;
+      panel.classList.remove('open');
+      if(panel.dataset.locked){ lockScroll(false); panel.dataset.locked = ''; }
+      launch.classList.remove('hide');
+      launch.setAttribute('aria-expanded','false');
+      var done = function(){ panel.hidden = true; };
+      if(reduce){ done(); } else { setTimeout(done, 240); }
+      if(lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    window.nvCloseChat = closeChat;   // so the drawer can close us
+
+    launch.addEventListener('click', openChat);
+    closeB.addEventListener('click', closeChat);
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && !panel.hidden && !drawerOpen) closeChat();
+    });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(busy) return;
+      var text = input.value.trim().slice(0, CFG.maxChars);
+      if(!text) return;
+      input.value = '';
+      send(text);
+    });
+  })();
+
 })();
 </script>
 </body>
