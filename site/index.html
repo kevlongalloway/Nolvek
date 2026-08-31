@@ -2041,7 +2041,12 @@ textarea.field{resize:vertical;min-height:120px;}
       var to = setTimeout(function(){ ctrl.abort(); }, CFG.clientTimeout);
       return fetch(CFG.endpoint + path, {
         method:'POST',
-        headers:{'Content-Type':'application/json'},
+        // text/plain keeps this a "simple" CORS request: no OPTIONS preflight,
+        // one round trip instead of two. The body is still JSON and the Worker
+        // still parses it with request.json(), which ignores this header.
+        headers:{'Content-Type':'text/plain'},
+        redirect:'error',            // a followed redirect silently becomes a GET
+
         body: JSON.stringify(body),
         signal: ctrl.signal
       }).then(function(r){
