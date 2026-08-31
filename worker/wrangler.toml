@@ -9,6 +9,10 @@ compatibility_date = "2026-08-01"
 #   wrangler secret put TURNSTILE_SECRET   (Cloudflare Turnstile dashboard)
 #   wrangler secret put GROQ_API_KEY
 #   wrangler secret put ANTHROPIC_API_KEY
+# Every deploy REPLACES the Worker's plain-text variables with this block.
+# Editing them in the dashboard does not survive the next build — change them
+# here. (Secrets are not affected: wrangler secret put / the dashboard's Secret
+# type are stored separately and are never touched by a deploy.)
 [vars]
 PROVIDER = "groq"          # "groq" | "anthropic" — the other is the failover
 CHAT_ENABLED = "true"      # flip to "false" to kill the assistant in ~30s
@@ -16,7 +20,7 @@ CHAT_ENABLED = "true"      # flip to "false" to kill the assistant in ~30s
 # Read the current list before setting it:
 #   curl -H "Authorization: Bearer $GROQ_API_KEY" \
 #        https://api.groq.com/openai/v1/models
-GROQ_MODEL = "SET-ME-FROM-THE-LIVE-MODEL-LIST"
+GROQ_MODEL = "llama-3.1-8b-instant"   # read from the live list; Groq rotates slugs
 
 # Per-IP rate limiting. Free, stateless, and counted per colo rather than
 # globally — acceptable here because the signed turn counter already caps

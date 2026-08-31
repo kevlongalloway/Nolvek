@@ -56,14 +56,22 @@ and set `CFG.enabled` to `true`.
 **Set a spend cap in the provider dashboard.** The caps in this Worker are friction, not a billing
 limit — a hard cap at Groq/Anthropic is the actual backstop.
 
+## Variables vs secrets
+
+`[vars]` in `wrangler.toml` is the source of truth. **A deploy replaces the Worker's plain-text
+variables with that block**, so editing `GROQ_MODEL`, `PROVIDER` or `CHAT_ENABLED` in the dashboard
+lasts only until the next build — change them in the file and deploy.
+
+Secrets are the opposite: they are stored separately and a deploy never touches them. That is why
+`SESSION_SECRET` and the API keys stay put while the vars snap back.
+
 ## Killing it
 
-```sh
-wrangler deploy --var CHAT_ENABLED:false
-```
+Set `CHAT_ENABLED = "false"` in `wrangler.toml` and deploy. `/session` and `/chat` then return 503
+and the widget falls back to the contact form; nothing on the Render site is touched.
 
-`/session` and `/chat` then return 503 and the widget falls back to the contact form. Takes about 30
-seconds and touches nothing on the Render site.
+Flipping it in the dashboard works too and is faster in an emergency — but it is temporary, and the
+next build will turn the assistant back on. Follow up with the file change.
 
 ## Tests
 

@@ -47,7 +47,9 @@ reason.
 
 The widget ships inert. It only starts talking once two values are filled in:
 
-1. `worker/wrangler.toml` → `GROQ_MODEL`, plus the secrets, then `wrangler deploy`.
+1. `worker/wrangler.toml` → `GROQ_MODEL`, plus the secrets, then deploy. Note that a deploy
+   overwrites the Worker's plain-text variables with the `[vars]` block, so dashboard edits to them
+   do not survive a build; secrets are stored separately and are never overwritten.
 2. `site/index.html` → `CFG.turnstileKey` in the chat module (the Turnstile **site** key, which is
    public and safe to commit), and `CFG.endpoint` if the Worker is not at `chat.nolvek.online`.
 
