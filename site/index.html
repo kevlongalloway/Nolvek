@@ -826,31 +826,41 @@ textarea.field{resize:vertical;min-height:120px;}
 /* The teaser: what a first-time visitor actually sees. It takes the
    launcher's place a few seconds in, then collapses back to the compact
    launcher once dismissed — so there is always exactly one way in, never
-   two competing ones. */
+   two competing ones. One line of text and a chevron: it has to read as a
+   button, not as a notification that happens to be sitting there. */
 .nv-teaser{
   position:fixed;right:1rem;bottom:1rem;z-index:70;
-  display:flex;align-items:flex-start;gap:0.5rem;
-  width:min(268px, calc(100vw - 2rem));
-  padding:0.85rem 0.85rem 0.85rem 1rem;
-  background:var(--paper);border:1px solid var(--line);border-radius:var(--r2);
-  box-shadow:0 14px 40px -14px rgba(12,17,30,.34);
+  width:min(292px, calc(100vw - 2rem));
   opacity:0;transform:translateY(8px) scale(.97);
   transition:opacity .3s var(--ease), transform .3s var(--ease);
 }
 .nv-teaser.in{opacity:1;transform:none;}
 .nv-teaser-go{
-  flex:1;text-align:left;background:none;border:0;padding:0;cursor:pointer;
-  font:inherit;font-size:0.92rem;line-height:1.4;color:var(--ink);font-weight:600;
+  display:flex;align-items:center;gap:0.7rem;width:100%;
+  padding:0.72rem 0.85rem;cursor:pointer;text-align:left;
+  background:var(--paper);border:1px solid var(--line);border-radius:999px;
+  box-shadow:0 10px 30px -12px rgba(12,17,30,.34);
+  font:inherit;font-size:0.87rem;line-height:1.25;font-weight:600;color:var(--ink);
+  transition:border-color .18s var(--ease), box-shadow .18s var(--ease), transform .18s var(--ease);
 }
-.nv-teaser-go span{display:block;margin-top:0.2rem;font-weight:400;
-  font-size:0.79rem;color:var(--label);}
+.nv-teaser-go:hover{border-color:var(--blue);box-shadow:0 14px 34px -12px rgba(54,97,227,.4);}
+.nv-teaser-go:active{transform:translateY(1px);}
+.nv-teaser-go .nv-teaser-ico{
+  flex:none;width:28px;height:28px;border-radius:50%;background:var(--blue);
+  display:grid;place-items:center;}
+.nv-teaser-go .nv-teaser-ico svg{width:14px;height:14px;fill:none;stroke:#fff;
+  stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.nv-teaser-go > span{flex:1;min-width:0;}
+.nv-teaser-go .nv-teaser-arr{flex:none;width:14px;height:14px;fill:none;
+  stroke:var(--blue);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
 .nv-teaser-x{
-  flex:none;width:22px;height:22px;margin:-0.15rem -0.15rem 0 0;
+  position:absolute;top:-7px;right:-4px;width:22px;height:22px;
   display:grid;place-items:center;cursor:pointer;
-  background:none;border:0;border-radius:5px;color:var(--label);
+  background:var(--paper);border:1px solid var(--line);border-radius:50%;
+  color:var(--label);box-shadow:0 2px 8px -2px rgba(12,17,30,.3);
 }
-.nv-teaser-x:hover{background:var(--surface);color:var(--ink);}
-.nv-teaser-x svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;}
+.nv-teaser-x:hover{background:var(--ink);border-color:var(--ink);color:#fff;}
+.nv-teaser-x svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;}
 .nv-teaser[hidden]{display:none;}
 /* A class selector beats the UA's [hidden]{display:none}, so both of these
    need saying explicitly — without them the "hidden" panel still lays out
@@ -1566,8 +1576,11 @@ textarea.field{resize:vertical;min-height:120px;}
 
 <div id="nvTeaser" class="nv-teaser" hidden>
   <button id="nvTeaserGo" class="nv-teaser-go" type="button">
-    Not sure which service you need?
-    <span>Ask me &mdash; takes a minute.</span>
+    <span class="nv-teaser-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg>
+    </span>
+    <span>Not sure which service you need?</span>
+    <svg class="nv-teaser-arr" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
   </button>
   <button id="nvTeaserX" class="nv-teaser-x" type="button" aria-label="Dismiss">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
