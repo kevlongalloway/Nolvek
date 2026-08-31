@@ -496,18 +496,6 @@ textarea.field{resize:vertical;min-height:120px;}
 .ex-hide:hover{color:var(--ink);border-color:var(--ink);}
 .ex-hide:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
 
-/* Standing hint above the list, so the interaction is announced before
-   the first card rather than discovered by accident. */
-.svc-hint{
-  display:flex;align-items:flex-start;gap:0.7rem;
-  border:1px dashed var(--line);border-radius:var(--r2);
-  padding:0.95rem 1.2rem;margin-bottom:clamp(2rem,4vw,3rem);
-  font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--body);
-  line-height:1.5;
-}
-.svc-hint svg{width:17px;height:17px;flex:none;fill:var(--blue);stroke:none;margin-top:0.15rem;}
-.svc-hint b{color:var(--blue);font-weight:600;}
 .ex-list{list-style:none;display:grid;gap:1rem;border-top:1px solid var(--line);padding-top:1.6rem;}
 .ex-list li{display:flex;gap:0.85rem;align-items:flex-start;font-size:0.95rem;color:var(--body);line-height:1.5;}
 .ex-list li b{color:var(--ink);font-weight:700;}
@@ -963,7 +951,6 @@ textarea.field{resize:vertical;min-height:120px;}
       <p class="lede">Getting found is the job. Everything else exists to catch what the marketing brings in. Each service below comes with an interactive demo — click to open it.</p>
     </div>
 
-        <div class="svc-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 8-6 1.6L10.4 19z"/></svg><span><b>Click to view</b> &mdash; every service below opens an interactive demo</span></div>
     <div class="svc-list">
 
       <article class="svc-block" id="svc-gbp">
