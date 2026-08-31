@@ -158,6 +158,85 @@ globalThis.fetch = async (url) => {
   return realFetch(url);
 };
 
+console.log('\nnolvek-llm provider');
+
+const NV_ENV = { ...ENV, PROVIDER: 'nolvek-llm', NOLVEK_LLM_URL: 'https://nolvek-llm.example/' };
+
+async function chatWith(env, upstream) {
+  const prev = globalThis.fetch;
+  globalThis.fetch = async (u) => String(u).includes('siteverify')
+    ? new Response(JSON.stringify({ success: true }), { status: 200 })
+    : upstream(String(u));
+  try {
+    const s = await worker.fetch(req('/session', { turnstileToken: 'x' }), env);
+    const tok = (await s.json()).session;
+    const r = await worker.fetch(req('/chat', { session: tok, messages: [{ role: 'user', content: 'hi' }] }), env);
+    return { status: r.status, body: await r.json() };
+  } finally { globalThis.fetch = prev; }
+}
+
+for (const [shape, body] of [
+  ['OpenAI',       { choices: [{ message: { content: 'shape ok' } }] }],
+  ['Workers AI',   { result: { response: 'shape ok' } }],
+  ['Anthropic',    { content: [{ type: 'text', text: 'shape ok' }] }],
+  ['bare response',{ response: 'shape ok' }],
+]) {
+  await ta('reads a ' + shape + '-shaped reply', async () => {
+    const out = await chatWith(NV_ENV, () => new Response(JSON.stringify(body), { status: 200 }));
+    assert.equal(out.status, 200);
+    assert.equal(out.body.reply, 'shape ok');
+  });
+}
+
+await ta('a 200 in an unrecognised shape fails over instead of showing a blank bubble', async () => {
+  const env = { ...NV_ENV, ANTHROPIC_API_KEY: 'a' };
+  const out = await chatWith(env, (u) => u.includes('nolvek-llm')
+    ? new Response(JSON.stringify({ weird: { nested: 'value' } }), { status: 200 })
+    : new Response(JSON.stringify({ content: [{ type: 'text', text: 'from anthropic' }] }), { status: 200 }));
+  assert.equal(out.status, 200);
+  assert.equal(out.body.reply, 'from anthropic');
+});
+
+await ta('/probe reports success and is gated behind DEBUG', async () => {
+  const prev = globalThis.fetch;
+  globalThis.fetch = async () => new Response(JSON.stringify({ choices: [{ message: { content: 'probe ok' } }] }), { status: 200 });
+  try {
+    const shut = await worker.fetch(new Request('https://chat.nolvek.online/probe?provider=nolvek-llm'), NV_ENV);
+    assert.equal(shut.status, 403, '/probe must be closed unless DEBUG is on');
+
+    const r = await worker.fetch(new Request('https://chat.nolvek.online/probe?provider=nolvek-llm'),
+      { ...NV_ENV, DEBUG: 'true' });
+    const j = await r.json();
+    assert.equal(j.ok, true);
+    assert.equal(j.provider, 'nolvek-llm');
+    assert.match(j.reply, /probe ok/);
+  } finally { globalThis.fetch = prev; }
+});
+
+await ta('/probe explains an unreachable provider rather than throwing', async () => {
+  const prev = globalThis.fetch;
+  globalThis.fetch = async () => { throw new Error('dns failure'); };
+  try {
+    const j = await (await worker.fetch(new Request('https://chat.nolvek.online/probe?provider=nolvek-llm'),
+      { ...NV_ENV, DEBUG: 'true' })).json();
+    assert.equal(j.ok, false);
+    assert.match(j.hint, /bad URL, DNS/);
+  } finally { globalThis.fetch = prev; }
+});
+
+await ta('/probe refuses a provider that is not configured', async () => {
+  const j = await (await worker.fetch(new Request('https://chat.nolvek.online/probe?provider=nolvek-llm'),
+    { ...ENV, DEBUG: 'true' })).json();
+  assert.equal(j.ok, false);
+  assert.match(j.error_message, /NOLVEK_LLM_URL is not set/);
+});
+
+await ta('health lists every provider and why it would be skipped', async () => {
+  const j = await (await worker.fetch(new Request('https://chat.nolvek.online/health'), NV_ENV)).json();
+  assert.equal(j.providers['nolvek-llm'], 'ready');
+  assert.match(j.providers.groq, /GROQ_API_KEY|GROQ_MODEL/);
+});
+
 console.log('\nprovider failover');
 
 await ta('a bad model slug on one provider falls over to the other', async () => {

@@ -27,6 +27,12 @@ DEBUG = "false"            # "true" adds error_message to every error response.
 #        https://api.groq.com/openai/v1/models
 GROQ_MODEL = "llama-3.1-8b-instant"   # read from the live list; Groq rotates slugs
 
+# Your own Worker AI. PROVIDER stays "anthropic" until you have proved this one
+# out with:  GET /probe?provider=nolvek-llm   (needs DEBUG="true")
+NOLVEK_LLM_URL = "https://nolvek-llm.kevlongalloway1999m.workers.dev"
+# NOLVEK_LLM_MODEL = ""    # only if your Worker expects a model name
+# NOLVEK_LLM_KEY is a SECRET, not a var — wrangler secret put NOLVEK_LLM_KEY
+
 # Per-IP rate limiting. Free, stateless, and counted per colo rather than
 # globally — acceptable here because the signed turn counter already caps
 # spend per conversation, and /session is what gates conversation creation.

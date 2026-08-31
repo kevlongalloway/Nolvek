@@ -317,18 +317,86 @@ async function callAnthropic(env, messages) {
   };
 }
 
+/* Your own Worker AI, addressed by URL from NOLVEK_LLM_URL. Its request shape
+   is the OpenAI one, which is what almost every Workers AI proxy speaks. The
+   *response* is read tolerantly, because that is the part that actually varies:
+   OpenAI-style, Cloudflare's native {result:{response}}, Anthropic-style
+   blocks, or a bare string are all accepted. If yours differs, /probe prints
+   the raw body so the shape is visible rather than guessed at. */
+function readReply(j) {
+  if (typeof j === 'string') return j;
+  if (!j || typeof j !== 'object') return '';
+  const c = j.choices && j.choices[0];
+  if (c && c.message && typeof c.message.content === 'string') return c.message.content;  // OpenAI
+  if (c && typeof c.text === 'string') return c.text;                                     // OpenAI legacy
+  if (j.result && typeof j.result.response === 'string') return j.result.response;         // Workers AI
+  if (typeof j.response === 'string') return j.response;
+  if (Array.isArray(j.content)) {                                                          // Anthropic
+    return j.content.filter(b => b && b.type === 'text').map(b => b.text).join('');
+  }
+  if (typeof j.output_text === 'string') return j.output_text;
+  if (typeof j.text === 'string') return j.text;
+  return '';
+}
+
+async function callNolvek(env, messages) {
+  let r;
+  const headers = { 'Content-Type': 'application/json' };
+  if (env.NOLVEK_LLM_KEY) headers['Authorization'] = 'Bearer ' + env.NOLVEK_LLM_KEY;
+  try {
+    r = await fetch(env.NOLVEK_LLM_URL, {
+      method: 'POST',
+      headers,
+      signal: AbortSignal.timeout(CAPS.PROVIDER_MS),
+      body: JSON.stringify({
+        model: env.NOLVEK_LLM_MODEL || undefined,
+        max_tokens: CAPS.MAX_TOKENS,
+        temperature: CAPS.TEMPERATURE,
+        messages: [{ role: 'system', content: SYSTEM }, ...messages],
+      }),
+    });
+  } catch (e) { throw new ProviderError('nolvek-llm', 0, String(e && e.message)); }
+  if (!r.ok) throw new ProviderError('nolvek-llm', r.status, (await r.text()).slice(0, 300));
+
+  const raw = await r.text();
+  let j; try { j = JSON.parse(raw); } catch { j = raw; }
+  const text = readReply(j);
+  if (!text) {
+    // A 200 with nothing we recognise is a real failure, not an empty reply.
+    // Say so, and fail over rather than showing the visitor a blank bubble.
+    throw new ProviderError('nolvek-llm', 502,
+      'responded 200 but no text field was recognised. Body starts: ' + raw.slice(0, 200));
+  }
+  return { text, usage: (j && j.usage) || null };
+}
+
+const ADAPTERS = {
+  'anthropic':  callAnthropic,
+  'groq':       callGroq,
+  'nolvek-llm': callNolvek,
+};
+
+/* Why a provider cannot run right now, or '' if it can. */
+function providerBlocked(env, name) {
+  if (name === 'anthropic')  return env.ANTHROPIC_API_KEY ? '' : 'ANTHROPIC_API_KEY is not set';
+  if (name === 'groq') {
+    if (!env.GROQ_API_KEY) return 'GROQ_API_KEY is not set';
+    if (!env.GROQ_MODEL || env.GROQ_MODEL.startsWith('SET-ME')) return 'GROQ_MODEL is unset or still the placeholder';
+    return '';
+  }
+  if (name === 'nolvek-llm') return env.NOLVEK_LLM_URL ? '' : 'NOLVEK_LLM_URL is not set';
+  return 'unknown provider';
+}
+
 async function callModel(env, messages) {
-  const useGroq = (env.PROVIDER || 'groq') === 'groq';
-  const order = useGroq ? [['groq', callGroq], ['anthropic', callAnthropic]]
-                        : [['anthropic', callAnthropic], ['groq', callGroq]];
+  // The named provider leads; the rest are fallbacks in a fixed order.
+  const first = ADAPTERS[env.PROVIDER] ? env.PROVIDER : 'anthropic';
+  const order = [first, ...['anthropic', 'groq', 'nolvek-llm'].filter(n => n !== first)];
   let last = null;
-  for (const [name, fn] of order) {
-    // skip a provider we have no key for
-    if (name === 'groq' && !env.GROQ_API_KEY) continue;
-    if (name === 'anthropic' && !env.ANTHROPIC_API_KEY) continue;
-    // ...or no usable model for. Groq rotates slugs; do not spend a call
-    // proving a placeholder is a 404.
-    if (name === 'groq' && (!env.GROQ_MODEL || env.GROQ_MODEL.startsWith('SET-ME'))) continue;
+  for (const name of order) {
+    const blocked = providerBlocked(env, name);
+    if (blocked) continue;                       // not configured: skip, do not spend a call
+    const fn = ADAPTERS[name];
     try {
       const out = await fn(env, messages);
       return { ...out, provider: name };
@@ -490,6 +558,8 @@ export default {
         warnings.push('Only one provider has a key, so there is no failover: an outage there is an outage here.');
       if (env.GROQ_API_KEY && (!env.GROQ_MODEL || env.GROQ_MODEL.startsWith('SET-ME')))
         warnings.push('GROQ_MODEL is not a real slug. Set it in wrangler.toml — the dashboard does not survive a deploy.');
+      if (provider === 'nolvek-llm' && !env.NOLVEK_LLM_URL)
+        warnings.push('PROVIDER is "nolvek-llm" but NOLVEK_LLM_URL is not set — every turn falls through to another provider.');
       if (!env.SESSION_SECRET) warnings.push('SESSION_SECRET is not set: no session can be issued or verified.');
       if (!env.TURNSTILE_SECRET) warnings.push('TURNSTILE_SECRET is not set: no Turnstile token can ever verify.');
       if (debugOn(env)) warnings.push('DEBUG is on. Turn it off when you are done.');
@@ -513,10 +583,57 @@ export default {
           anthropicKey:    !!env.ANTHROPIC_API_KEY,
           rateLimiting:    !!(env.CHAT_LIMIT && env.SESSION_LIMIT),
         },
+        // '' means ready; anything else is why it would be skipped this turn.
+        providers: {
+          anthropic:    providerBlocked(env, 'anthropic') || 'ready',
+          groq:         providerBlocked(env, 'groq') || 'ready',
+          'nolvek-llm': providerBlocked(env, 'nolvek-llm') || 'ready',
+        },
+        nolvekLlmUrl: env.NOLVEK_LLM_URL || null,
+        probe: 'GET /probe?provider=nolvek-llm (needs DEBUG=true) tries one provider without changing PROVIDER',
       }, null, 2), { status: 200, headers: { 'Content-Type': 'application/json' } });
     }
 
     const allowed = [...ALLOWED_ORIGINS].join(', ');
+
+    /* Try one provider without making it the default. DEBUG-gated, because it
+       spends tokens and prints the upstream body. Example:
+         https://chat.nolvek.online/probe?provider=nolvek-llm            */
+    if (url.pathname === '/probe') {
+      if (!debugOn(env)) {
+        return new Response(JSON.stringify({ error: 'disabled',
+          error_message: 'set DEBUG="true" in wrangler.toml and deploy to use /probe' }, null, 2),
+          { status: 403, headers: { 'Content-Type': 'application/json' } });
+      }
+      const want = url.searchParams.get('provider') || env.PROVIDER || 'anthropic';
+      if (!ADAPTERS[want]) {
+        return new Response(JSON.stringify({ ok: false, provider: want,
+          error_message: 'unknown provider. Valid: ' + Object.keys(ADAPTERS).join(', ') }, null, 2),
+          { status: 400, headers: { 'Content-Type': 'application/json' } });
+      }
+      const blocked = providerBlocked(env, want);
+      if (blocked) {
+        return new Response(JSON.stringify({ ok: false, provider: want, error_message: blocked }, null, 2),
+          { status: 400, headers: { 'Content-Type': 'application/json' } });
+      }
+      const t0 = Date.now();
+      try {
+        const out = await ADAPTERS[want](env, [{ role: 'user', content: 'Say only: probe ok' }]);
+        return new Response(JSON.stringify({
+          ok: true, provider: want, ms: Date.now() - t0,
+          reply: out.text.slice(0, 400), usage: out.usage,
+          note: 'This provider works and its response shape was understood. Set PROVIDER to it when you are ready.',
+        }, null, 2), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      } catch (e) {
+        return new Response(JSON.stringify({
+          ok: false, provider: want, ms: Date.now() - t0, upstream: (e && e.status) || 0,
+          error_message: safeDetail(e && e.detail) || String(e && e.message),
+          hint: (e && e.status) === 0 ? 'no response — bad URL, DNS, or the ' + CAPS.PROVIDER_MS + 'ms timeout'
+              : (e && e.status) === 502 ? 'it answered, but in a shape the adapter does not recognise. The body above shows what it sent.'
+              : 'upstream returned ' + ((e && e.status) || '?') + '.',
+        }, null, 2), { status: 200, headers: { 'Content-Type': 'application/json' } });
+      }
+    }
 
     if (request.method === 'OPTIONS') {
       // A preflight reaching here at all is worth knowing about: the widget

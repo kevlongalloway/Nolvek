@@ -87,6 +87,31 @@ Then run `nvDebug()` in the console for a full diagnosis of the request path:
 The first failing row is the one to fix. If the simple POST works and the preflighted one does not,
 the preflight is the problem — which is why the widget sends `text/plain`.
 
+## Providers
+
+Three: `anthropic`, `groq`, `nolvek-llm`. `PROVIDER` names which one leads; the others are
+fallbacks. A provider with nothing configured is skipped without spending a call, and `/health`
+prints `ready` or the reason for each.
+
+`nolvek-llm` is your own Worker AI at `NOLVEK_LLM_URL`. It is sent an OpenAI-shaped request — a
+`messages` array with the system prompt first. Its **response** is read tolerantly, since that is the
+part that varies: OpenAI `choices[0].message.content`, Workers AI `result.response`, Anthropic
+`content[]` blocks, a bare `response`/`text`, or a plain string all work. A 200 whose shape is not
+recognised is treated as a failure and falls over, rather than showing the visitor an empty bubble.
+Set `NOLVEK_LLM_KEY` as a secret if it needs an Authorization header, and `NOLVEK_LLM_MODEL` if it
+expects a model name.
+
+### Trying a provider before switching to it
+
+```
+GET /probe?provider=nolvek-llm      # needs DEBUG="true"
+```
+
+One short prompt through that adapter, reporting the reply, latency and token usage — or, on
+failure, the upstream status and body so an unexpected response shape is visible instead of guessed
+at. It does not touch `PROVIDER`, so nothing is at risk while you try it. Switch only once it says
+`"ok": true`.
+
 ## Failover
 
 `PROVIDER` names which vendor leads; the other is the fallback. A provider-specific failure — 404
