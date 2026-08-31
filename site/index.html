@@ -1876,7 +1876,10 @@ textarea.field{resize:vertical;min-height:120px;}
     var tsLoaded = false;
 
     if(!CFG.enabled) return;   // nothing renders, nothing binds
-    launch.hidden = false;     // only appears when JS is alive AND configured
+    /* The launcher deliberately stays hidden here. The corner is empty until
+       the teaser has had its turn — a button that swaps into a teaser reads
+       as a glitch. Whichever of the two is right for this visitor is decided
+       in the teaser block below. */
 
     /* --- rendering (textContent only; never innerHTML for model output) --- */
     function atBottom(){ return log.scrollHeight - log.scrollTop - log.clientHeight < 40; }
@@ -2192,12 +2195,17 @@ textarea.field{resize:vertical;min-height:120px;}
       if(reduce){ done(); } else { setTimeout(done, 300); }
     }
 
+    if(!teaser || teaserSeen()){
+      // Teaser already spent this session (or missing): the launcher is the
+      // entry point straight away.
+      launch.hidden = false;
+    }
+
     if(teaser && !teaserSeen()){
       setTimeout(function(){
         if(!panel.hidden || teaserSeen()) return;   // already chatting, or dismissed elsewhere
         teaser.hidden = false;
-        launch.hidden = true;                       // instead of, not alongside
-        void teaser.offsetWidth;
+        void teaser.offsetWidth;                    // reflow, so the transition actually runs
         teaser.classList.add('in');
       }, CFG.teaserDelay);
 
