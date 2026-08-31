@@ -364,7 +364,10 @@ async function handleChat(request, env, origin, ip) {
       ev: 'chat_fail', sid: sess.sid, ms: Date.now() - started,
       status: e && e.status, detail: e && e.detail,
     }));
-    return json(502, { error: 'provider' }, origin);
+    // The upstream status only (404 = bad model slug, 401 = bad key, 429 =
+    // quota). Never e.detail — that is the provider's response body, and it
+    // can echo the system prompt back.
+    return json(502, { error: 'provider', upstream: (e && e.status) || 0 }, origin);
   }
 
   const { reply, lead } = extractLead(out.text);
