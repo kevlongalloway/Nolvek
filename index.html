@@ -206,20 +206,24 @@ h3.display{font-size:clamp(1.55rem, 3vw, 2.15rem);letter-spacing:-0.028em;line-h
 }
 /* Section marker. One job: tell you plainly which section you're in.
    Solid blue, sized to be read — not a decorative whisper. */
+/* Section marker: a short blue rule and the label. No counters — the page
+   previously ran three independent sequences (sections, services, process
+   steps) which read as one scrambled numbering rather than three. */
 .eyebrow{
   font-family:'JetBrains Mono',ui-monospace,monospace;
   font-size:0.82rem;
   font-weight:600;
-  letter-spacing:0.08em;
+  letter-spacing:0.1em;
   text-transform:uppercase;
   color:var(--blue);
   display:flex;
   align-items:center;
-  gap:0.7rem;
+  gap:0.75rem;
   margin-bottom:1.5rem;
 }
-.eyebrow .n{color:var(--blue);}
-.eyebrow .n.num{color:#fff;background:var(--blue);border-radius:var(--r);padding:0.2rem 0.5rem;font-size:0.76rem;}
+.eyebrow::before{
+  content:'';width:26px;height:2px;background:var(--blue);flex:none;border-radius:2px;
+}
 .eyebrow .t{color:var(--blue);}
 
 /* ---------- LAYOUT ---------- */
@@ -347,15 +351,19 @@ a:hover>.link-arrow svg,.link-arrow:hover svg{transform:translateX(4px);}
    HERO
 ============================================================ */
 .hero{padding-block:clamp(3rem,7vw,6rem) clamp(3.5rem,7vw,6rem);}
-.hero-grid{
-  display:grid;grid-template-columns:1.08fr 0.92fr;gap:clamp(2rem,5vw,5rem);align-items:start;
-}
+/* Constrain the children, not the wrap — putting a max-width on .wrap
+   itself inherits its margin:0 auto and centres the hero away from the
+   nav's left edge. */
+.hero-in h1{max-width:16ch;}
+.hero-in .lede{max-width:60ch;}
+.hero-in .hero-checks{max-width:76ch;}
 .hero h1{margin-bottom:1.7rem;}
 .hero-eyebrow{margin-bottom:1.8rem;}
 .hero .lede{margin-bottom:2.4rem;}
 .hero-actions{display:flex;flex-wrap:wrap;gap:0.9rem;margin-bottom:2rem;}
 .hero-pills{display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:2.4rem;}
-.hero-checks{display:grid;gap:0.9rem;border-top:1px solid var(--line);padding-top:1.8rem;}
+.hero-checks{display:grid;gap:0.9rem;border-top:1px solid var(--line);padding-top:1.8rem;grid-template-columns:repeat(2,1fr);}
+@media (max-width:760px){ .hero-checks{grid-template-columns:1fr;} }
 .hero-checks li{display:flex;gap:0.85rem;align-items:flex-start;list-style:none;color:var(--ink-2);font-size:0.97rem;}
 .hero-checks svg{width:17px;height:17px;flex:none;margin-top:0.28rem;fill:none;stroke:var(--blue);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
 
@@ -367,7 +375,6 @@ a:hover>.link-arrow svg,.link-arrow:hover svg{transform:translateX(4px);}
 }
 .audit .eyebrow{margin-bottom:1.1rem;}
 .audit h2{font-size:clamp(1.7rem,3.1vw,2.2rem);margin-bottom:0.8rem;}
-.audit-sub{color:var(--body);font-size:0.97rem;margin-bottom:1.7rem;line-height:1.55;}
 .field{
   width:100%;padding:1rem 1.05rem;margin-bottom:0.7rem;
   border:1px solid var(--line);border-radius:9px;background:var(--paper);
@@ -380,17 +387,6 @@ select.field{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg 
 textarea.field{resize:vertical;min-height:120px;}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;}
 .field-row .field{margin-bottom:0.7rem;}
-.need-label{margin:1.35rem 0 0.85rem;color:var(--label);}
-.needs{display:flex;flex-wrap:wrap;gap:0.55rem;margin-bottom:1.5rem;}
-.need{
-  font-family:'JetBrains Mono',ui-monospace,monospace;
-  font-size:0.7rem;letter-spacing:0.06em;
-  padding:0.62rem 1.05rem;border:1px solid var(--line);border-radius:999px;
-  background:var(--paper);color:var(--ink);cursor:pointer;
-  transition:border-color .18s, background .18s, color .18s;
-}
-.need:hover{border-color:var(--ink);}
-.need[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff;}
 .form-note{
   margin-top:1.1rem;font-size:0.84rem;color:var(--body);line-height:1.5;text-align:center;
 }
@@ -454,9 +450,8 @@ textarea.field{resize:vertical;min-height:120px;}
   font-family:'JetBrains Mono',ui-monospace,monospace;
   font-size:0.82rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
 }
-.svc-label .n{
-  color:#fff;background:var(--blue);border-radius:var(--r);
-  padding:0.2rem 0.5rem;font-size:0.76rem;
+.svc-label::before{
+  content:'';width:26px;height:2px;background:var(--blue);flex:none;border-radius:2px;
 }
 .svc-label .t{color:var(--blue);}
 .svc-copy h3{margin-bottom:1.1rem;}
@@ -848,7 +843,6 @@ textarea.field{resize:vertical;min-height:120px;}
    RESPONSIVE
 ============================================================ */
 @media (max-width:1080px){
-  .hero-grid{grid-template-columns:1fr;gap:3rem;}
   .svc-block{grid-template-columns:1fr;gap:2.25rem;}
   .contact-grid{grid-template-columns:1fr;gap:2.5rem;}
   .step{grid-template-columns:64px 1fr;}
@@ -889,7 +883,7 @@ textarea.field{resize:vertical;min-height:120px;}
       <li><a href="#work">Work</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#audit" class="btn nav-cta">Free Audit</a></li>
+      <li><a href="#contact" class="btn nav-cta">Free Audit</a></li>
     </ul>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
       <span></span><span></span><span></span>
@@ -903,68 +897,33 @@ textarea.field{resize:vertical;min-height:120px;}
   <a href="#process">Process</a>
   <a href="#pricing">Pricing</a>
   <a href="#contact">Contact</a>
-  <a href="#audit" class="btn">Get my free audit →</a>
+  <a href="#contact" class="btn">Get my free audit →</a>
 </div>
 
 <span id="top"></span>
 
 <!-- ===================== HERO ===================== -->
 <header class="hero graph">
-  <div class="wrap hero-grid">
+  <div class="wrap hero-in">
+    <div class="eyebrow hero-eyebrow"><span class="t">Atlanta, GA — Digital Marketing</span></div>
+    <h1 class="display">Get found first.<br><span class="accent">Get called first.</span></h1>
+    <p class="lede">Nolvek runs the marketing that puts Atlanta businesses at the top of local search — Google Business Profile, local SEO, paid ads, and websites built to convert. When you outgrow the tools, we build the software too.</p>
 
-    <div>
-      <div class="eyebrow hero-eyebrow"><span class="n">//</span><span class="t">Atlanta, GA — Digital Marketing</span></div>
-      <h1 class="display">Get found first.<br><span class="accent">Get called first.</span></h1>
-      <p class="lede">Nolvek runs the marketing that puts Atlanta businesses at the top of local search — Google Business Profile, local SEO, paid ads, and websites built to convert. When you outgrow the tools, we build the software too.</p>
-
-      <div class="hero-actions">
-        <a href="#audit" class="btn">Get my free audit →</a>
-        <a href="#services" class="btn btn-ghost">See the work</a>
-      </div>
-
-      <div class="hero-pills">
-        <span class="pill"><b>+</b> Websites from $199</span>
-        <span class="pill"><b>↑</b> Map-pack visibility</span>
-        <span class="pill"><b>×</b> No long contracts</span>
-      </div>
-
-      <ul class="hero-checks">
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>Marketing first — with the sites and software to back it up</span></li>
-        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>Atlanta-based. One business day to a real reply from a person</span></li>
-      </ul>
+    <div class="hero-actions">
+      <a href="#contact" class="btn">Get my free audit →</a>
+      <a href="#work" class="btn btn-ghost">See the work</a>
     </div>
 
-    <!-- FREE AUDIT -->
-    <div class="audit" id="audit">
-      <div class="eyebrow"><span class="n">//</span><span class="t">Free Audit</span></div>
-      <h2 class="display">See where your leads leak.</h2>
-      <p class="audit-sub">A plain-English teardown of your Google presence, your site, and what happens after someone reaches out. No obligation.</p>
-
-      <form id="auditForm" data-lead="Free Audit Request" novalidate>
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
-        <input class="field" type="text" name="name" placeholder="Your name" aria-label="Your name" autocomplete="name" required>
-        <input class="field" type="email" name="email" placeholder="Work email" aria-label="Work email" autocomplete="email" required>
-        <div class="field-row">
-          <input class="field" type="tel" name="phone" placeholder="Phone number" aria-label="Phone number" autocomplete="tel">
-          <input class="field" type="text" name="website" placeholder="Website URL" aria-label="Website URL" autocomplete="url">
-        </div>
-
-        <div class="mono need-label" id="needLabel">What do you need help with?</div>
-        <div class="needs" role="group" aria-labelledby="needLabel">
-          <button type="button" class="need" aria-pressed="false">Local SEO</button>
-          <button type="button" class="need" aria-pressed="false">Google Ads</button>
-          <button type="button" class="need" aria-pressed="false">Website</button>
-          <button type="button" class="need" aria-pressed="false">AI Follow-Up</button>
-          <button type="button" class="need" aria-pressed="false">Software</button>
-        </div>
-        <input type="hidden" name="needs" value="">
-
-        <button type="submit" class="btn btn-full">Send my free audit →</button>
-        <p class="form-note" role="status" aria-live="polite">We read every one. Reply within one business day.</p>
-        <p class="mono legal">No spam · No obligation</p>
-      </form>
+    <div class="hero-pills">
+      <span class="pill"><b>+</b> Websites from $199</span>
+      <span class="pill"><b>↑</b> Map-pack visibility</span>
+      <span class="pill"><b>×</b> No long contracts</span>
     </div>
 
+    <ul class="hero-checks">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>Every dollar tied to a call, a booking or a sale — not impressions</span></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L19 7"/></svg><span>Atlanta-based. One business day to a real reply from a person</span></li>
+    </ul>
   </div>
 </header>
 
@@ -980,7 +939,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" aria-labelledby="numbers-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n num">01</span><span class="t">The Deal</span></div>
+      <div class="eyebrow"><span class="t">The Deal</span></div>
       <h2 class="display" id="numbers-h">Straight numbers, before you ever talk to us.</h2>
       <p class="lede">No retainer roulette, no twelve-month lock-in, no mystery invoice. Here's what's actually on the table.</p>
     </div>
@@ -999,7 +958,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="services" aria-labelledby="services-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n num">02</span><span class="t">Services</span></div>
+      <div class="eyebrow"><span class="t">Services</span></div>
       <h2 class="display" id="services-h">Marketing that fills the calendar.</h2>
       <p class="lede">Getting found is the job. Everything else exists to catch what the marketing brings in. Each service below comes with an interactive demo — click to open it.</p>
     </div>
@@ -1009,7 +968,7 @@ textarea.field{resize:vertical;min-height:120px;}
 
       <article class="svc-block" id="svc-gbp">
         <div class="svc-copy">
-          <div class="svc-label"><span class="n">01</span><span class="t">Local SEO &amp; Google Profile</span></div>
+          <div class="svc-label"><span class="t">Local SEO &amp; Google Profile</span></div>
       <h3 class="display">Own the map pack in your neighborhood.</h3>
               <p>Most local customers never scroll past the map. We optimize the profile that lives there — right categories, real photos, weekly posts, and a steady review flow — so you're the obvious choice nearby.</p>
               <ul class="ex-list">
@@ -1061,7 +1020,7 @@ textarea.field{resize:vertical;min-height:120px;}
 
       <article class="svc-block" id="svc-ads">
         <div class="svc-copy">
-          <div class="svc-label"><span class="n">02</span><span class="t">Google &amp; Meta Ads</span></div>
+          <div class="svc-label"><span class="t">Google &amp; Meta Ads</span></div>
       <h3 class="display">Be the first result — on purpose.</h3>
               <p>SEO earns the long game. Ads buy the top of the page today. We build the campaign around the searches that mean someone is ready to call, then cut whatever isn't producing.</p>
               <ul class="ex-list">
@@ -1114,7 +1073,7 @@ textarea.field{resize:vertical;min-height:120px;}
 
       <article class="svc-block" id="svc-web">
         <div class="svc-copy">
-          <div class="svc-label"><span class="n">03</span><span class="t">Conversion Websites</span></div>
+          <div class="svc-label"><span class="t">Conversion Websites</span></div>
       <h3 class="display">A site that earns the click — and the call.</h3>
               <p>Traffic is only worth what it converts. We design around one thing: turning a visitor into a customer. Clear headline, obvious action, fast load, and a layout that holds up on the phone where most of your traffic lives.</p>
               <ul class="ex-list">
@@ -1161,7 +1120,7 @@ textarea.field{resize:vertical;min-height:120px;}
 
       <article class="svc-block" id="svc-ai">
         <div class="svc-copy">
-          <div class="svc-label"><span class="n">04</span><span class="t">AI Lead Follow-Up</span></div>
+          <div class="svc-label"><span class="t">AI Lead Follow-Up</span></div>
       <h3 class="display">Every lead gets a reply — instantly.</h3>
               <p>Marketing that works creates a new problem: more inquiries than you can answer. Our AI responds the moment someone reaches out, qualifies them, and books the appointment — while you're on a job, at dinner, or asleep.</p>
               <ul class="ex-list">
@@ -1209,7 +1168,7 @@ textarea.field{resize:vertical;min-height:120px;}
 
       <article class="svc-block" id="svc-soft">
         <div class="svc-copy">
-          <div class="svc-label"><span class="n">05</span><span class="t">Custom Software</span></div>
+          <div class="svc-label"><span class="t">Custom Software</span></div>
       <h3 class="display">The exact tool your business runs on.</h3>
               <p>Not every problem is a marketing problem. When off-the-shelf software almost fits but never quite does, we build the real thing — a dashboard, portal, or workflow shaped around how your team actually operates.</p>
               <ul class="ex-list">
@@ -1267,7 +1226,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="work" aria-labelledby="work-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n num">03</span><span class="t">Work</span></div>
+      <div class="eyebrow"><span class="t">Work</span></div>
       <h2 class="display" id="work-h">Sites that are live right now.</h2>
       <p class="lede">Not mockups. Every build below is online and serving its business today — click any tile and go see it.</p>
     </div>
@@ -1328,15 +1287,15 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="process" aria-labelledby="process-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n num">04</span><span class="t">Process</span></div>
+      <div class="eyebrow"><span class="t">Process</span></div>
       <h2 class="display" id="process-h">Four steps. No mystery.</h2>
       <p class="lede">You'll know what's happening, what it costs, and what it produced. Every step.</p>
     </div>
     <div class="steps">
-      <div class="step"><span class="n">01</span><h3>Audit</h3><p>We look at where you show up today, what your competitors are doing, and where the leads are leaking out.</p></div>
-      <div class="step"><span class="n">02</span><h3>Build</h3><p>Profile, campaigns, and pages get built around the searches that actually turn into work.</p></div>
-      <div class="step"><span class="n">03</span><h3>Launch</h3><p>Everything goes live with tracking attached, so the first call is measured from day one.</p></div>
-      <div class="step"><span class="n">04</span><h3>Optimize</h3><p>We read the numbers monthly, cut what's wasting spend, and put more behind what's working.</p></div>
+      <div class="step"><span class="n">1</span><h3>Audit</h3><p>We look at where you show up today, what your competitors are doing, and where the leads are leaking out.</p></div>
+      <div class="step"><span class="n">2</span><h3>Build</h3><p>Profile, campaigns, and pages get built around the searches that actually turn into work.</p></div>
+      <div class="step"><span class="n">3</span><h3>Launch</h3><p>Everything goes live with tracking attached, so the first call is measured from day one.</p></div>
+      <div class="step"><span class="n">4</span><h3>Optimize</h3><p>We read the numbers monthly, cut what's wasting spend, and put more behind what's working.</p></div>
     </div>
   </div>
 </section>
@@ -1345,7 +1304,7 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="pricing" aria-labelledby="pricing-h">
   <div class="wrap">
     <div class="sec-head">
-      <div class="eyebrow"><span class="n num">05</span><span class="t">Pricing</span></div>
+      <div class="eyebrow"><span class="t">Pricing</span></div>
       <h2 class="display" id="pricing-h">Straight pricing. No surprises.</h2>
       <p class="lede">Start small, scale when you're ready. No hidden fees, no long contracts.</p>
     </div>
@@ -1395,9 +1354,9 @@ textarea.field{resize:vertical;min-height:120px;}
 <section class="sec reveal" id="contact" aria-labelledby="contact-h">
   <div class="wrap contact-grid">
     <div>
-      <div class="eyebrow"><span class="n num">06</span><span class="t">Get Started</span></div>
+      <div class="eyebrow"><span class="t">Get Started</span></div>
       <h2 class="display" id="contact-h">Tell us what you're trying to grow.</h2>
-      <p class="lede">We'll come back within one business day with a plan and a quote — not a discovery-call funnel.</p>
+      <p class="lede">Send it over and we'll come back within one business day with a free audit of where your leads are leaking, plus a plan and a quote. Not a discovery-call funnel.</p>
       <div class="contact-meta">
         <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Atlanta, Georgia</div>
         <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg> hello@nolvek.online</div>
@@ -1412,7 +1371,11 @@ textarea.field{resize:vertical;min-height:120px;}
           <input class="field" type="text" name="name" placeholder="Your name" aria-label="Your name" autocomplete="name" required>
           <input class="field" type="email" name="email" placeholder="Email address" aria-label="Email address" autocomplete="email" required>
         </div>
-        <input class="field" type="text" name="business" placeholder="Business name" aria-label="Business name" autocomplete="organization">
+        <div class="field-row">
+          <input class="field" type="text" name="business" placeholder="Business name" aria-label="Business name" autocomplete="organization">
+          <input class="field" type="tel" name="phone" placeholder="Phone number" aria-label="Phone number" autocomplete="tel">
+        </div>
+        <input class="field" type="text" name="website" placeholder="Website URL (if you have one)" aria-label="Website URL" autocomplete="url">
         <select class="field" name="service" aria-label="What do you need?" required>
           <option value="">What do you need?</option>
           <option>Local SEO &amp; Google Business Profile</option>
@@ -1423,8 +1386,9 @@ textarea.field{resize:vertical;min-height:120px;}
           <option>Upcart / E-commerce</option>
         </select>
         <textarea class="field" name="message" rows="4" placeholder="What are you trying to grow?" aria-label="What are you trying to grow?"></textarea>
-        <button type="submit" class="btn btn-full">Send message →</button>
-        <p class="form-note" role="status" aria-live="polite">No spam, ever. We reply within one business day.</p>
+        <button type="submit" class="btn btn-full">Send it over →</button>
+        <p class="form-note" role="status" aria-live="polite">We read every one. Reply within one business day.</p>
+        <p class="mono legal">No spam · No obligation</p>
       </form>
     </div>
   </div>
@@ -1442,7 +1406,7 @@ textarea.field{resize:vertical;min-height:120px;}
     <h2 class="display">Your competition is already bidding on your name.</h2>
     <p>Book a free consultation and we'll map out exactly where the traffic in your neighborhood is going — and what it takes to get it back.</p>
     <div class="cta-actions">
-      <a href="#audit" class="btn btn-inv">Get my free audit →</a>
+      <a href="#contact" class="btn btn-inv">Get my free audit →</a>
       <a href="#work" class="btn btn-ghost">See the work</a>
     </div>
   </div>
@@ -1453,8 +1417,8 @@ textarea.field{resize:vertical;min-height:120px;}
   <div class="wrap labs-in">
     <div class="labs-copy">
       <div class="mono labs-eyebrow">Also from Nolvek</div>
-      <h2 id="labs-h">We build our own software, too.</h2>
-      <p><b>Upcart</b> is our managed e-commerce platform — sign up, set up your store, and hosting, checkout and inventory are handled. It runs on its own, separately from the agency work above.</p>
+      <h2 id="labs-h">Self-serve software we offer.</h2>
+      <p><b>Upcart</b> is our managed e-commerce platform. Sign up, set up your store, and hosting, checkout and inventory are handled — no agency project required.</p>
     </div>
     <a class="btn btn-ghost" href="https://upcart.online" target="_blank" rel="noopener noreferrer">Visit Upcart →</a>
   </div>
@@ -1562,61 +1526,6 @@ textarea.field{resize:vertical;min-height:120px;}
     });
   })();
 
-  /* ---------- AUDIT "what do you need" chips ---------- */
-  (function(){
-    var wrap = document.querySelector('.needs');
-    if(!wrap) return;
-    var hidden = document.querySelector('input[name="needs"]');
-    wrap.querySelectorAll('.need').forEach(function(b){
-      b.addEventListener('click', function(){
-        b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
-        var on = [];
-        wrap.querySelectorAll('.need[aria-pressed="true"]').forEach(function(x){ on.push(x.textContent.trim()); });
-        hidden.value = on.join(', ');
-      });
-    });
-  })();
-
-  /* ---------- AI CHAT DEMO ---------- */
-  (function(){
-    var body = document.getElementById('chatBody');
-    var typing = document.getElementById('typing');
-    if(!body || !typing || reduce) return;
-    var script = [
-      {side:'user', text:'Thursday works for me', time:'9:42 AM'},
-      {side:'bot',  text:"You're booked for Thursday, 10am–12pm. I'll text a reminder the morning of. See you then.", time:'9:43 AM'}
-    ];
-    var i = 0;
-    function add(m){
-      var b = document.createElement('div');
-      b.className = 'bubble ' + m.side + ' added';
-      b.textContent = m.text;
-      var t = document.createElement('span');
-      t.className = 't'; t.textContent = m.time;
-      b.appendChild(t);
-      body.insertBefore(b, typing);
-      body.scrollTop = body.scrollHeight;
-    }
-    function loop(){
-      if(i >= script.length){
-        setTimeout(function(){
-          body.querySelectorAll('.added').forEach(function(n){ n.remove(); });
-          typing.style.display = ''; i = 0; setTimeout(loop, 1800);
-        }, 4200);
-        return;
-      }
-      var m = script[i];
-      if(m.side === 'user'){
-        typing.style.display = 'none';
-        add(m); i++;
-        setTimeout(function(){ typing.style.display = ''; body.scrollTop = body.scrollHeight; setTimeout(loop, 1500); }, 500);
-      } else {
-        setTimeout(function(){ typing.style.display = 'none'; add(m); i++; loop(); }, 1700);
-      }
-    }
-    setTimeout(loop, 2500);
-  })();
-
   /* ---------- WORK TILES ----------
      Each preview is the client's live site rendered at 1440x900 and scaled
      to fit its tile. The frames are lazy so they only load near the
@@ -1700,8 +1609,6 @@ textarea.field{resize:vertical;min-height:120px;}
         note.textContent = 'Thanks, ' + first + '. We’ll be in touch within one business day.';
         note.className = 'form-note ok';
         form.reset();
-        form.querySelectorAll('.need[aria-pressed="true"]').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
-        var h = form.querySelector('input[name="needs"]'); if(h) h.value = '';
         btn.disabled = false; btn.textContent = label;
       })
       .catch(function(err){
