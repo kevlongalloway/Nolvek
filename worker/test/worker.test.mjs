@@ -158,6 +158,68 @@ globalThis.fetch = async (url) => {
   return realFetch(url);
 };
 
+console.log('\nprovider failover');
+
+await ta('a bad model slug on one provider falls over to the other', async () => {
+  const prev = globalThis.fetch;
+  const seen = [];
+  globalThis.fetch = async (u, o) => {
+    const url = String(u);
+    if (url.includes('siteverify')) return new Response(JSON.stringify({ success: true }), { status: 200 });
+    seen.push(url.includes('groq') ? 'groq' : 'anthropic');
+    if (url.includes('groq')) return new Response('{"error":{"message":"model does not exist"}}', { status: 404 });
+    return new Response(JSON.stringify({ content: [{ type: 'text', text: 'Hello from the fallback.' }] }), { status: 200 });
+  };
+  try {
+    const env = { ...ENV, PROVIDER: 'groq', GROQ_API_KEY: 'g', GROQ_MODEL: 'stale-slug', ANTHROPIC_API_KEY: 'a' };
+    const s = await worker.fetch(req('/session', { turnstileToken: 'x' }), env);
+    const tok = (await s.json()).session;
+    const r = await worker.fetch(req('/chat', { session: tok, messages: [{ role: 'user', content: 'hi' }] }), env);
+    assert.equal(r.status, 200, 'a 404 on one provider must not take the chat down');
+    assert.match((await r.json()).reply, /fallback/);
+    assert.deepEqual(seen, ['groq', 'anthropic'], 'it should have tried both');
+  } finally { globalThis.fetch = prev; }
+});
+
+await ta('a 400 does not get replayed against the other vendor', async () => {
+  const prev = globalThis.fetch;
+  const seen = [];
+  globalThis.fetch = async (u) => {
+    const url = String(u);
+    if (url.includes('siteverify')) return new Response(JSON.stringify({ success: true }), { status: 200 });
+    seen.push(url.includes('groq') ? 'groq' : 'anthropic');
+    return new Response('bad request', { status: 400 });
+  };
+  try {
+    const env = { ...ENV, PROVIDER: 'groq', GROQ_API_KEY: 'g', GROQ_MODEL: 'm', ANTHROPIC_API_KEY: 'a' };
+    const s = await worker.fetch(req('/session', { turnstileToken: 'x' }), env);
+    const tok = (await s.json()).session;
+    const r = await worker.fetch(req('/chat', { session: tok, messages: [{ role: 'user', content: 'hi' }] }), env);
+    assert.equal(r.status, 502);
+    assert.deepEqual(seen, ['groq'], 'a malformed payload fails the same way twice; do not send it twice');
+  } finally { globalThis.fetch = prev; }
+});
+
+await ta('a placeholder slug skips Groq without spending a call', async () => {
+  const prev = globalThis.fetch;
+  const seen = [];
+  globalThis.fetch = async (u) => {
+    const url = String(u);
+    if (url.includes('siteverify')) return new Response(JSON.stringify({ success: true }), { status: 200 });
+    seen.push(url.includes('groq') ? 'groq' : 'anthropic');
+    return new Response(JSON.stringify({ content: [{ type: 'text', text: 'ok' }] }), { status: 200 });
+  };
+  try {
+    const env = { ...ENV, PROVIDER: 'groq', GROQ_API_KEY: 'g',
+                  GROQ_MODEL: 'SET-ME-FROM-THE-LIVE-MODEL-LIST', ANTHROPIC_API_KEY: 'a' };
+    const s = await worker.fetch(req('/session', { turnstileToken: 'x' }), env);
+    const tok = (await s.json()).session;
+    const r = await worker.fetch(req('/chat', { session: tok, messages: [{ role: 'user', content: 'hi' }] }), env);
+    assert.equal(r.status, 200);
+    assert.deepEqual(seen, ['anthropic']);
+  } finally { globalThis.fetch = prev; }
+});
+
 console.log('\ndebug mode');
 
 const DBG = { ...ENV, DEBUG: 'true' };

@@ -258,6 +258,11 @@ class ProviderError extends Error {
     this.status = status;
     this.detail = detail;
     this.retryable = status === 429 || status >= 500 || status === 0;
+    /* Worth trying the other vendor. 404 (this model does not exist here),
+       401/403 (this key is wrong or unentitled) and 429 are all specific to
+       this provider — the other one may be perfectly healthy. Only a 400 is
+       our own malformed payload, which would fail identically on both. */
+    this.failover = this.retryable || status === 404 || status === 401 || status === 403;
   }
 }
 
@@ -321,14 +326,16 @@ async function callModel(env, messages) {
     // skip a provider we have no key for
     if (name === 'groq' && !env.GROQ_API_KEY) continue;
     if (name === 'anthropic' && !env.ANTHROPIC_API_KEY) continue;
+    // ...or no usable model for. Groq rotates slugs; do not spend a call
+    // proving a placeholder is a 404.
+    if (name === 'groq' && (!env.GROQ_MODEL || env.GROQ_MODEL.startsWith('SET-ME'))) continue;
     try {
       const out = await fn(env, messages);
       return { ...out, provider: name };
     } catch (e) {
       last = e;
-      // A 4xx that isn't 429 is our own malformed request — failing over would
-      // just send the same bad payload to a second vendor.
-      if (!(e instanceof ProviderError) || !e.retryable) break;
+      console.log(JSON.stringify({ ev: 'provider_fail', provider: name, status: e && e.status }));
+      if (!(e instanceof ProviderError) || !e.failover) break;
     }
   }
   throw last || new Error('no provider configured');

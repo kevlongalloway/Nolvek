@@ -87,6 +87,18 @@ Then run `nvDebug()` in the console for a full diagnosis of the request path:
 The first failing row is the one to fix. If the simple POST works and the preflighted one does not,
 the preflight is the problem — which is why the widget sends `text/plain`.
 
+## Failover
+
+`PROVIDER` names which vendor leads; the other is the fallback. A provider-specific failure — 404
+(that model does not exist there), 401/403 (that key is wrong or unentitled), 429, 5xx, timeout —
+falls through to the other vendor. Only a 400 stops the chain, because a malformed payload fails the
+same way at both.
+
+Groq is skipped without spending a call when `GROQ_MODEL` is unset or still the placeholder.
+
+So a stale Groq slug degrades to Anthropic instead of taking the chat down — provided both keys are
+set. `/health` warns when only one is.
+
 ## Variables vs secrets
 
 `[vars]` in `wrangler.toml` is the source of truth. **A deploy replaces the Worker's plain-text
