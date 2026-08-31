@@ -1352,7 +1352,8 @@ textarea.field{resize:vertical;min-height:120px;}
     </div>
 
     <div class="audit">
-      <form id="contactForm" data-lead="Project Inquiry" novalidate>
+      <form id="contactForm" data-lead="Project Inquiry" novalidate
+            action="https://formsubmit.co/kevlongalloway47@gmail.com" method="POST">
         <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
         <div class="field-row">
           <input class="field" type="text" name="name" placeholder="Your name" aria-label="Your name" autocomplete="name" required>
@@ -1551,6 +1552,41 @@ textarea.field{resize:vertical;min-height:120px;}
   var FORM_ENDPOINT  = 'https://formsubmit.co/ajax/kevlongalloway47@gmail.com';
   var FALLBACK_EMAIL = 'hello@nolvek.online';
 
+  /* The single delivery path for the whole site — the contact form and the
+     chat assistant both send through here, so there is one place where a
+     lead can be built wrong and one place to fix it.
+       fields – raw values; empty ones are dropped
+       kind   – what shows up in the subject line, so chat leads and form
+                leads are tellable apart in the inbox
+     Resolves only on genuine delivery; rejects otherwise. */
+  function sendLead(fields, kind){
+    var data = {};
+    Object.keys(fields).forEach(function(k){ if(fields[k]) data[k] = fields[k]; });
+    data._subject = 'Nolvek — ' + kind + ' from ' + (data.name || 'website');
+    data._template = 'table';
+    data._captcha = 'false';
+    if(data.email) data._replyto = data.email;   // Reply goes straight to the lead
+
+    return fetch(FORM_ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify(data)
+    })
+    .then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(j){
+        // Only a 2xx carrying success:"true" means it was actually sent.
+        // FormSubmit answers 403 for an address that hasn't been activated,
+        // and that body still parses as JSON — treating any parsed response
+        // as success is what made this form claim delivery while sending
+        // nothing.
+        if(!r.ok || String(j.success) !== 'true'){
+          throw new Error(j.message || ('FormSubmit HTTP ' + r.status));
+        }
+        return j;
+      });
+    });
+  }
+
   document.querySelectorAll('form[data-lead]').forEach(function(form){
     var note = form.querySelector('.form-note');
     var btn = form.querySelector('button[type="submit"]');
@@ -1563,35 +1599,14 @@ textarea.field{resize:vertical;min-height:120px;}
         form.reportValidity();
         return;
       }
-      var data = {};
-      new FormData(form).forEach(function(v,k){ if(v) data[k] = v; });
-      data._subject = 'Nolvek — ' + form.dataset.lead + ' from ' + (data.name || 'website');
-      data._template = 'table';
-      data._captcha = 'false';
-      if(data.email) data._replyto = data.email;   // Reply goes straight to the lead
+      var fields = {};
+      new FormData(form).forEach(function(v,k){ fields[k] = v; });  // sendLead drops empties
 
-      var first = (data.name || 'there').split(' ')[0];
+      var first = (fields.name || 'there').split(' ')[0];
       btn.disabled = true; btn.textContent = 'Sending…';
       note.textContent = 'Sending…'; note.className = 'form-note';
 
-      fetch(FORM_ENDPOINT, {
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body: JSON.stringify(data)
-      })
-      .then(function(r){
-        return r.json().catch(function(){ return {}; }).then(function(j){
-          // Only a 2xx carrying success:"true" means it was actually sent.
-          // FormSubmit answers 403 for an address that hasn't been activated,
-          // and that body still parses as JSON — treating any parsed response
-          // as success is what made this form claim delivery while sending
-          // nothing.
-          if(!r.ok || String(j.success) !== 'true'){
-            throw new Error(j.message || ('FormSubmit HTTP ' + r.status));
-          }
-          return j;
-        });
-      })
+      sendLead(fields, form.dataset.lead)
       .then(function(){
         note.textContent = 'Thanks, ' + first + '. We’ll be in touch within one business day.';
         note.className = 'form-note ok';
