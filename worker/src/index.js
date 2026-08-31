@@ -470,6 +470,24 @@ export default {
        the deploy from a browser address bar. Booleans only — it reports which
        variables are *set*, never a value. */
     if (url.pathname === '/health') {
+      /* Anything inconsistent enough to break a conversation, said plainly.
+         [vars] come from wrangler.toml and a deploy overwrites the dashboard,
+         so a value that looks wrong here is usually wrong in that file. */
+      const provider = env.PROVIDER || 'groq';
+      const warnings = [];
+      if (provider === 'anthropic' && !env.ANTHROPIC_API_KEY)
+        warnings.push('PROVIDER is "anthropic" but ANTHROPIC_API_KEY is not set — every turn falls through to Groq.');
+      if (provider === 'groq' && !env.GROQ_API_KEY)
+        warnings.push('PROVIDER is "groq" but GROQ_API_KEY is not set — every turn falls through to Anthropic.');
+      if (!env.ANTHROPIC_API_KEY || !env.GROQ_API_KEY)
+        warnings.push('Only one provider has a key, so there is no failover: an outage there is an outage here.');
+      if (env.GROQ_API_KEY && (!env.GROQ_MODEL || env.GROQ_MODEL.startsWith('SET-ME')))
+        warnings.push('GROQ_MODEL is not a real slug. Set it in wrangler.toml — the dashboard does not survive a deploy.');
+      if (!env.SESSION_SECRET) warnings.push('SESSION_SECRET is not set: no session can be issued or verified.');
+      if (!env.TURNSTILE_SECRET) warnings.push('TURNSTILE_SECRET is not set: no Turnstile token can ever verify.');
+      if (debugOn(env)) warnings.push('DEBUG is on. Turn it off when you are done.');
+      if (env.CHAT_ENABLED === 'false') warnings.push('CHAT_ENABLED is "false": the kill switch is on.');
+
       return new Response(JSON.stringify({
         ok: true,
         debug: debugOn(env),
@@ -477,7 +495,9 @@ export default {
           ? 'DEBUG is ON: error responses carry error_message describing internal checks. Set DEBUG="false" in wrangler.toml and deploy when you are done.'
           : 'DEBUG is off. Set DEBUG="true" in wrangler.toml [vars] and deploy to get error_message on every failure.',
         chatEnabled: env.CHAT_ENABLED !== 'false',
-        provider: env.PROVIDER || 'groq',
+        provider,
+        warnings,
+        varsNote: 'PROVIDER, CHAT_ENABLED, DEBUG and GROQ_MODEL come from wrangler.toml [vars]; a deploy overwrites dashboard edits to them. Secrets are separate and are never overwritten.',
         groqModel: env.GROQ_MODEL || null,
         configured: {
           sessionSecret:   !!env.SESSION_SECRET,

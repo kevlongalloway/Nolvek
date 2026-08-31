@@ -14,7 +14,10 @@ compatibility_date = "2026-08-01"
 # here. (Secrets are not affected: wrangler secret put / the dashboard's Secret
 # type are stored separately and are never touched by a deploy.)
 [vars]
-PROVIDER = "groq"          # "groq" | "anthropic" — the other is the failover
+PROVIDER = "anthropic"     # "groq" | "anthropic" — the other is the failover.
+                           # Anthropic leads: the failure mode here is quoting a
+                           # price we do not charge, and the small Groq models hold
+                           # that constraint less reliably.
 CHAT_ENABLED = "true"      # flip to "false" to kill the assistant in ~30s
 DEBUG = "false"            # "true" adds error_message to every error response.
                            # Diagnostics only — turn it back off when done.

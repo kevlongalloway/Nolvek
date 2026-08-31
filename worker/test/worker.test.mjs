@@ -162,6 +162,26 @@ console.log('\ndebug mode');
 
 const DBG = { ...ENV, DEBUG: 'true' };
 
+await ta('health warns about an inconsistent config', async () => {
+  const j = await (await worker.fetch(new Request('https://chat.nolvek.online/health'),
+    { ...ENV, PROVIDER: 'anthropic', ANTHROPIC_API_KEY: '' })).json();
+  assert.match(j.warnings.join(' '), /ANTHROPIC_API_KEY is not set/);
+  assert.match(j.warnings.join(' '), /no failover/);
+});
+
+await ta('health warns about a placeholder model slug', async () => {
+  const j = await (await worker.fetch(new Request('https://chat.nolvek.online/health'),
+    { ...ENV, GROQ_API_KEY: 'g', GROQ_MODEL: 'SET-ME-FROM-THE-LIVE-MODEL-LIST' })).json();
+  assert.match(j.warnings.join(' '), /not a real slug/);
+});
+
+await ta('a fully configured Worker warns about nothing', async () => {
+  const j = await (await worker.fetch(new Request('https://chat.nolvek.online/health'),
+    { ...ENV, PROVIDER: 'anthropic', ANTHROPIC_API_KEY: 'a', GROQ_API_KEY: 'g',
+      GROQ_MODEL: 'llama-3.1-8b-instant' })).json();
+  assert.deepEqual(j.warnings, []);
+});
+
 await ta('health reports whether debug is on', async () => {
   const off = await (await worker.fetch(new Request('https://chat.nolvek.online/health'), ENV)).json();
   const on  = await (await worker.fetch(new Request('https://chat.nolvek.online/health'), DBG)).json();
