@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | Nolvek</title>
+<link rel="canonical" href="https://nolvek.online/privacy.html">
+<meta name="description" content="What Nolvek collects when you use the contact form or chat assistant, who processes it, and how to have it deleted.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#05080f">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<style>
+:root{
+  --paper:#ffffff; --surface:#f7f8f9; --line:#e6e8ec;
+  --ink:#0c111e; --body:#545f78; --label:#667085;
+  --blue:#3661e3; --blue-d:#2a4dbd;
+  --r:4px; --gutter:clamp(1.25rem,5vw,4.5rem);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:17px;line-height:1.65;font-weight:500;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--blue);text-decoration:none;font-weight:600;}
+a:hover{text-decoration:underline;}
+img{display:block;max-width:100%;}
+.wrap{max-width:720px;margin:0 auto;padding-inline:var(--gutter);}
+
+.nav{border-bottom:1px solid var(--line);}
+.nav-in{max-width:1280px;margin:0 auto;padding:0 var(--gutter);height:74px;
+  display:flex;align-items:center;justify-content:space-between;}
+.brand img{width:132px;height:auto;}
+.back{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:0.72rem;
+  font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--body);}
+.back:hover{color:var(--ink);text-decoration:none;}
+
+main{padding-block:clamp(3rem,7vw,5rem) clamp(4rem,8vw,6rem);}
+.eyebrow{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.4rem;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:0.82rem;
+  font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);}
+.eyebrow::before{content:'';width:26px;height:2px;background:var(--blue);border-radius:2px;}
+h1{font-size:clamp(2.1rem,5vw,3.1rem);font-weight:800;letter-spacing:-0.035em;
+  line-height:1.05;margin-bottom:1.2rem;}
+.lede{font-size:1.08rem;color:var(--body);margin-bottom:0.6rem;}
+.updated{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:0.72rem;
+  letter-spacing:0.09em;text-transform:uppercase;color:var(--label);
+  padding-bottom:2.4rem;border-bottom:1px solid var(--line);margin-bottom:2.4rem;}
+
+h2{font-size:1.35rem;font-weight:800;letter-spacing:-0.025em;
+  margin:2.6rem 0 0.9rem;}
+h2:first-of-type{margin-top:0;}
+p{color:var(--body);margin-bottom:1rem;}
+ul{margin:0 0 1.2rem 0;padding-left:0;list-style:none;}
+li{color:var(--body);padding-left:1.1rem;position:relative;margin-bottom:0.5rem;}
+li::before{content:'';position:absolute;left:0;top:0.65rem;width:5px;height:5px;
+  border-radius:50%;background:var(--blue);}
+strong{color:var(--ink);font-weight:700;}
+/* Stacked blocks rather than a table: the cells are long prose, which a
+   3-column table crams unreadably on a phone and overflows the viewport. */
+.proc{border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:0.8rem;}
+.proc h3{font-size:1rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.15rem;}
+.proc .dom{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:0.7rem;
+  letter-spacing:0.06em;color:var(--label);margin-bottom:0.7rem;}
+.proc dl{display:grid;grid-template-columns:auto 1fr;gap:0.3rem 0.9rem;margin:0;}
+.proc dt{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:0.64rem;
+  letter-spacing:0.09em;text-transform:uppercase;color:var(--label);padding-top:0.2rem;}
+.proc dd{margin:0;color:var(--body);font-size:0.94rem;}
+@media (max-width:560px){
+  .proc dl{grid-template-columns:1fr;gap:0.15rem;}
+  .proc dd{margin-bottom:0.5rem;}
+}
+.note{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:1.3rem 1.5rem;margin:1.6rem 0;}
+.note p:last-child{margin-bottom:0;}
+
+.footer{border-top:1px solid var(--line);padding-block:2rem;}
+.footer-in{max-width:1280px;margin:0 auto;padding:0 var(--gutter);
+  display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:0.68rem;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--label);}
+.footer-in a{color:var(--label);font-weight:500;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/" aria-label="Nolvek home"><img src="/wordmark.png" alt="Nolvek" width="640" height="88"></a>
+    <a class="back" href="/">← Back to site</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <div class="eyebrow"><span>Privacy</span></div>
+    <h1>What we collect, and what happens to it.</h1>
+    <p class="lede">Nolvek is a digital marketing agency based in Atlanta, Georgia. This page explains
+      what information this website collects, who else sees it, and how to have it removed. Plain
+      English, no boilerplate.</p>
+    <p class="updated">Last updated: 31 August 2026</p>
+
+    <h2>What we collect</h2>
+    <p>Only what you type, plus the technical minimum needed to stop the site being abused. There is
+      no analytics, advertising or tracking on this site — no Google Analytics, no Meta Pixel, no
+      third-party cookies.</p>
+    <ul>
+      <li><strong>Contact form.</strong> Your name and email, and — if you fill them in — your
+        business name, phone number, website, which service you're after, and your message.</li>
+      <li><strong>Chat assistant.</strong> Whatever you type into it, which may include the same
+        contact details if you choose to share them.</li>
+      <li><strong>Technical data.</strong> Your IP address, seen by our hosting and security
+        providers when you load the page or send a chat message.</li>
+    </ul>
+    <p>We do not ask for, and have no use for, payment details, government identifiers, or any
+      special-category personal data. Please don't put them into the chat.</p>
+
+    <h2>Why we collect it</h2>
+    <p>To reply to you. That's the whole purpose. We use your details to answer your enquiry, prepare
+      a quote, and follow up about the work you asked about. We don't sell it, rent it, or share it
+      for anyone else's marketing.</p>
+
+    <h2>Who processes it</h2>
+    <p>We use a small number of third-party services to run this site. Each one only receives what it
+      needs to do its job.</p>
+    <div class="proc">
+      <h3>FormSubmit</h3>
+      <div class="dom">formsubmit.co</div>
+      <dl>
+        <dt>Receives</dt><dd>Everything you submit through the contact form, or send from the chat’s confirmation card.</dd>
+        <dt>Why</dt><dd>Delivers it to our inbox. We have no server of our own to receive it.</dd>
+      </dl>
+    </div>
+    <div class="proc">
+      <h3>Render</h3>
+      <div class="dom">render.com</div>
+      <dl>
+        <dt>Receives</dt><dd>Your IP address and standard web request data.</dd>
+        <dt>Why</dt><dd>Hosts and serves this website.</dd>
+      </dl>
+    </div>
+    <div class="proc">
+      <h3>Cloudflare</h3>
+      <div class="dom">cloudflare.com</div>
+      <dl>
+        <dt>Receives</dt><dd>Your IP address, and your chat messages as they pass through.</dd>
+        <dt>Why</dt><dd>Runs the chat assistant’s connection and the Turnstile check that keeps bots off it.</dd>
+      </dl>
+    </div>
+    <div class="proc">
+      <h3>AI model provider</h3>
+      <div class="dom">Anthropic and/or Groq</div>
+      <dl>
+        <dt>Receives</dt><dd>The text of your chat conversation.</dd>
+        <dt>Why</dt><dd>Generates the assistant’s replies. Nothing is sent here unless you use the chat.</dd>
+      </dl>
+    </div>
+    <div class="proc">
+      <h3>Google Fonts</h3>
+      <div class="dom">fonts.google.com</div>
+      <dl>
+        <dt>Receives</dt><dd>Your IP address when the page loads a font.</dd>
+        <dt>Why</dt><dd>Serves the two typefaces this site uses.</dd>
+      </dl>
+    </div>
+
+    <h2>The chat assistant, specifically</h2>
+    <div class="note">
+      <p><strong>Your chat messages are sent to an external AI provider</strong> (Anthropic and/or
+        Groq) so it can generate a reply. If you type your name, email or phone number into the chat,
+        that text goes to them as part of the conversation.</p>
+      <p>We do not store chat transcripts. Conversations exist only in your browser while the window
+        is open, and are gone when you close or refresh it. Our systems log only technical
+        information about each request — timing, which provider was used, and roughly how much text
+        was processed — never the content of what you wrote.</p>
+      <p>The assistant only emails us your details when you review them on a confirmation card and
+        tap send. It cannot do it on its own.</p>
+    </div>
+    <p>The assistant is automated and can be wrong. Nothing it says is a quote, a contract, or a
+      commitment on our part — prices and scope are confirmed by a person.</p>
+
+    <h2>How long we keep it</h2>
+    <p>Enquiries stay in our email for as long as we may need them for the working relationship and
+      our own records. Chat transcripts aren't kept at all. Our providers keep data according to
+      their own retention policies, which we don't control.</p>
+
+    <h2>Cookies and local storage</h2>
+    <p>This site sets no cookies of its own and does no tracking. Cloudflare Turnstile — the anti-bot
+      check on the chat — may store a short-lived value in your browser to remember that the check
+      passed. It exists to tell humans from scripts, not to identify or follow you.</p>
+
+    <h2>Your choices</h2>
+    <p>You can ask us what we hold about you, ask us to correct it, or ask us to delete it. Email
+      <a href="mailto:hello@nolvek.online">hello@nolvek.online</a> and we'll action it. Depending on
+      where you live you may have additional rights under laws such as the CCPA/CPRA or the GDPR; we
+      will honour those requests regardless of where you're writing from.</p>
+    <p>You can use this site without the chat. The contact form does the same job, and email always
+      works.</p>
+
+    <h2>Children</h2>
+    <p>This site is for businesses and isn't directed at children. We don't knowingly collect
+      information from anyone under 13.</p>
+
+    <h2>Changes</h2>
+    <p>If we change what we collect or who processes it, we'll update this page and the date at the
+      top. Material changes to how we handle information already collected will be notified to anyone
+      affected.</p>
+
+    <h2>Contact</h2>
+    <p>Nolvek — Atlanta, Georgia<br>
+      <a href="mailto:hello@nolvek.online">hello@nolvek.online</a></p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-in">
+    <span>© 2026 Nolvek — Atlanta, GA</span>
+    <span><a href="/">nolvek.online</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
