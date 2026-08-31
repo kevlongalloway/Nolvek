@@ -1,4 +1,6 @@
-name = "nolvek-chat"
+name = "nolvek"          # must match the Worker in the dashboard that owns
+                        # chat.nolvek.online and the secrets — a different
+                        # name here deploys to a different Worker entirely
 main = "src/index.js"
 compatibility_date = "2026-08-01"
 
