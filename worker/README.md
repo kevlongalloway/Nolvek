@@ -13,6 +13,15 @@ confirm card.
 |---|---|
 | `POST /session` | Turnstile token → signed, stateless session token |
 | `POST /chat` | one assistant turn |
+| `GET /health` | deploy check — booleans for which vars are set, never a value |
+
+`/health` is the only route reachable without an `Origin` header, so it is the only one a browser
+address bar can see. Every other path requires an allowlisted origin and returns a plain `forbidden`
+otherwise — visiting `chat.nolvek.online` in a browser is *supposed* to say that.
+
+A `405` carries the verb it actually received (`{"error":"method","received":"GET"}`). The widget only
+ever sends `POST`, so a 405 means something in front of the Worker — most often a redirect rule on
+the zone — rewrote the request; a 301/302 turns a `POST` into a `GET`.
 
 There is no KV and no Durable Object. The turn counter lives inside an HMAC-signed token the client
 carries, so it is unforgeable without any storage. The token is also bound to the issuing IP, so it
@@ -39,7 +48,8 @@ curl -H "Authorization: Bearer $GROQ_API_KEY" https://api.groq.com/openai/v1/mod
 
 Uncomment the `[[routes]]` block, then `wrangler deploy`.
 
-Finally, add the Turnstile **site key** to the widget in `site/index.html` (`NV.turnstileKey`).
+Finally, add the Turnstile **site key** to the widget in `site/index.html` (`CFG.turnstileKey`),
+and set `CFG.enabled` to `true`.
 
 ## Before it goes live
 

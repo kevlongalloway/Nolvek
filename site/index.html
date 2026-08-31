@@ -822,6 +822,36 @@ textarea.field{resize:vertical;min-height:120px;}
 .nv-launch:active{transform:translateY(1px);}
 .nv-launch svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .nv-launch.hide{visibility:hidden;}   /* also drops it from the tab order */
+
+/* The teaser: what a first-time visitor actually sees. It takes the
+   launcher's place a few seconds in, then collapses back to the compact
+   launcher once dismissed — so there is always exactly one way in, never
+   two competing ones. */
+.nv-teaser{
+  position:fixed;right:1rem;bottom:1rem;z-index:70;
+  display:flex;align-items:flex-start;gap:0.5rem;
+  width:min(268px, calc(100vw - 2rem));
+  padding:0.85rem 0.85rem 0.85rem 1rem;
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--r2);
+  box-shadow:0 14px 40px -14px rgba(12,17,30,.34);
+  opacity:0;transform:translateY(8px) scale(.97);
+  transition:opacity .3s var(--ease), transform .3s var(--ease);
+}
+.nv-teaser.in{opacity:1;transform:none;}
+.nv-teaser-go{
+  flex:1;text-align:left;background:none;border:0;padding:0;cursor:pointer;
+  font:inherit;font-size:0.92rem;line-height:1.4;color:var(--ink);font-weight:600;
+}
+.nv-teaser-go span{display:block;margin-top:0.2rem;font-weight:400;
+  font-size:0.79rem;color:var(--label);}
+.nv-teaser-x{
+  flex:none;width:22px;height:22px;margin:-0.15rem -0.15rem 0 0;
+  display:grid;place-items:center;cursor:pointer;
+  background:none;border:0;border-radius:5px;color:var(--label);
+}
+.nv-teaser-x:hover{background:var(--surface);color:var(--ink);}
+.nv-teaser-x svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;}
+.nv-teaser[hidden]{display:none;}
 /* A class selector beats the UA's [hidden]{display:none}, so both of these
    need saying explicitly — without them the "hidden" panel still lays out
    over the launcher and swallows its clicks, and the launcher stays visible
@@ -889,7 +919,11 @@ textarea.field{resize:vertical;min-height:120px;}
 
 .nv-foot{display:flex;gap:0.5rem;padding:0.75rem;border-top:1px solid var(--line);background:var(--paper);}
 .nv-foot .field{margin:0;flex:1;min-width:0;padding:0.75rem 0.85rem;font-size:0.88rem;}
-.nv-foot .btn{padding:0.75rem 1rem;font-size:0.68rem;flex:none;}
+.nv-foot .btn{padding:0.75rem 1rem;font-size:0.68rem;flex:none;
+  /* width:auto beats the site-wide @media(max-width:520px){.btn{width:100%}}
+     that stacks the hero CTAs — without it the Send button claims the whole
+     composer and squeezes the input to nothing. */
+  width:auto;white-space:nowrap;}
 .nv-legal{padding:0 0.75rem 0.7rem;font-size:0.6rem;letter-spacing:0.06em;
   color:var(--label);text-align:center;background:var(--paper);}
 .nv-legal a{color:var(--label);text-decoration:underline;}
@@ -897,9 +931,10 @@ textarea.field{resize:vertical;min-height:120px;}
 @media (max-width:680px){
   .nv-panel{right:0;bottom:0;left:0;top:0;width:auto;max-width:none;height:100%;border-radius:0;border:0;}
   .nv-launch{right:0.85rem;bottom:0.85rem;}
+  .nv-teaser{right:0.85rem;bottom:0.85rem;}
 }
 @media (prefers-reduced-motion:reduce){
-  .nv-panel{transition:none;}
+  .nv-panel,.nv-teaser{transition:none;}
   .nv-dots i{animation:none;}
 }
 
@@ -1529,6 +1564,16 @@ textarea.field{resize:vertical;min-height:120px;}
   <span>Chat with us</span>
 </button>
 
+<div id="nvTeaser" class="nv-teaser" hidden>
+  <button id="nvTeaserGo" class="nv-teaser-go" type="button">
+    Not sure which service you need?
+    <span>Ask me &mdash; takes a minute.</span>
+  </button>
+  <button id="nvTeaserX" class="nv-teaser-x" type="button" aria-label="Dismiss">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+</div>
+
 <section id="nvPanel" class="nv-panel" role="dialog" aria-modal="false"
          aria-labelledby="nvTitle" hidden>
   <header class="nv-head">
@@ -1792,6 +1837,8 @@ textarea.field{resize:vertical;min-height:120px;}
       endpoint: 'https://chat.nolvek.online',
       turnstileKey: '',            // Turnstile SITE key (public, safe to commit)
       maxChars: 600,
+      teaserDelay: 4500,       // ms after load before the teaser appears
+
       clientTimeout: 20000,
       mobile: '(max-width: 680px)'
     };
@@ -1802,6 +1849,9 @@ textarea.field{resize:vertical;min-height:120px;}
     var log    = document.getElementById('nvLog');
     var form   = document.getElementById('nvForm');
     var input  = document.getElementById('nvInput');
+    var teaser   = document.getElementById('nvTeaser');
+    var teaserGo = document.getElementById('nvTeaserGo');
+    var teaserX  = document.getElementById('nvTeaserX');
     if(!launch || !panel) return;
 
     var history = [];        // [{role, content}] mirrored to the Worker each turn
@@ -2073,6 +2123,7 @@ textarea.field{resize:vertical;min-height:120px;}
     function openChat(){
       if(!panel.hidden) return;
       lastFocus = document.activeElement;
+      if(teaser && !teaser.hidden){ markTeaserSeen(); teaser.hidden = true; launch.hidden = false; }
       if(drawerOpen) setDrawer(false);          // they cannot coexist on mobile
       panel.hidden = false;
       void panel.offsetWidth;                    // force reflow so the transition runs
@@ -2099,6 +2150,48 @@ textarea.field{resize:vertical;min-height:120px;}
       if(lastFocus && lastFocus.focus) lastFocus.focus();
     }
     window.nvCloseChat = closeChat;   // so the drawer can close us
+
+    /* --- the teaser ---
+       A first-time visitor gets a sentence, not a button. It replaces the
+       launcher rather than sitting next to it, so there is never a pair of
+       competing affordances in the same corner. Dismissing it — or opening
+       the chat once — collapses it back to the compact launcher for the rest
+       of the tab session. sessionStorage, not localStorage: it should not
+       nag someone reading the page, but a genuinely new visit gets it. */
+    var TEASER_KEY = 'nv-teaser-seen';
+    function teaserSeen(){
+      try { return sessionStorage.getItem(TEASER_KEY) === '1'; } catch(e){ return false; }
+    }
+    function markTeaserSeen(){
+      try { sessionStorage.setItem(TEASER_KEY, '1'); } catch(e){}
+    }
+    function retireTeaser(){
+      if(teaser.hidden) return;
+      markTeaserSeen();
+      teaser.classList.remove('in');
+      launch.hidden = false;                 // the compact launcher takes over
+      var done = function(){ teaser.hidden = true; };
+      if(reduce){ done(); } else { setTimeout(done, 300); }
+    }
+
+    if(teaser && !teaserSeen()){
+      setTimeout(function(){
+        if(!panel.hidden || teaserSeen()) return;   // already chatting, or dismissed elsewhere
+        teaser.hidden = false;
+        launch.hidden = true;                       // instead of, not alongside
+        void teaser.offsetWidth;
+        teaser.classList.add('in');
+      }, CFG.teaserDelay);
+
+      teaserGo.addEventListener('click', function(){
+        markTeaserSeen();
+        teaser.classList.remove('in');
+        teaser.hidden = true;
+        launch.hidden = false;
+        openChat();
+      });
+      teaserX.addEventListener('click', retireTeaser);
+    }
 
     launch.addEventListener('click', openChat);
     closeB.addEventListener('click', closeChat);

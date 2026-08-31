@@ -390,6 +390,25 @@ export default {
     const origin = request.headers.get('Origin') || '';
     const url = new URL(request.url);
 
+    /* Reachable without an Origin, on purpose: it is the only way to eyeball
+       the deploy from a browser address bar. Booleans only — it reports which
+       variables are *set*, never a value. */
+    if (url.pathname === '/health') {
+      return new Response(JSON.stringify({
+        ok: true,
+        chatEnabled: env.CHAT_ENABLED !== 'false',
+        provider: env.PROVIDER || 'groq',
+        groqModel: env.GROQ_MODEL || null,
+        configured: {
+          sessionSecret:   !!env.SESSION_SECRET,
+          turnstileSecret: !!env.TURNSTILE_SECRET,
+          groqKey:         !!env.GROQ_API_KEY,
+          anthropicKey:    !!env.ANTHROPIC_API_KEY,
+          rateLimiting:    !!(env.CHAT_LIMIT && env.SESSION_LIMIT),
+        },
+      }, null, 2), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    }
+
     if (request.method === 'OPTIONS') {
       if (!ALLOWED_ORIGINS.has(origin)) return new Response('', { status: 403 });
       return new Response(null, { status: 204, headers: cors(origin) });
@@ -397,7 +416,15 @@ export default {
     // Origin stops other *websites* mounting this Worker. It does not stop
     // curl — Turnstile and the IP-bound session token do that.
     if (!ALLOWED_ORIGINS.has(origin)) return new Response('forbidden', { status: 403 });
-    if (request.method !== 'POST') return json(405, { error: 'method' }, origin);
+    // Echo what actually arrived. A 405 here means something upstream — a
+    // redirect rule, a proxy — turned the widget's POST into another verb,
+    // and the method name is the only thing that identifies it.
+    if (request.method !== 'POST') {
+      return new Response(JSON.stringify({ error: 'method', received: request.method }), {
+        status: 405,
+        headers: { 'Content-Type': 'application/json', 'Allow': 'POST, OPTIONS', ...cors(origin) },
+      });
+    }
 
     if (env.CHAT_ENABLED === 'false') return json(503, { error: 'disabled' }, origin);
 

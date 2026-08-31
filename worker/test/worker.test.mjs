@@ -159,6 +159,16 @@ globalThis.fetch = async (url) => {
 
 console.log('\nhandler: origin, method, kill switch');
 
+await ta('health answers without an Origin and leaks no values', async () => {
+  const r = await worker.fetch(new Request('https://chat.nolvek.online/health'), ENV);
+  assert.equal(r.status, 200);
+  const j = await r.json();
+  assert.equal(j.ok, true);
+  assert.equal(j.configured.sessionSecret, true);
+  // booleans only — no secret may appear anywhere in the body
+  assert.ok(!JSON.stringify(j).includes(ENV.SESSION_SECRET));
+});
+
 await ta('rejects a foreign origin', async () => {
   const r = await worker.fetch(req('/chat', {}, { origin: 'https://evil.test' }), ENV);
   assert.equal(r.status, 403);
@@ -167,6 +177,9 @@ await ta('rejects a foreign origin', async () => {
 await ta('rejects GET', async () => {
   const r = await worker.fetch(req('/chat', undefined, { method: 'GET' }), ENV);
   assert.equal(r.status, 405);
+  assert.equal(r.headers.get('Allow'), 'POST, OPTIONS');
+  // the echoed verb is what identifies a redirect that rewrote the request
+  assert.equal((await r.json()).received, 'GET');
 });
 
 await ta('CHAT_ENABLED=false returns 503', async () => {
