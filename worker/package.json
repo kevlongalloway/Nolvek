@@ -1,0 +1,11 @@
+{
+  "name": "nolvek-chat",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker backing the chat assistant on nolvek.online. Model proxy only — it never sends email.",
+  "scripts": {
+    "test": "node test/worker.test.mjs",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  }
+}

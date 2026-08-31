@@ -1,0 +1,38 @@
+name = "nolvek-chat"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+# Plain vars. Secrets are NOT here — set them with `wrangler secret put`:
+#   wrangler secret put SESSION_SECRET     (any long random string)
+#   wrangler secret put TURNSTILE_SECRET   (Cloudflare Turnstile dashboard)
+#   wrangler secret put GROQ_API_KEY
+#   wrangler secret put ANTHROPIC_API_KEY
+[vars]
+PROVIDER = "groq"          # "groq" | "anthropic" — the other is the failover
+CHAT_ENABLED = "true"      # flip to "false" to kill the assistant in ~30s
+# Groq rotates and deprecates model slugs, so this is config rather than code.
+# Read the current list before setting it:
+#   curl -H "Authorization: Bearer $GROQ_API_KEY" \
+#        https://api.groq.com/openai/v1/models
+GROQ_MODEL = "SET-ME-FROM-THE-LIVE-MODEL-LIST"
+
+# Per-IP rate limiting. Free, stateless, and counted per colo rather than
+# globally — acceptable here because the signed turn counter already caps
+# spend per conversation, and /session is what gates conversation creation.
+[[unsafe.bindings]]
+name = "CHAT_LIMIT"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 20, period = 60 }
+
+[[unsafe.bindings]]
+name = "SESSION_LIMIT"
+type = "ratelimit"
+namespace_id = "1002"
+simple = { limit = 5, period = 60 }
+
+# Route. The Worker must answer on its own hostname so the static site on
+# Render is untouched.
+# [[routes]]
+# pattern = "chat.nolvek.online/*"
+# zone_name = "nolvek.online"
