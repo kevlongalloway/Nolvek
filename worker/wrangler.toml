@@ -16,6 +16,8 @@ compatibility_date = "2026-08-01"
 [vars]
 PROVIDER = "groq"          # "groq" | "anthropic" — the other is the failover
 CHAT_ENABLED = "true"      # flip to "false" to kill the assistant in ~30s
+DEBUG = "false"            # "true" adds error_message to every error response.
+                           # Diagnostics only — turn it back off when done.
 # Groq rotates and deprecates model slugs, so this is config rather than code.
 # Read the current list before setting it:
 #   curl -H "Authorization: Bearer $GROQ_API_KEY" \

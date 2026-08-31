@@ -100,6 +100,30 @@ function cors(origin) {
   };
 }
 
+/* DEBUG is a plain var, so it lives in wrangler.toml's [vars] and a deploy
+   sets it. When on, every error carries an error_message saying exactly what
+   failed and what to do about it. It is off by default and should stay off in
+   normal operation: the messages describe internal checks, which is help for
+   you and reconnaissance for anyone else. */
+function debugOn(env) { return env && env.DEBUG === 'true'; }
+
+/* Redact anything that would hand out the guardrails. Provider error bodies
+   sometimes quote the request back, system prompt included. */
+function safeDetail(text) {
+  let t = String(text == null ? '' : text).slice(0, 600);
+  const head = SYSTEM.slice(0, 40);
+  if (head && t.includes(head)) t = '[redacted: upstream echoed the system prompt]';
+  return t;
+}
+
+/* Every error response goes through here. `code` is the stable machine name
+   the widget switches on; `message` is the human sentence, debug-only. */
+function fail(status, code, message, origin, env, extra) {
+  const body = Object.assign({ error: code }, extra || {});
+  if (debugOn(env)) body.error_message = message;
+  return json(status, body, origin);
+}
+
 function json(status, body, origin) {
   return new Response(JSON.stringify(body), {
     status,
@@ -140,30 +164,34 @@ async function signSession(env, payload) {
   return body + '.' + b64url(sig);
 }
 
-async function verifySession(env, token, ipHash) {
-  if (typeof token !== 'string' || token.length > 2000) return null;
+async function verifySession(env, token, ipHash, why) {
+  const no = (reason) => { if (why) why.reason = reason; return null; };
+  if (typeof token !== 'string' || token.length > 2000)
+    return no(token ? 'session token is not a string, or is over 2000 chars' :
+                      'no session token in the request body — /session was never called, or its response was dropped');
   const dot = token.indexOf('.');
-  if (dot < 1) return null;
+  if (dot < 1) return no('session token is malformed: no "payload.signature" separator');
   const body = token.slice(0, dot);
   const sig = token.slice(dot + 1);
 
   let expected;
   try {
     expected = await crypto.subtle.sign('HMAC', await hmacKey(env.SESSION_SECRET), enc.encode(body));
-  } catch { return null; }
+  } catch { return no('SESSION_SECRET is missing or unusable, so the token could not be verified'); }
   const got = unb64url(sig);
   const want = new Uint8Array(expected);
-  if (got.length !== want.length) return null;
+  if (got.length !== want.length) return no('signature is the wrong length — token truncated, or SESSION_SECRET changed since it was issued');
   // constant-time compare
   let diff = 0;
   for (let i = 0; i < want.length; i++) diff |= got[i] ^ want[i];
-  if (diff !== 0) return null;
+  if (diff !== 0) return no('signature does not verify — the token was tampered with, or SESSION_SECRET changed since it was issued');
 
   let p;
-  try { p = JSON.parse(new TextDecoder().decode(unb64url(body))); } catch { return null; }
-  if (typeof p !== 'object' || !p) return null;
+  try { p = JSON.parse(new TextDecoder().decode(unb64url(body))); } catch { return no('session payload is not valid JSON'); }
+  if (typeof p !== 'object' || !p) return no('session payload is not an object');
   if ((Date.now() / 1000) - p.iat > CAPS.SESSION_SECS) return { expired: true };
-  if (p.iph !== ipHash) return null;          // token bound to the issuing IP
+  // token bound to the issuing IP
+  if (p.iph !== ipHash) return no('session was issued to a different IP — a shared token, or your address changed mid-conversation (mobile network switch, VPN)');
   return p;
 }
 
@@ -226,6 +254,7 @@ class ProviderError extends Error {
   constructor(name, status, detail) {
     super(name + ' ' + status);
     this.name = 'ProviderError';
+    this.provider = name;          // this.name is taken by Error itself
     this.status = status;
     this.detail = detail;
     this.retryable = status === 429 || status >= 500 || status === 0;
@@ -323,10 +352,24 @@ async function verifyTurnstile(env, token, ip) {
 
 async function handleSession(request, env, origin, ip) {
   let body;
-  try { body = await request.json(); } catch { return json(400, { error: 'bad_json' }, origin); }
+  try { body = await request.json(); }
+  catch { return fail(400, 'bad_json', 'the request body is not valid JSON', origin, env); }
 
-  const ok = await verifyTurnstile(env, String(body.turnstileToken || ''), ip);
-  if (!ok) return json(403, { error: 'turnstile' }, origin);
+  const token = String(body.turnstileToken || '');
+  if (!env.TURNSTILE_SECRET) {
+    return fail(403, 'turnstile', 'TURNSTILE_SECRET is not set on the Worker, so no token can ever verify', origin, env);
+  }
+  // An empty token can never verify; do not spend a siteverify round trip on it.
+  if (!token) {
+    return fail(403, 'turnstile',
+      'no Turnstile token was sent — the challenge script did not load (ad-blocker, blocked CDN) or CFG.turnstileKey is empty',
+      origin, env);
+  }
+  if (!(await verifyTurnstile(env, token, ip))) {
+    return fail(403, 'turnstile',
+      'Turnstile rejected the token. It is single-use and expires in ~300s, so this is a replay, an expired token, or a site key that does not match TURNSTILE_SECRET.',
+      origin, env);
+  }
 
   const iph = (await sha256Hex(ip + '|' + env.SESSION_SECRET)).slice(0, 16);
   const session = await signSession(env, {
@@ -340,20 +383,35 @@ async function handleSession(request, env, origin, ip) {
 
 async function handleChat(request, env, origin, ip) {
   const len = Number(request.headers.get('content-length') || 0);
-  if (len > CAPS.BODY_BYTES) return json(413, { error: 'too_large' }, origin);
+  if (len > CAPS.BODY_BYTES) {
+    return fail(413, 'too_large', 'request body is ' + len + ' bytes; the cap is ' + CAPS.BODY_BYTES, origin, env);
+  }
 
   let body;
-  try { body = await request.json(); } catch { return json(400, { error: 'bad_json' }, origin); }
+  try { body = await request.json(); }
+  catch { return fail(400, 'bad_json', 'the request body is not valid JSON', origin, env); }
 
   const iph = (await sha256Hex(ip + '|' + env.SESSION_SECRET)).slice(0, 16);
-  const sess = await verifySession(env, body.session, iph);
-  if (!sess) return json(401, { error: 'session' }, origin);
-  if (sess.expired) return json(401, { error: 'expired' }, origin);
-  if (sess.turn >= CAPS.TURNS) return json(409, { error: 'turns' }, origin);
+  const why = {};
+  const sess = await verifySession(env, body.session, iph, why);
+  if (!sess) return fail(401, 'session', why.reason || 'the session token did not verify', origin, env);
+  if (sess.expired) {
+    return fail(401, 'expired', 'session is older than ' + CAPS.SESSION_SECS + 's; the widget should re-run /session once and replay', origin, env);
+  }
+  if (sess.turn >= CAPS.TURNS) {
+    return fail(409, 'turns', 'this conversation used all ' + CAPS.TURNS + ' turns — by design, not a fault', origin, env);
+  }
 
+  const rawCount = Array.isArray(body.messages) ? body.messages.length : 0;
   const messages = normaliseHistory(body.messages);
-  if (!messages.length) return json(400, { error: 'empty' }, origin);
-  if (messages[messages.length - 1].role !== 'user') return json(400, { error: 'not_user_turn' }, origin);
+  if (!messages.length) {
+    return fail(400, 'empty', rawCount
+      ? 'all ' + rawCount + ' messages were dropped by normalisation — every one had an unknown role or an empty body'
+      : 'no messages were sent', origin, env);
+  }
+  if (messages[messages.length - 1].role !== 'user') {
+    return fail(400, 'not_user_turn', 'the last message must be from the user; this history ends on an assistant turn', origin, env);
+  }
 
   const started = Date.now();
   let out;
@@ -364,10 +422,25 @@ async function handleChat(request, env, origin, ip) {
       ev: 'chat_fail', sid: sess.sid, ms: Date.now() - started,
       status: e && e.status, detail: e && e.detail,
     }));
-    // The upstream status only (404 = bad model slug, 401 = bad key, 429 =
-    // quota). Never e.detail — that is the provider's response body, and it
-    // can echo the system prompt back.
-    return json(502, { error: 'provider', upstream: (e && e.status) || 0 }, origin);
+    // Outside debug the upstream status only (404 = bad model slug, 401 = bad
+    // key, 429 = quota). Never the raw detail — that is the provider's
+    // response body, and it can echo the system prompt back.
+    const st = (e && e.status) || 0;
+    const which = (e && e.provider) || env.PROVIDER || 'groq';
+    const hint =
+      st === 404 ? 'the model does not exist. GROQ_MODEL is "' + (env.GROQ_MODEL || '') + '" — Groq rotates slugs, so read the live model list.' :
+      st === 401 ? 'the API key for ' + which + ' was rejected. Check the secret is set and not revoked.' :
+      st === 403 ? 'the API key for ' + which + ' is not permitted to use this model.' :
+      st === 429 ? 'rate-limited or out of quota at ' + which + '.' :
+      st === 400 ? 'the provider rejected the request shape.' :
+      st === 0   ? 'no response from ' + which + ' — network failure or the ' + CAPS.PROVIDER_MS + 'ms timeout.' :
+      st >= 500  ? which + ' returned a server error.' :
+                   'the model call failed.';
+    const noFallback = !env.ANTHROPIC_API_KEY || !env.GROQ_API_KEY
+      ? ' Only one provider is configured, so there was no failover.' : '';
+    return fail(502, 'provider',
+      which + ' ' + st + ': ' + hint + noFallback + ' Upstream said: ' + safeDetail(e && e.detail),
+      origin, env, { upstream: st });
   }
 
   const { reply, lead } = extractLead(out.text);
@@ -399,6 +472,10 @@ export default {
     if (url.pathname === '/health') {
       return new Response(JSON.stringify({
         ok: true,
+        debug: debugOn(env),
+        debugNote: debugOn(env)
+          ? 'DEBUG is ON: error responses carry error_message describing internal checks. Set DEBUG="false" in wrangler.toml and deploy when you are done.'
+          : 'DEBUG is off. Set DEBUG="true" in wrangler.toml [vars] and deploy to get error_message on every failure.',
         chatEnabled: env.CHAT_ENABLED !== 'false',
         provider: env.PROVIDER || 'groq',
         groqModel: env.GROQ_MODEL || null,
@@ -412,31 +489,66 @@ export default {
       }, null, 2), { status: 200, headers: { 'Content-Type': 'application/json' } });
     }
 
+    const allowed = [...ALLOWED_ORIGINS].join(', ');
+
     if (request.method === 'OPTIONS') {
-      if (!ALLOWED_ORIGINS.has(origin)) return new Response('', { status: 403 });
+      // A preflight reaching here at all is worth knowing about: the widget
+      // sends text/plain precisely so no preflight is needed.
+      if (!ALLOWED_ORIGINS.has(origin)) {
+        return debugOn(env)
+          ? fail(403, 'origin', 'CORS preflight from "' + (origin || '(none)') + '"; allowed: ' + allowed, origin, env)
+          : new Response('', { status: 403 });
+      }
       return new Response(null, { status: 204, headers: cors(origin) });
     }
     // Origin stops other *websites* mounting this Worker. It does not stop
     // curl — Turnstile and the IP-bound session token do that.
-    if (!ALLOWED_ORIGINS.has(origin)) return new Response('forbidden', { status: 403 });
+    if (!ALLOWED_ORIGINS.has(origin)) {
+      const msg = origin
+        ? 'origin "' + origin + '" is not allowed; allowed: ' + allowed
+        : 'no Origin header — a browser address bar, curl, or a same-origin request. Only /health answers without one.';
+      return debugOn(env)
+        ? new Response(JSON.stringify({ error: 'origin', error_message: msg }, null, 2),
+            { status: 403, headers: { 'Content-Type': 'application/json' } })
+        : new Response('forbidden', { status: 403 });
+    }
     // Echo what actually arrived. A 405 here means something upstream — a
     // redirect rule, a proxy — turned the widget's POST into another verb,
     // and the method name is the only thing that identifies it.
     if (request.method !== 'POST') {
-      return new Response(JSON.stringify({ error: 'method', received: request.method }), {
+      const body = { error: 'method', received: request.method };
+      if (debugOn(env)) {
+        body.error_message =
+          'this arrived as ' + request.method + ', but the widget only ever sends POST. A GET here means the POST was ' +
+          'rewritten in transit — following a 301/302 downgrades a POST to GET while keeping Origin. Check for a redirect ' +
+          'on this hostname. Path: ' + url.pathname + '. Referer: ' + (request.headers.get('Referer') || '(none)') + '.';
+        body.received_headers = {
+          origin: origin || null,
+          referer: request.headers.get('Referer') || null,
+          'sec-fetch-mode': request.headers.get('Sec-Fetch-Mode') || null,
+          'sec-fetch-site': request.headers.get('Sec-Fetch-Site') || null,
+          'sec-fetch-dest': request.headers.get('Sec-Fetch-Dest') || null,
+          'content-type': request.headers.get('Content-Type') || null,
+        };
+      }
+      return new Response(JSON.stringify(body, null, 2), {
         status: 405,
         headers: { 'Content-Type': 'application/json', 'Allow': 'POST, OPTIONS', ...cors(origin) },
       });
     }
 
-    if (env.CHAT_ENABLED === 'false') return json(503, { error: 'disabled' }, origin);
+    if (env.CHAT_ENABLED === 'false') {
+      return fail(503, 'disabled', 'CHAT_ENABLED is "false" — the kill switch is on. Set it to "true" in wrangler.toml and deploy.', origin, env);
+    }
 
     const ip = request.headers.get('CF-Connecting-IP') || '0.0.0.0';
 
     if (url.pathname === '/session') {
       if (env.SESSION_LIMIT) {
         const { success } = await env.SESSION_LIMIT.limit({ key: ip });
-        if (!success) return json(429, { error: 'rate', retryAfter: 60 }, origin);
+        if (!success) {
+          return fail(429, 'rate', 'more than 5 /session calls in a minute from this IP', origin, env, { retryAfter: 60 });
+        }
       }
       return handleSession(request, env, origin, ip);
     }
@@ -444,13 +556,15 @@ export default {
     if (url.pathname === '/chat') {
       if (env.CHAT_LIMIT) {
         const { success } = await env.CHAT_LIMIT.limit({ key: ip });
-        if (!success) return json(429, { error: 'rate', retryAfter: 60 }, origin);
+        if (!success) {
+          return fail(429, 'rate', 'more than 20 /chat calls in a minute from this IP', origin, env, { retryAfter: 60 });
+        }
       }
       return handleChat(request, env, origin, ip);
     }
 
-    return json(404, { error: 'not_found' }, origin);
+    return fail(404, 'not_found', 'no route for ' + url.pathname + '. Valid: /session, /chat, /health.', origin, env);
   },
 };
 
-export { extractLead, validateLead, normaliseHistory, CAPS, SERVICES };
+export { extractLead, validateLead, normaliseHistory, CAPS, SERVICES, SYSTEM };

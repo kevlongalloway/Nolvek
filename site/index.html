@@ -2052,9 +2052,30 @@ textarea.field{resize:vertical;min-height:120px;}
       });
     }
 
+    /* ---- debug mode ----
+       On with ?nvdebug=1 in the URL, or localStorage.setItem('nvDebug','1')
+       to keep it across reloads. No redeploy needed either way. It logs every
+       request and surfaces the Worker's error_message; window.nvDebug() runs
+       a full diagnosis of the request path. */
+    var DEBUG = (function(){
+      try {
+        if(/[?&]nvdebug=1/.test(location.search)){ localStorage.setItem('nvDebug','1'); return true; }
+        if(/[?&]nvdebug=0/.test(location.search)){ localStorage.removeItem('nvDebug'); return false; }
+        return localStorage.getItem('nvDebug') === '1';
+      } catch(e){ return /[?&]nvdebug=1/.test(location.search); }
+    })();
+    function dlog(){
+      if(!DEBUG || !window.console) return;
+      var a = ['%c[nv]', 'color:#3661e3;font-weight:700'].concat([].slice.call(arguments));
+      console.log.apply(console, a);
+    }
+    if(DEBUG) dlog('debug on — endpoint', CFG.endpoint, '· run nvDebug() for a full diagnosis');
+
     function api(path, body){
       var ctrl = new AbortController();
       var to = setTimeout(function(){ ctrl.abort(); }, CFG.clientTimeout);
+      var t0 = (window.performance && performance.now()) || Date.now();
+      dlog('POST', CFG.endpoint + path, body);
       return fetch(CFG.endpoint + path, {
         method:'POST',
         // text/plain keeps this a "simple" CORS request: no OPTIONS preflight,
@@ -2067,12 +2088,102 @@ textarea.field{resize:vertical;min-height:120px;}
         signal: ctrl.signal
       }).then(function(r){
         clearTimeout(to);
-        return r.json().catch(function(){ return {}; }).then(function(j){
-          if(!r.ok){ var e = new Error(j.error || ('HTTP ' + r.status)); e.status = r.status; throw e; }
+        return r.text().then(function(txt){
+          var j = {};
+          try { j = JSON.parse(txt); } catch(e){ j = {}; }
+          if(DEBUG){
+            dlog(path, r.status, r.redirected ? '(REDIRECTED to ' + r.url + ')' : '',
+                 Math.round(((window.performance && performance.now()) || Date.now()) - t0) + 'ms',
+                 j.error_message || txt.slice(0, 300));
+            if(j.received) dlog('the Worker received a', j.received, '— the POST was rewritten in transit');
+            if(!j.error_message && !r.ok) dlog('no error_message: set DEBUG="true" in worker/wrangler.toml and deploy');
+          }
+          if(!r.ok){
+            var e = new Error(j.error || ('HTTP ' + r.status));
+            e.status = r.status;
+            e.detail = j.error_message || '';
+            e.received = j.received || '';
+            throw e;
+          }
           return j;
         });
+      }).catch(function(err){
+        clearTimeout(to);
+        if(DEBUG && !err.status){
+          // No status means fetch itself rejected: redirect:'error', a CORS
+          // block, an abort, or the network. Each looks different in the log.
+          dlog('fetch rejected for', path, '·', err.name + ': ' + err.message,
+               '\n  redirect:"error" is set, so a redirect on this hostname rejects here rather than',
+               '\n  silently becoming a GET. A TypeError with no detail is usually CORS or DNS.');
+        }
+        throw err;
       });
     }
+
+    /* One command that reports exactly where the request path breaks. */
+    window.nvDebug = function(){
+      var base = CFG.endpoint, out = [];
+      function note(step, ok, detail){ out.push({step:step, ok:ok, detail:detail}); }
+      dlog('running diagnosis against', base, '— page origin is', location.origin);
+
+      return fetch(base + '/health', {cache:'no-store'})
+        .then(function(r){ return r.json(); })
+        .then(function(h){
+          note('/health', true, 'reachable · debug=' + h.debug + ' · provider=' + h.provider +
+               ' · model=' + h.groqModel + ' · anthropicKey=' + h.configured.anthropicKey);
+          if(!h.debug) note('worker debug', false, 'DEBUG is off — set DEBUG="true" in worker/wrangler.toml and deploy for error_message');
+        })
+        .catch(function(e){ note('/health', false, e.message + ' — wrong endpoint, Worker down, or DNS'); })
+
+        // Does anything redirect? redirect:'manual' reports without following.
+        .then(function(){
+          return fetch(base + '/session', {method:'POST', headers:{'Content-Type':'text/plain'},
+                                           body:'{}', redirect:'manual'})
+            .then(function(r){
+              note('redirect check', r.type !== 'opaqueredirect',
+                r.type === 'opaqueredirect'
+                  ? 'A REDIRECT IS IN THE PATH. This is the bug: a followed 301/302 turns a POST into a GET. Look at Cloudflare Rules for this hostname.'
+                  : 'no redirect (response type "' + r.type + '", status ' + r.status + ')');
+            })
+            .catch(function(e){ note('redirect check', false, e.message); });
+        })
+
+        // Simple request: text/plain, no preflight. This is what ships.
+        .then(function(){
+          return fetch(base + '/session', {method:'POST', headers:{'Content-Type':'text/plain'},
+                                           body:JSON.stringify({turnstileToken:''})})
+            .then(function(r){ return r.text().then(function(t){
+              var j = {}; try { j = JSON.parse(t); } catch(e){}
+              note('simple POST (no preflight)', r.status === 403 && j.error === 'turnstile',
+                r.status + ' ' + (j.error || '') + ' · ' + (j.error_message || t.slice(0,160)) +
+                (j.received ? '  <-- arrived as ' + j.received : ''));
+            }); })
+            .catch(function(e){ note('simple POST (no preflight)', false, e.name + ': ' + e.message + ' — CORS block, DNS, or a redirect'); });
+        })
+
+        // Preflighted request: application/json forces an OPTIONS first.
+        .then(function(){
+          return fetch(base + '/session', {method:'POST', headers:{'Content-Type':'application/json'},
+                                           body:JSON.stringify({turnstileToken:''})})
+            .then(function(r){ return r.text().then(function(t){
+              var j = {}; try { j = JSON.parse(t); } catch(e){}
+              note('preflighted POST (OPTIONS first)', r.status === 403,
+                r.status + ' ' + (j.error || '') + (j.received ? '  <-- arrived as ' + j.received : ''));
+            }); })
+            .catch(function(e){ note('preflighted POST (OPTIONS first)', false,
+              e.name + ': ' + e.message + ' — if the simple POST above worked and this did not, the OPTIONS preflight is the problem'); });
+        })
+
+        .then(function(){
+          note('page origin', /^https:\/\/(www\.)?nolvek\.online$/.test(location.origin),
+               location.origin + ' — the Worker only allows https://nolvek.online and https://www.nolvek.online');
+          if(console.table) console.table(out); else dlog(out);
+          var red = out.filter(function(o){ return !o.ok; });
+          dlog(red.length ? red.length + ' problem(s) above — the first failing row is the one to fix'
+                          : 'every check passed; the request path is healthy');
+          return out;
+        });
+    };
 
     function ensureSession(){
       if(session) return Promise.resolve(session);
@@ -2093,6 +2204,12 @@ textarea.field{resize:vertical;min-height:120px;}
         systemNote('The quick anti-bot check didn’t pass — usually an ad-blocker or a strict browser. The contact form works without it.', true);
       } else {
         systemNote('I’m having trouble connecting. The contact form always works, or email ' + FALLBACK_EMAIL + '.', true);
+      }
+      if(DEBUG){
+        systemNote('[debug] ' + (err && err.status ? err.status + ' ' : '') +
+          (err && err.message || 'no status') +
+          (err && err.received ? ' · the Worker received a ' + err.received : '') +
+          (err && err.detail ? ' · ' + err.detail : ' · no error_message (set DEBUG="true" on the Worker)'));
       }
       if(window.console) console.error('Chat failed:', err && (err.message || err));
     }

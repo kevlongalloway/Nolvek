@@ -56,6 +56,37 @@ and set `CFG.enabled` to `true`.
 **Set a spend cap in the provider dashboard.** The caps in this Worker are friction, not a billing
 limit — a hard cap at Groq/Anthropic is the actual backstop.
 
+## Debugging
+
+Two switches, independent of each other.
+
+**Worker.** Set `DEBUG = "true"` in `wrangler.toml` `[vars]` and deploy. Every error response then
+carries an `error_message` naming the check that failed and what to do about it — a 401 says whether
+the token was missing, forged, or bound to another IP; a 502 names the provider, the upstream status
+and the likely cause. `GET /health` reports whether it is on.
+
+Turn it off when you are done. The messages describe internal checks: help for you, reconnaissance
+for anyone else. What it will never print is a secret, or the system prompt — provider errors
+sometimes quote the request back, so anything containing the prompt is replaced with
+`[redacted: upstream echoed the system prompt]`, and there is a test that fails if it ever leaks.
+
+**Browser.** Add `?nvdebug=1` to the site URL, or run `localStorage.setItem('nvDebug','1')`. Requires
+no deploy. Every request is logged, and the Worker's `error_message` appears in the chat panel
+instead of only the visitor-facing copy. `?nvdebug=0` turns it off.
+
+Then run `nvDebug()` in the console for a full diagnosis of the request path:
+
+| Row | Tells you |
+|---|---|
+| `/health` | is the Worker reachable at `CFG.endpoint`, and how is it configured |
+| `redirect check` | is a 301/302 in the path — the one thing that turns a POST into a GET |
+| `simple POST` | does the request the widget actually sends get through |
+| `preflighted POST` | does a request needing an `OPTIONS` preflight behave differently |
+| `page origin` | is the page on an origin the Worker allows |
+
+The first failing row is the one to fix. If the simple POST works and the preflighted one does not,
+the preflight is the problem — which is why the widget sends `text/plain`.
+
 ## Variables vs secrets
 
 `[vars]` in `wrangler.toml` is the source of truth. **A deploy replaces the Worker's plain-text

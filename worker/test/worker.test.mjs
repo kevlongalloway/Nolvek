@@ -5,7 +5,8 @@
  *   node test/worker.test.mjs
  */
 import assert from 'node:assert/strict';
-import worker, { extractLead, validateLead, normaliseHistory, CAPS } from '../src/index.js';
+import worker, { extractLead, validateLead, normaliseHistory, CAPS, SYSTEM } from '../src/index.js';
+const SYSTEM_HEAD = SYSTEM.slice(0, 40);
 
 let pass = 0, fail = 0;
 function t(name, fn) {
@@ -156,6 +157,70 @@ globalThis.fetch = async (url) => {
   }
   return realFetch(url);
 };
+
+console.log('\ndebug mode');
+
+const DBG = { ...ENV, DEBUG: 'true' };
+
+await ta('health reports whether debug is on', async () => {
+  const off = await (await worker.fetch(new Request('https://chat.nolvek.online/health'), ENV)).json();
+  const on  = await (await worker.fetch(new Request('https://chat.nolvek.online/health'), DBG)).json();
+  assert.equal(off.debug, false);
+  assert.equal(on.debug, true);
+});
+
+await ta('every error carries error_message when debug is on', async () => {
+  const cases = [
+    ['/nope',    {},                       'POST'],   // 404
+    ['/chat',    undefined,                'GET'],    // 405
+    ['/chat',    { session: 'nope', messages: [{ role: 'user', content: 'hi' }] }, 'POST'], // 401
+    ['/session', { turnstileToken: '' },   'POST'],   // 403
+  ];
+  for (const [path, body, method] of cases) {
+    const r = await worker.fetch(req(path, body, { method }), DBG);
+    const j = await r.json();
+    assert.ok(j.error, path + ' has a machine code');
+    assert.ok(typeof j.error_message === 'string' && j.error_message.length > 10,
+      path + ' (' + r.status + ') should explain itself, got: ' + JSON.stringify(j));
+  }
+});
+
+await ta('debug off leaks nothing', async () => {
+  const r = await worker.fetch(req('/chat', { session: 'nope', messages: [{ role: 'user', content: 'hi' }] }), ENV);
+  const j = await r.json();
+  assert.equal(j.error, 'session');
+  assert.equal(j.error_message, undefined);
+});
+
+await ta('a bad origin explains itself only in debug', async () => {
+  const bad = { origin: 'https://evil.test' };
+  const quiet = await worker.fetch(req('/chat', {}, bad), ENV);
+  assert.equal(await quiet.text(), 'forbidden');
+  const loud = await worker.fetch(req('/chat', {}, bad), DBG);
+  assert.match((await loud.json()).error_message, /evil\.test/);
+});
+
+await ta('the session reason names the actual check that failed', async () => {
+  const r = await worker.fetch(req('/chat', { messages: [{ role: 'user', content: 'hi' }] }), DBG);
+  assert.match((await r.json()).error_message, /no session token/);
+});
+
+await ta('debug never echoes the system prompt back', async () => {
+  const prev = globalThis.fetch;
+  // Turnstile must still pass; only the provider call fails, quoting the prompt.
+  globalThis.fetch = async (u) => String(u).includes('siteverify')
+    ? new Response(JSON.stringify({ success: true }), { status: 200 })
+    : new Response('you are: ' + SYSTEM_HEAD, { status: 400 });
+  try {
+    const s = await worker.fetch(req('/session', { turnstileToken: 'x' }), DBG);
+    const tok = (await s.json()).session;
+    const r = await worker.fetch(req('/chat', { session: tok, messages: [{ role: 'user', content: 'hi' }] }), DBG);
+    const j = await r.json();
+    assert.equal(j.error, 'provider');
+    assert.ok(!j.error_message.includes(SYSTEM_HEAD), 'the prompt must not come back: ' + j.error_message);
+    assert.match(j.error_message, /redacted/);
+  } finally { globalThis.fetch = prev; }
+});
 
 console.log('\nhandler: origin, method, kill switch');
 
